@@ -14,8 +14,7 @@ const Sidebar = (prop) => {
         { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />},
         { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, gap: true},
     ]
-    return <div>
-            <div className={` ${prop.menustat ? 'w-52' : 'w-14'} flex h-screen duration-300 bg-cyan-blue pt-16`}>
+    return  <div className={` ${prop.menustat ? 'w-52' : 'w-14'}flex h-screen duration-300 bg-cyan-blue pt-32`}>
                 <ul className='pt-6'>
                     {Menus.map((menu, index) => (
                         <li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md  ${menu.gap ? "absolute inset-x-0 bottom-0" : "mt-2"}`}>
@@ -25,6 +24,5 @@ const Sidebar = (prop) => {
                     ))}
                 </ul>
             </div>
-        </div>     
     }
 export default Sidebar;
