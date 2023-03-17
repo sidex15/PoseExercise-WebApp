@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
 import Card from '../components/dashCard';
 
 const Dashboard = () => {
 
     return <div className='h-fit w-auto'>
-            <div className=''><Navbar /></div>
+            <div className='mt-44 ml-44 absolute'>
+                <p className="font-mono font-bold text-8xl text-white">Start your exercise <br /> session now</p>
+            </div>
             <div>
-                <div className='absolute mt-44 ml-44'>
-                    <p className="font-mono font-bold text-8xl text-white">Start your exercise <br /> session now</p>
-                </div>
-                <div>
-                    <img className="h-65vh w-screen " src="images/banner.jpg" />
+                <div className=''>
+                    <img className="h-65vh w-screen" src="images/banner.jpg" alt="dashboardimg"/>
                 </div>
                 <div className='pl-60 pt-16'>
                     <h1 className='font-mono font-bold text-cyan-blue text-3xl'>Choose an exercise</h1>

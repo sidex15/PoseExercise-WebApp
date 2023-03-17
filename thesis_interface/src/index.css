@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body, html{
-  height: 100%;
+React.Strickmode{
+  height: 100vh;
+  width: 100vw;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
