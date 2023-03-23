@@ -23,7 +23,7 @@ const Register = () => {
                             <button type="submit" onClick={() => navigate('/')} className=" font-bold rounded-3xl text-cyan-blue p-4">Already have an account? <span className="underline">Sign in</span></button>
                         </div>
                         <div className="flex justify-center mt-7">
-                            <button type="submit" onClick={() => navigate('/personal-information')} className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
+                            <button type="submit" onClick={() => navigate('/step-1')} className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
                         </div>
                     </form>
                     </div>

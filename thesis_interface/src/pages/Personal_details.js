@@ -46,7 +46,7 @@ const Userinfo = () => {
                 <div className="absolute flex flex-col self-center">
                     <h1 className='font-mono font-bold text-5xl text-white'>Get stronger and <br /> fitter with us, <br /> helping you to take <br /> fitness to the top <br /> level</h1>
                     <div className="flex justify-center mt-36">
-                        <button type="submit" onClick={() => navigate('/personal-information')} className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
+                        <button type="submit" onClick={() => navigate('/step-2')} className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
                     </div>
                 </div>
                 <img className="h-full w-full" src="images/userinfobanner.png" alt="userinfobanner"/>
