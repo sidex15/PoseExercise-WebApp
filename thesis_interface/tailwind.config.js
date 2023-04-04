@@ -7,6 +7,8 @@ module.exports = {
         "cyan-blue": "#023E8A",
         "light-white": "rgba(255, 255, 255, 0.17)",
         "red-me": "#FF0000",
+        "grey": "#EFEFEF",
+        "pinkish": "#C5C5C5",
       },
       height:{
         "65vh": "65vh",

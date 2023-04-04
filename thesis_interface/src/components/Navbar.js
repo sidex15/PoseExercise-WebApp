@@ -6,16 +6,20 @@ import { GiBiceps } from "react-icons/gi";
 import { TbReportSearch } from "react-icons/tb";
 import { RiFileUserLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
     const [open, setOpen] = useState(false)
 
     const Menus = [
-        { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />},
-        { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />},
-        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />},
-        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />},
-        { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, gap: true},
+        { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "/dashboard"},
+        { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "/workout-session"},
+        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "/exercise-records"},
+        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "student-records"},
+        { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, path: "/profile", gap: true},
     ]
 
     return <div>
@@ -25,9 +29,9 @@ const Navbar = () => {
                     <div className='p-3'>
                         <hiIcons.HiMenu size="30px" color="white" onClick={() => setOpen(!open)}/>
                     </div>
-                    <div className='text-white text-sm flex items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4'>
-                        <vscIcons.VscAccount size="28px" color="white"/>
-                        <span>Login/Signup</span>
+                    <div className='text-white text-sm flex items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4' onClick={() => navigate('/')}>
+                        <RiLogoutBoxRLine size="28px" color="white"/>
+                        <span>Logout</span>
                     </div>
                 </nav>
             </div>
@@ -36,7 +40,7 @@ const Navbar = () => {
         <div className={`${open ? 'w-52' : 'w-14'} flex h-screen duration-300 bg-cyan-blue pt-32`}>
                 <ul className='pt-6'>
                     {Menus.map((menu, index) => (
-                        <li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md  ${menu.gap ? "absolute inset-x-0 bottom-0" : "mt-2"}`}>
+                        <li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md  ${menu.gap ? "absolute inset-x-0 bottom-0" : "mt-2"}`} onClick={() => navigate(menu.path)}>
                             {menu.icon}
                             <span className={`${!open && 'hidden'} origin-left duration-200`}>{menu.title}</span>
                         </li>

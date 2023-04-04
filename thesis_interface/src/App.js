@@ -7,6 +7,8 @@ import Userinfo from "./pages/Personal_details";
 import Userinfo2 from "./pages/Biometrics";
 import Invcode from "./pages/Invite-code";
 import Reg_success from "./pages/Reg-success";
+import Exer_records from "./pages/Exer_records";
+import Student_record from "./pages/Stud_records";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/all-set" element={<Reg_success />} />
         <Route path="/nav" element={<Navbar />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/exercise-records" element={<Exer_records />} />
+        <Route path="/student-records" element={<Student_record />} />
       </Routes>
     </div>
   );
