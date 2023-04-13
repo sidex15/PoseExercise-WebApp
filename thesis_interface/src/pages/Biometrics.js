@@ -1,13 +1,14 @@
 import { FaWeight } from 'react-icons/fa';
 import { IoBody } from 'react-icons/io5'
 import { useNavigate } from "react-router-dom";
+import biometrics from "../img/biometrics.png"
 
 const Userinfo2 = () => {
     const navigate = useNavigate();
     return ( 
         <div className="h-full flex">
             <div className="h-screen w-1/2">
-                <img className="h-full w-full" src="images/biometrics.png" alt="biometricsimg"/>
+                <img className="h-full w-full" src={biometrics} alt="biometricsimg"/>
             </div>
             <div className="w-1/2 flex justify-center items-center">
                 <div>

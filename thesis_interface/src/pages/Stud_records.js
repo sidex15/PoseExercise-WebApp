@@ -1,6 +1,6 @@
 import { IoCopyOutline } from "react-icons/io5"
 
-const Student_record = () => {
+const StudentRecord = () => {
     return ( 
     <div className="h-screen flex">
         <div className="bg-grey h-full w-1/6 pt-24">
@@ -26,4 +26,4 @@ const Student_record = () => {
     );
 }
  
-export default Student_record;
+export default StudentRecord;

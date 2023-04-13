@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import userinfobanner from "../img/userinfobanner.png"
 const Userinfo = () => {
     const navigate = useNavigate();
     return ( 
@@ -49,7 +49,7 @@ const Userinfo = () => {
                         <button type="submit" onClick={() => navigate('/step-2')} className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
                     </div>
                 </div>
-                <img className="h-full w-full" src="images/userinfobanner.png" alt="userinfobanner"/>
+                <img className="h-full w-full" src={userinfobanner} alt="userinfobanner"/>
             </div>
         </div>
      );

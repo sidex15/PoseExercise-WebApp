@@ -1,6 +1,7 @@
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import loginbanner from "../img/loginbanner.png"
 
 const Login = () => {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Login = () => {
                             <button type="submit" onClick={() => navigate('/signup')} className=" font-bold rounded-3xl text-cyan-blue p-4">Don't have an account yet? <span className="underline">Sign up</span></button>
                         </div>
                         <div className="flex justify-center mt-7">
-                            <button type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Login</button>
+                            <button type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32" onClick={() => navigate('/content')}>Login</button>
                         </div>
                     </form>
                     </div>
@@ -31,7 +32,7 @@ const Login = () => {
             </div>
             <div className="h-screen w-1/2 flex justify-center ml-20">
                 <h1 className='absolute font-mono font-bold text-5xl text-white self-center mt-56'>Login to your <br /> account and <br /> start tracking <br /> you Exercise <br />Sessions now!</h1>
-                <img className="h-full" src="images/loginbanner.png" alt="loginimg"/>
+                <img className="h-full" src={loginbanner} alt="loginimg"/>
             </div>
         </div>
      );

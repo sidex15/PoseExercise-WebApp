@@ -1,6 +1,7 @@
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import loginbanner from "../img/loginbanner.png"
 
 const Register = () => {
     const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Register = () => {
             </div>
             <div className="h-screen w-1/2 flex justify-center ml-20">
                 <h1 className='absolute font-mono font-bold text-5xl text-white self-center mt-56'>Create your <br /> account and <br /> track your <br /> exercise records <br /> and stats</h1>
-                <img className="h-full" src="images/loginbanner.png" alt="loginimg"/>
+                <img className="h-full" src={loginbanner} alt="loginimg"/>
             </div>
         </div>
      );

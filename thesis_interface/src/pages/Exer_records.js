@@ -1,4 +1,4 @@
-const Exer_records = () => {
+const ExerRecords = () => {
     return ( 
         <div className="h-screen px-44 pt-28">
             <h1 className='font-mono font-bold text-6xl text-cyan-blue'>Your Exercise Session Records</h1>
@@ -9,4 +9,4 @@ const Exer_records = () => {
      );
 }
  
-export default Exer_records;
+export default ExerRecords;

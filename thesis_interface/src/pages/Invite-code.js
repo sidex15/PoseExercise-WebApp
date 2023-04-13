@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-
+import quartercircle from "../img/quartercircle.png"
+import coach from "../img/coach.png"
 const Invcode = () => {
     const navigate = useNavigate();
     return ( 
@@ -13,7 +14,7 @@ const Invcode = () => {
                     <button type="submit" onClick={() => navigate('/all-set')} className="self-center bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32 mt-28">Proceed</button>   
                 </div>
             </div>
-            <img className="h-1/2" src="images/quartercircle.png" alt="circle"/>
+            <img className="h-1/2" src={quartercircle} alt="circle"/>
         </div>
         <div className="h-screen w-3/5 flex justify-center">
             <div className="absolute flex flex-col self-center">
@@ -22,7 +23,7 @@ const Invcode = () => {
                     <button type="submit" onClick={() => navigate('/all-set')} className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">SKIP</button>
                 </div>
             </div>
-            <img className="h-full w-full" src="images/coach.png" alt="biometricsimg"/>
+            <img className="h-full w-full" src={coach} alt="inviteimg"/>
         </div>
     </div> 
     );
