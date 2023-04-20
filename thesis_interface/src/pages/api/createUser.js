@@ -1,12 +1,13 @@
 import { MongoClient } from 'mongodb';
 
-const client = await MongoClient.connect(process.env.MONGODB_URI);
 
 export default async function createUser(req, res) {
   const { username, password, firstName, middleName, lastName, birthDate, weight, height, sex } = req.body;
 
+  const client = await MongoClient.connect(process.env.MONGODB_URI);
   // Validate the form data
   // ...
+
 
   try {
     await client.connect();

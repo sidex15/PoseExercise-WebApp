@@ -12,6 +12,7 @@
 /build
 
 # misc
+.next/
 ../test
 .DS_Store
 .env.local

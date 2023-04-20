@@ -1,14 +1,9 @@
-<<<<<<< HEAD:thesis_interface/src/pages/Personal_details/index.js
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import userinfobanner from "@/img/userinfobanner.png"
 import { useEffect, useState } from 'react';
 
 
-=======
-import { useNavigate } from "react-router-dom";
-import userinfobanner from "../img/userinfobanner.png"
->>>>>>> 71a294b066f11213a2f53a58c91fb42b58f5c5ed:thesis_interface/src/pages/Personal_details.js
 const Userinfo = () => {
     const router = useRouter()
 
@@ -88,11 +83,7 @@ const Userinfo = () => {
                         <button type="submit" onClick={Userinfo2} className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
                     </div>
                 </div>
-<<<<<<< HEAD:thesis_interface/src/pages/Personal_details/index.js
                 <Image className="h-full w-full" src={userinfobanner} alt="userinfobanner"/>
-=======
-                <img className="h-full w-full" src={userinfobanner} alt="userinfobanner"/>
->>>>>>> 71a294b066f11213a2f53a58c91fb42b58f5c5ed:thesis_interface/src/pages/Personal_details.js
             </div>
         </div>
      );
