@@ -7,10 +7,10 @@ import { TbReportSearch } from "react-icons/tb";
 import { RiFileUserLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiLogoutBoxRLine } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 
 const Navbar = ({callback}) => {
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const [open, setOpen] = useState(false)
 
@@ -47,7 +47,7 @@ const Navbar = ({callback}) => {
                     <div className='p-3'>
                         <hiIcons.HiMenu size="30px" color="white" onClick={hamburger}/>
                     </div>
-                    <div className='text-white text-sm flex items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4' onClick={() => navigate('/')}>
+                    <div className='text-white text-sm flex items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4' onClick={() => router.push('/')}>
                         <RiLogoutBoxRLine size="28px" color="white"/>
                         <span>Logout</span>
                     </div>
