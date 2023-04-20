@@ -4,15 +4,15 @@ import { MdTimer } from "react-icons/md";
 import { IoSpeedometer } from "react-icons/io5";
 import { HiPlay } from "react-icons/hi2";
 import { HiStop } from "react-icons/hi2";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 
 const Session = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
     return ( 
         <div className="h-full flex">
             <div className="h-full w-4/5 ">
                 <div className="h-5% p-5">
-                    <button className="flex items-center" onClick={() => navigate('/content')}><IoArrowBack size="30px" color="grey"/> Go Back</button>
+                    <button className="flex items-center" onClick={() => router.push('/Content')}><IoArrowBack size="30px" color="grey"/> Go Back</button>
                 </div>
                 <div className="h-95% flex items-center justify-center">
                     <div className="h-95% w-95% bg-grey rounded-3xl flex justify-center items-center">

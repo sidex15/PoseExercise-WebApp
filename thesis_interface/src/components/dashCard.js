@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FaPlayCircle } from 'react-icons/fa';
+import Image from 'next/image';
 
 const Card = (props) => {
     return (
@@ -9,7 +10,7 @@ const Card = (props) => {
                     <p className="font-mono font-bold text-5xl text-white">{props.name}</p> 
                 </div>
                 <div>
-                    <img className='rounded-t-lg h-56' src={props.picsrc} alt="dashcardimg"/>
+                    <Image className='rounded-t-lg h-56' src={props.picsrc} alt="dashcardImage"/>
                 </div>
                 <div className='mt-3 flex justify-center'>
                     <button className="text-cyan-blue font-bold rounded-3xl p-3 text-white flex justify-center gap-x-2">

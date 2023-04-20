@@ -12,9 +12,9 @@
     "next": "latest",
     "react": "latest",
     "react-bootstrap": "^2.7.0",
-    "react-dom": "latest",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
-    "react-router-dom": "^6.8.1",
+    "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.2",
     "web-vitals": "^2.1.4"

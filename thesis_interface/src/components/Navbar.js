@@ -20,10 +20,10 @@ const Navbar = ({callback}) => {
     }
 
     const Menus = [
-        { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "dashboard"},
-        { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "workout-session"},
-        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "exercise-records"},
-        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "student-records"},
+        { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "Dashboard", pathname: "/Dashboard"},
+        { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "Session", pathname: "workout-session"},
+        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "Exer_records", pathname: "/exercise-records"},
+        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "Stud_records", pathname: "/student-records"},
         { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, path: "profile", gap: true},
     ]
 
@@ -33,7 +33,7 @@ const Navbar = ({callback}) => {
         <div className={`${open ? 'w-52' : 'w-14'} flex h-screen duration-300 bg-cyan-blue pt-32S fixed`}>
             <ul className='pt-32'>
                 {Menus.map((menu, index) => (
-                    <li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md  ${menu.gap ? "absolute inset-x-0 bottom-0" : "mt-2"}`} onClick={() => navigate(menu.path)}>
+                    <li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md  ${menu.gap ? "absolute inset-x-0 bottom-0" : "mt-2"}`} onClick={() => router.push(menu.path,menu.pathname)}>
                         {menu.icon}
                         <span className={`${!open && 'hidden'} origin-left duration-200`}>{menu.title}</span>
                     </li>
