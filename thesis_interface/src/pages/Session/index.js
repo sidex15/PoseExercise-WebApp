@@ -5,10 +5,11 @@ import { IoSpeedometer } from "react-icons/io5";
 import { HiPlay } from "react-icons/hi2";
 import { HiStop } from "react-icons/hi2";
 import { useRouter } from "next/router";
+import Layout from "@/components/Layout";
 
 const Session = () => {
     const router = useRouter();
-    return ( 
+    return ( <Layout>
         <div className="h-full flex">
             <div className="h-full w-4/5 ">
                 <div className="h-5% p-5">
@@ -47,6 +48,7 @@ const Session = () => {
                 </div>
             </div>
         </div>
+        </Layout>
      );
 }
  

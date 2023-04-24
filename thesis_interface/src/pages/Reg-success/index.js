@@ -3,9 +3,9 @@ import Image from 'next/image';
 import regsuccess from "@/img/regsuccess.jpg"
 const RegSuccess = () => {
     const router = useRouter()
-    const Content= (e) => {
+    const Content = (e) => {
         e.preventDefault()
-        router.push('/Content')
+        router.push('/dashboard')
       } 
     return ( 
         <div className="h-screen flex justify-center items-center">

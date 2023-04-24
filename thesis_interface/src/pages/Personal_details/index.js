@@ -33,7 +33,7 @@ const Userinfo = () => {
     const Userinfo2 = (e) => {
         e.preventDefault()
         localStorage.setItem('formData', JSON.stringify(formData));
-        router.push('/Biometrics');
+        router.push('/biometrics');
       } 
 
     return ( 

@@ -13,7 +13,7 @@ const Card = (props) => {
                     <Image className='rounded-t-lg h-56' src={props.picsrc} alt="dashcardImage"/>
                 </div>
                 <div className='mt-3 flex justify-center'>
-                    <button className="text-cyan-blue font-bold rounded-3xl p-3 text-white flex justify-center gap-x-2">
+                    <button className="text-cyan-blue font-bold rounded-3xl p-3 flex justify-center gap-x-2">
                     <span className='self-center text-2xl'>Start Session</span>
                     <FaPlayCircle size="50px" color="blue"/>
                     </button>

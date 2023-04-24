@@ -1,7 +1,8 @@
 import { IoCopyOutline } from "react-icons/io5"
+import Layout from "@/components/Layout";
 
 const StudentRecord = () => {
-    return ( 
+    return ( <Layout>
     <div className="h-screen flex">
         <div className="bg-grey h-full w-1/6 pt-24">
             <h1 className="font-mono font-bold text-4xl text-cyan-blue ml-3">Student's List</h1>
@@ -18,11 +19,10 @@ const StudentRecord = () => {
                 <div className="bg-grey flex justify-center items-center mt-7 h-2/3">
                     this is container for the exercise records pulled from the database
                 </div>
-                
             </div>
-            
         </div>
     </div>
+    </Layout>
     );
 }
  

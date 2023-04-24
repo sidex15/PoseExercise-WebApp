@@ -24,6 +24,9 @@ module.exports = {
         "c-width": "1920px",
         "95%": "95%",
       },
+      zIndex: {
+        '1': '1',
+      },
     },
   },
   plugins: [],

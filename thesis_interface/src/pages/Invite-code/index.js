@@ -55,7 +55,7 @@ const Invcode = () => {
           console.error(error);
         }
         e.preventDefault()
-        router.push('/Reg-success')
+        router.push('/reg-success')
       };
 
     return ( 

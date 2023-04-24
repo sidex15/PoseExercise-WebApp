@@ -28,7 +28,8 @@ function Login () {
         throw new Error(message);
       }
 
-      router.push('/Content');
+      router.push('/dashboard');
+      
     } catch (error) {
         toast.error('Username or password do not match.', {
             position: toast.POSITION.TOP_CENTER,

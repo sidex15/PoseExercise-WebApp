@@ -36,7 +36,7 @@ const Userinfo2 = () => {
     const Invcode = (e) => {
         e.preventDefault()
         localStorage.setItem('formData', JSON.stringify(formData));
-        router.push('/Invite-code')
+        router.push('/invite-code')
     } 
     return ( 
         <div className="h-full flex">
