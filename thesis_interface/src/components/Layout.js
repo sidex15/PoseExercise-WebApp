@@ -22,7 +22,7 @@ const Layout = ({children}) => {
         </div>
         <div className="h-full w-full flex">
             <Sidebar open={open}/>
-            <div className="h-full w-full overflow-hidden">
+            <div className="h-full w-full relative overflow-hidden">
                 { children }
             </div>
         </div>

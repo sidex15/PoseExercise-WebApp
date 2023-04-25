@@ -12,15 +12,15 @@ import Layout from '@/components/Layout';
 const Dashboard = () => {
 
     return <Layout >
-        <div className='h-screen'>
+        <div className='absolute overflow-scroll h-full w-full'>
             <div className='flex justify-center items-center w-full'>
-                <Image className="h-65vh w-screen" src={banner} alt="dashboardimg" priority/>
-                <p className="font-mono font-bold text-8xl text-white absolute">Start your exercise <br /> session now</p>
+                <Image className="lg:h-65vh h-30vh w-screen" src={banner} alt="dashboardimg" priority/>
+                <p className="font-mono font-bold lg:text-8xl text-5xl text-white absolute">Start your exercise <br /> session now</p>
             </div>
-            <div>
-                <div className='pl-60 pt-16'>
-                    <h1 className='font-mono font-bold text-cyan-blue text-3xl'>Choose an exercise</h1>
-                    <div className="flex flex-wrap">
+            <div className='w-full flex justify-center bg-grey'>
+                <div className='pt-16 w-90% lg:block flex flex-col items-center'>
+                    <h1 className='font-mono font-bold text-cyan-blue lg:text-5xl text-3xl'>Choose an exercise</h1>
+                    <div className="flex flex-wrap justify-center lg:pt-16 pt-0">
                         <Card name="PUSH-UPS" picsrc={pushups}/>
                         <Card name="SIT-UPS" picsrc={situps}/>
                         <Card name="JUMPING JACK" picsrc={jumpjacks}/>

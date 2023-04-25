@@ -20,7 +20,7 @@ const Sidebar = ({open}) => {
     
 
     return ( <>
-        <div className={`${open ? 'lg:w-56 w-full' : 'lg:w-14 lg:block hidden'} lg:h-full h-1/2 lg:static fixed lg:z-0 z-1 duration-300 bg-cyan-blue`}>
+        <div className={`${open ? 'lg:w-56 w-full' : 'lg:w-14 lg:block hidden'} lg:h-full h-80 lg:static fixed lg:z-0 z-1 duration-300 bg-cyan-blue`}>
             <ul className='lg:pt-56 pt-0 lg:block h-full flex flex-col justify-center items-center'>
                 <div>
                     {Menus.map((menu, index) => (

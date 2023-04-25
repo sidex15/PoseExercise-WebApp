@@ -5,7 +5,7 @@ import Image from 'next/image';
 const Card = (props) => {
     return (
         <div className='flex p-7'>
-            <div className='h-80 w-80 rounded-lg shadow-lg'>
+            <div className='h-80 w-80 rounded-lg shadow-md shadow-#03045E'>
                 <div className='absolute w-80 text-center mt-20'>
                     <p className="font-mono font-bold text-5xl text-white">{props.name}</p> 
                 </div>
