@@ -1,4 +1,4 @@
-import Login from "./login";
+import Login from "./Login";
 
 function Routes() {
   return (<Login />);
