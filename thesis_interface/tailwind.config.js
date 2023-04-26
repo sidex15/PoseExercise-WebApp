@@ -15,6 +15,7 @@ module.exports = {
         "btnstart": "#03045E",
         "btnstop": "#CC0000",
         "#03045E": "#03045E",
+        "#D9D9D9": "#D9D9D9",
       },
       height:{
         "30vh": "30vh",
@@ -26,12 +27,16 @@ module.exports = {
         "c-width": "1920px",
         "95%": "95%",
         "90%": "90%",
+        "350px": "350px",
+        "10%": "10%",
+        "70%": "70%",
       },
       zIndex: {
         '1': '1',
       },
       boxShadow: {
         'cshadow': '0 0 8px 4px rgba(0, 0, 0, 0.1)',
+        '#023E8A': '0 0 8px 4px #023E8A'
       },
       backgroundImage: {
         'dash-banner': "url('/src/img/banner.jpg')",
