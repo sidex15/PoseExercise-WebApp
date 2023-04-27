@@ -50,19 +50,19 @@ function Login () {
         router.push('/signup')
       } 
     return ( 
-        <div className="h-full flex">
-            <div className="w-1/2 flex justify-center">
-                <div className="self-center">
-                    <h1 className='font-mono font-bold text-8xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
-                    <div className="flex justify-center mt-16">
-                    <form>
-                        <div>
-                        <span className="absolute m-4"><FaUser size="50px" color="blue"/></span>
-                        <input type="text" placeholder="Username" onChange={handleUsernameChange} size="50" className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 h-20 text-2xl" />    
+        <div className="h-screen w-screen flex">
+            <div className="lg:w-1/2 w-full h-full flex justify-center items-center">
+                <div className="">
+                    <h1 className='font-mono font-bold lg:text-8xl text-5xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
+                    <div className="flex justify-center pt-12">
+                    <form className="lg:w-full w-screen flex flex-col items-center">
+                        <div className="">
+                          <span className="absolute lg:p-4 p-3"><FaUser color="blue" className="lg:h-12 h-8 lg:w-12 w-8"/></span>
+                          <input type="text" placeholder="Username" onChange={handleUsernameChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
                         </div>
                         <div className="mt-8">
-                        <span className="absolute m-4"><FaLock size="50px" color="blue"/></span>
-                        <input type="password" placeholder="Password" onChange={handlePasswordChange} size="50" className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 h-20 text-2xl" />    
+                          <span className="absolute lg:p-4 p-3"><FaLock color="blue" className="lg:h-12 h-8 lg:w-12 w-8"/></span>
+                          <input type="password" placeholder="Password" onChange={handlePasswordChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
                         </div>
                         <div className="flex justify-center mt-3">
                             <button type="submit" onClick={signup} className=" font-bold rounded-3xl text-cyan-blue p-4">Don't have an account yet? <span className="underline">Sign up</span></button>
@@ -74,7 +74,7 @@ function Login () {
                     </div>
                 </div>
             </div>
-            <div className="h-screen w-1/2 flex justify-center ml-20">
+            <div className="lg:flex hidden h-screen w-1/2  justify-center ml-20">
                 <h1 className='absolute font-mono font-bold text-5xl text-white self-center mt-56'>Login to your <br /> account and <br /> start tracking <br /> you Exercise <br />Sessions now!</h1>
                 <Image className="h-full" src={loginbanner} priority='true' alt="loginimg"/>
             </div>
