@@ -13,8 +13,8 @@ const Dashboard = () => {
 
     return <Layout >
         <div className='absolute overflow-scroll h-full w-full'>
-            <div className='flex justify-center items-center w-full'>
-                <Image className="lg:h-65vh h-30vh w-screen" src={banner} alt="dashboardimg" priority/>
+            <div className=' flex justify-center items-center w-full'>
+                <Image className="object-cover lg:h-65vh h-30vh" src={banner} alt="dashboardimg" priority/>
                 <p className="font-mono font-bold lg:text-8xl text-5xl text-white absolute">Start your exercise <br /> session now</p>
             </div>
             <div className='w-full flex justify-center bg-grey'>
