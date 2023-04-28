@@ -39,7 +39,7 @@ const Userinfo = () => {
     return ( 
         <div className="h-screen w-screen flex">
             <div className="h-full lg:w-1/2 w-full flex justify-center items-center">
-                <div className="lg:relative absolute items-center lg:bg-inherit bg-white/50 lg:w-full sm:w-4/5 w-90% lg:p-0 p-7 rounded-xl lg:shadow-none shadow-#023E8A">
+                <div className="lg:relavite absolute lg:bg-inherit bg-white/50 lg:w-full sm:w-4/5 w-90% lg:p-0 p-7 rounded-xl lg:shadow-none shadow-#023E8A">
                     <h1 className='font-mono font-bold text-6xl text-cyan-blue text-center'>Personal Details</h1>
                     <div className="flex justify-center mt-5">
                         <form className='flex flex-col gap-4'>

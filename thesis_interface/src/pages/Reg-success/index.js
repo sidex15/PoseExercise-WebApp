@@ -8,11 +8,11 @@ const RegSuccess = () => {
         router.push('/dashboard')
       } 
     return ( 
-        <div className="h-screen flex justify-center items-center">
-            <div className="absolute flex flex-col">
-                <h1 className='font-mono font-bold text-9xl text-white'>Congratulations, <br /> You are all set!</h1>
-                <div className="flex justify-center mt-36">
-                    <button type="submit" onClick={Content} className="bg-cyan-blue font-bold text-4xl rounded-3xl text-white p-5 w-2/5">Proceed to Dashboard</button>
+        <div className="h-screen w-screen flex justify-center items-center">
+            <div className="absolute flex flex-col sm:gap-36 gap-16">
+                <h1 className='font-mono font-bold xl:text-9xl sm:text-6xl text-4xl text-white'>Congratulations, <br /> You are all set!</h1>
+                <div className="flex justify-center">
+                    <button type="submit" onClick={Content} className="bg-cyan-blue font-bold xl:text-4xl sm:text-2xl text-xl rounded-3xl text-white p-5">Proceed to Dashboard</button>
                 </div>
             </div>
             <Image src={regsuccess} alt="regsuccess" className="h-full w-full object-cover" />

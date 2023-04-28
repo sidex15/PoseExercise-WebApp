@@ -42,6 +42,9 @@ module.exports = {
       backgroundImage: {
         'dash-banner': "url('/src/img/banner.jpg')",
       },
+      screens: {
+        'mobileL': '425px'
+      },
     },
   },
   plugins: [],
