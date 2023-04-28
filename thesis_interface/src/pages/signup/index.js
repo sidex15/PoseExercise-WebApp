@@ -37,7 +37,7 @@ const Register = () => {
         const hashedPassword = await hashPassword(formData.password);
         const userData = { ...formData, password: hashedPassword };
         localStorage.setItem('formData', JSON.stringify(userData));
-        router.push('/personal_details');
+        router.push('/Personal_details');
       }
     const back = (e) => {
         e.preventDefault()

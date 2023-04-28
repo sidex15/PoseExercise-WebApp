@@ -27,8 +27,6 @@ const Invcode = () => {
         }
     }, []);
 
-    console.log(formData);
-
     const RegSuccess = (e) => {
         e.preventDefault()
         router.push('/Reg-success')
@@ -55,7 +53,7 @@ const Invcode = () => {
           console.error(error);
         }
         e.preventDefault()
-        router.push('/reg-success')
+        router.push('/Reg-success')
       };
 
     return ( 

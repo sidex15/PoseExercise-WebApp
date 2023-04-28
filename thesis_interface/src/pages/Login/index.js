@@ -6,6 +6,7 @@ import Image from 'next/image'
 import loginbanner from "@/img/loginbanner.png"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 
 function Login () {
     const router = useRouter();
@@ -28,6 +29,9 @@ function Login () {
         throw new Error(message);
       }
 
+      const { token } = await res.json();
+      Cookies.set('token', token);
+       // store the token in a cookie
       router.push('/Dashboard');
       
     } catch (error) {

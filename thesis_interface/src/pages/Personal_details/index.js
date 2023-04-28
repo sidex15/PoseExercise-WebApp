@@ -23,8 +23,6 @@ const Userinfo = () => {
             setformData(JSON.parse(storedData));
         }
     }, []);
-
-    console.log(formData);
       
     const handleChange = (e) => {
         setformData({ ...formData, [e.target.name]: e.target.value });
@@ -33,7 +31,7 @@ const Userinfo = () => {
     const Userinfo2 = (e) => {
         e.preventDefault()
         localStorage.setItem('formData', JSON.stringify(formData));
-        router.push('/biometrics');
+        router.push('/Biometrics');
       } 
 
     return ( 

@@ -27,8 +27,6 @@ const Userinfo2 = () => {
         }
     }, []);
 
-    console.log(formData);
-
     const handleChange = (e) => {
         setformData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -36,7 +34,7 @@ const Userinfo2 = () => {
     const Invcode = (e) => {
         e.preventDefault()
         localStorage.setItem('formData', JSON.stringify(formData));
-        router.push('/invite-code')
+        router.push('/Invite-code')
     } 
     return ( 
         <div className="h-screen w-screen flex items-center justify-center">
