@@ -1,5 +1,7 @@
 import { compare } from 'bcryptjs';
 import { MongoClient } from 'mongodb';
+import jwt from 'jsonwebtoken';
+import Cookies from 'js-cookie';
 
 export default async function handler(req, res) {
   const { username, password } = req.body;
@@ -23,6 +25,6 @@ export default async function handler(req, res) {
   }
 
   // TODO: Create a session and return a JWT token
-
-  res.status(200).json({ message: 'Login successful' });
+  const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET);
+  res.status(200).json({ message: 'Login successful',token });
 }

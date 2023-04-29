@@ -1,7 +1,7 @@
 // How would you describe your level of breathlessness during exercise? (Options: Borderline uncomfortable, Breathing heavily, Comfortable)
 // How would you describe your ability to speak during exercise? (Options: Can speak a sentence, Can hold a short conversation, Easy to breath and carry a conversation)
 
-function evalExercise(breathlessness, speechAbility){
+export default function evalExercise(breathlessness, speechAbility){
 
     let exercise_intensity;
 

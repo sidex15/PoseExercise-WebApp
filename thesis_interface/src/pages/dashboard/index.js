@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import Image from 'next/image';
 import Card from '@/components/dashCard';
 import banner from '@/img/banner.jpg'
@@ -8,9 +8,10 @@ import jumpjacks from '@/img/jumpjacks.jpg'
 import squats from '@/img/squats.jpg'
 import flanking from '@/img/flanking.png'
 import Layout from '@/components/Layout';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 const Dashboard = () => {
-
     return <Layout >
         <div className='absolute overflow-scroll h-full w-full'>
             <div className=' flex justify-center items-center w-full'>

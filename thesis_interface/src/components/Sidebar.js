@@ -10,10 +10,10 @@ const Sidebar = ({open}) => {
     const router = useRouter();
 
     const Menus = [
-        { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "Dashboard", },
-        { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "Session", },
-        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "Exer_records", },
-        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "Stud_records", },
+        { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "dashboard", },
+        { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "session", },
+        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "exer_records", },
+        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "stud_records", },
         { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, path: "profile", gap: true},
     ]
 

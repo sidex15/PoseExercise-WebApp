@@ -9,12 +9,12 @@ import Layout from "@/components/Layout";
 import PostQuestions from "@/components/questions";
 import { useState, useEffect, useRef } from "react";
 
-import { getPrediction } from './get_prediction';
-import validateExercise from "./validate_exercise";
+import getPrediction from '@/lib/get_prediction';
+import validateExercise from "@/lib/validate_exercise";
 
-import { drawLandmarks, drawConnectors, PoseConnection } from '../../../node_modules/@mediapipe/drawing_utils/drawing_utils';
-import { POSE_CONNECTIONS, Pose } from '../../../node_modules/@mediapipe/pose/pose';
-import { Camera } from '../../../node_modules/@mediapipe/camera_utils/camera_utils';
+import { drawLandmarks, drawConnectors, PoseConnection } from '@mediapipe/drawing_utils/drawing_utils';
+import { POSE_CONNECTIONS, Pose } from '@mediapipe/pose/pose';
+import { Camera } from '@mediapipe/camera_utils/camera_utils';
 
 // GLOBAL VARIABLES ONLY FOR THIS CCOMPONENT
 var stopSesssion = false;

@@ -1,5 +1,5 @@
 
-async function requestPrediction(data){
+export default async function requestPrediction(data){
     
     // SEND AN HTTP REQUEST TO THE PYTHON FLASK BACKEND THAT HOSTS ...
     // THE MACHINE LEARNING MODEL TO GET THE ML MODEL PREDICTION ON THE SENT DATA
@@ -15,4 +15,3 @@ async function requestPrediction(data){
       return result.prediction;
 }
 
-export { requestPrediction };
