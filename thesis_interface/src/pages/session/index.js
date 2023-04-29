@@ -28,28 +28,22 @@ const Session = () => {
   
   const handleStopButton = () => {
     console.log("Test");
-    // setStop(true);
+    setStop(true);
     stopSesssion = true;
   }
   
   const [question1, setquestion1] = useState(true)
   const [question2, setquestion2] = useState(false)
-  const [question3, setquestion3] = useState(false)
   
   const getQuestion = (value) => {
     if (value == '1') {
       setquestion1(false)
       setquestion2(true)
-      setquestion3(false)
+      
     }
     if (value == '2') {
-      setquestion1(false)
-          setquestion2(false)
-          setquestion3(true)
-      }
-      if (value == '3') {
-        router.push('/dashboard')
-      }
+      router.push('/dashboard')
+    }
     }
     
     const [count, setCount] = useState(false);
@@ -252,13 +246,10 @@ const Session = () => {
     return (<Layout>
         <div className={`${stop ? 'block' : 'hidden'} h-screen w-screen absolute`}>
             <div className={`${ question1 ? 'block' : 'hidden' }`}>
-                <PostQuestions id='1' question='Do you feel like you can keep going?' choice1='Yes' choice2='No' choice3={false} submit={getQuestion}/>
+                <PostQuestions id='1' question='How would you describe your level of breathlessness during exercise?' choice1='Borderline uncomfortable' choice2='Breathing heavily' choice3='Comfortable' submit={getQuestion}/>
             </div>
             <div className={`${ question2 ? 'block' : 'hidden' }`}>
-                <PostQuestions id='2' question='Are you out of breath?' choice1='Yes' choice2='No' choice3={false} submit={getQuestion}/>
-            </div>
-            <div className={`${ question3 ? 'block' : 'hidden' }`}>
-                <PostQuestions id='3' question='Can you still talk?' choice1='Can speak a sentence' choice2='Can only speak few words' choice3='Cant speak' submit={getQuestion}/>
+                <PostQuestions id='2' question='How would you describe your ability to speak during exercise?' choice1='Can speak a sentence' choice2='Can hold a short conversation' choice3='Easy to breath and carry a conversation' submit={getQuestion}/>
             </div>
         </div>
         <div className="h-full flex">
@@ -266,7 +257,7 @@ const Session = () => {
                 <div className="h-5% p-5">
                   <button className="flex items-center" onClick={() => router.push('/Dashboard')}><IoArrowBack size="30px" color="grey"/> Go Back</button>
                 </div>
-                <div className="h-95% flex items-center justify-center">
+                <div className="h-95% flex items-center justify-center pl-7">
                     <canvas className="output_canvas h-95% w-95% bg-grey rounded-3xl flex justify-center items-center" width={"1280"} height={"720"}>
                     </canvas>
                     <div className="z-10 stopwatch-display text-black">{formatTime(time)}</div>
@@ -297,7 +288,7 @@ const Session = () => {
                         initMediapipe("Sit Up");
                         handleStart();
                         }}} className="bg-btnstart w-56 p-3 font-mono font-bold text-white text-5xl rounded-full flex items-center justify-center">Start <HiPlay size="55px"/></button>
-                    <button className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-5xl rounded-full flex items-center justify-center" onClick={()=>{handleStopButton();}}>Stop <HiStop size="55px"/></button>
+                    <button className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-5xl rounded-full flex items-center justify-center" onClick={()=>{handleStopButton(); getQuestion();}}>Stop <HiStop size="55px"/></button>
                 </div>
             </div>
         </div>

@@ -10,9 +10,9 @@ const StudentRecord = () => {
             <h1 className="text-center text-cyan-blue">Select one to view their Exercise sessions</h1>
         </div>
         <div className="h-full w-5/6 px-28 pt-4">
-            <div className="h-full">
+            <div className="h-full pb-4">
                 <div className="flex items-center justify-end gap-3">
-                    <h1 className="text-cyan-blue text-3xl">Your Code</h1>
+                    <h1 className="text-cyan-blue text-3xl">Your Code:</h1>
                     <button className="flex justify-center items-center bg-cyan-blue font-bold rounded-3xl text-white p-4 w-44 gap-3">ABCD-1234 <IoCopyOutline size='30px' color='white'/></button>
                 </div>
                 <h1 className='font-mono font-bold text-3xl text-cyan-blue mt-7'>Viewing <i>Student #</i> Exercise Sessions</h1>
