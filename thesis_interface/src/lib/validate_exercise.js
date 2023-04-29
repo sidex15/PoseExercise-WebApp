@@ -94,8 +94,7 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
             var leftCore = calcAngle(leftShoulder, leftHip, leftKnee);
             var rightCore = calcAngle(rightShoulder, rightHip, rightKnee);
 
-            console.log("Left Leg: " + leftCore + " Right Leg: " + rightCore);
-
+            // console.log("Left Leg: " + leftCore + " Right Leg: " + rightCore);
 
             if(rightCore <= 40 || leftCore <= 40){
                 

@@ -7,7 +7,7 @@ import { HiStop } from "react-icons/hi2";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import PostQuestions from "@/components/questions";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import getPrediction from '@/lib/get_prediction';
 import validateExercise from "@/lib/validate_exercise";
@@ -16,48 +16,84 @@ import { drawLandmarks, drawConnectors, PoseConnection } from '@mediapipe/drawin
 import { POSE_CONNECTIONS, Pose } from '@mediapipe/pose/pose';
 import { Camera } from '@mediapipe/camera_utils/camera_utils';
 
+// GLOBAL VARIABLES ONLY FOR THIS CCOMPONENT
+var stopSesssion = false;
+var sessionStarted = false;
+
 const Session = () => {
-    const router = useRouter();
-
-    const [stop, setStop] = useState(false)
-
-    const handleStopButton = () => {
-        setStop(true)
-    }
-
-    const [question1, setquestion1] = useState(true)
-    const [question2, setquestion2] = useState(false)
-    const [question3, setquestion3] = useState(false)
-
-    const getQuestion = (value) => {
-        if (value == '1') {
-            setquestion1(false)
-            setquestion2(true)
-            setquestion3(false)
-        }
-        if (value == '2') {
-            setquestion1(false)
-            setquestion2(false)
-            setquestion3(true)
-        }
-        if (value == '3') {
-            router.push('/dashboard')
-        }
-    }
-
-    const [count, setCount] = useState(false);
+  const router = useRouter();
   
-  useEffect(() => {
-    setCount(true);
-  }, [count]) 
+
+  const [stop, setStop] = useState(false);
   
-  if(count==true){
-    fetchCameraDevice();
+  const handleStopButton = () => {
+    console.log("Test");
+    // setStop(true);
+    stopSesssion = true;
   }
   
-  const [reps, setReps] = useState(0);
-  const [speed, setSpeed] = useState(0);
-  function initMediapipe(){
+  const [question1, setquestion1] = useState(true)
+  const [question2, setquestion2] = useState(false)
+  const [question3, setquestion3] = useState(false)
+  
+  const getQuestion = (value) => {
+    if (value == '1') {
+      setquestion1(false)
+      setquestion2(true)
+      setquestion3(false)
+    }
+    if (value == '2') {
+      setquestion1(false)
+          setquestion2(false)
+          setquestion3(true)
+      }
+      if (value == '3') {
+        router.push('/dashboard')
+      }
+    }
+    
+    const [count, setCount] = useState(false);
+    
+    useEffect(() => {
+      setCount(true);
+    }, [count]) 
+    
+    if(count==true){
+      fetchCameraDevice();
+    }
+    
+    const [reps, setReps] = useState(0);
+    const [speed, setSpeed] = useState(0);
+    
+    const [time, setTime] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
+
+  const formatTime = (timeInSeconds) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const handleStart = () => {
+    setIsRunning(true);
+    intervalRef.current = setInterval(() => {
+      setTime((prevTime) => prevTime + 1);
+    }, 1000);
+  };
+
+  const handleStop = () => {
+    clearInterval(intervalRef.current);
+    setIsRunning(false);
+  };
+
+
+  function initMediapipe(exercise){
+
+    sessionStarted = true;
 
     const canvasElement = document.getElementsByClassName('output_canvas')[0];
     const canvasCtx = canvasElement.getContext('2d');
@@ -69,83 +105,81 @@ const Session = () => {
     var countReset = true;
     var durationReset = true;
     var repsProgress = 0;
-  
+    
     function onResults(results) {
-        canvasCtx.save();
-        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        canvasCtx.drawImage(
-            results.image, 0, 0, canvasElement.width, canvasElement.height);
-        drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
-                        {color: '#00FF00', lineWidth: 2});
-        drawLandmarks(canvasCtx, results.poseLandmarks,
-                        {color: '#FF0000', lineWidth: 1});
-        canvasCtx.restore();
-  
-        // const poseLandmarksArray = results.poseLandmarks.map((landmark) => ({
-        //   x: landmark.x,
-        //   y: landmark.y,
-        // }));
-  
+
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(
+          results.image, 0, 0, canvasElement.width, canvasElement.height);
+      drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
+                      {color: '#00FF00', lineWidth: 1});
+      drawLandmarks(canvasCtx, results.poseLandmarks,
+                      {color: '#FF0000', lineWidth: 2});
+      canvasCtx.restore();
+
+      // const poseLandmarksArray = results.poseLandmarks.map((landmark) => ({
+      //   x: landmark.x,
+      //   y: landmark.y,
+      // }));      
+      
+      try {
+
+        const flattenedLandmarks = results.poseLandmarks.flatMap((landmark) => {
+          return [landmark.x, landmark.y];
+        });
         
-        
-        try {
+        // GET PREDICTION FROM ML MODEL BY SENDING DATA TO getPrediction() FUNCTION
+        getPrediction(flattenedLandmarks).then(result =>{
 
-          const flattenedLandmarks = results.poseLandmarks.flatMap((landmark) => {
-            return [landmark.x, landmark.y];
-          });
-          
-          // GET PREDICTION FROM ML MODEL BY SENDING DATA TO getPrediction() FUNCTION
-          getPrediction(flattenedLandmarks).then(result =>{
+          const landmark = results.poseLandmarks;
 
-            console.log(result);
-
-            const landmark = results.poseLandmarks;
-
-            // SET VALUE OF prevPrediction to the CURRENT PREDICTION RESULT FROM ML MODEL
-            if(prevPrediction == undefined){
-              prevPrediction = result;
-            }
-
-            // GET THE EXERCISE ASSESSMENT USING validateExercise() FUNCTION AND SEND THE FF. ARGUMENTS REQUIRED
-            let exercise_assessment = validateExercise("Sit Up", landmark, prevPrediction, result, countReset, durationReset, repsProgress);
-            
-            if(exercise_assessment != undefined){
-
-              if(exercise_assessment.startPosition != undefined) prevPrediction = exercise_assessment.startPosition;
-
-              if(exercise_assessment.count == 0 && durationReset == true){
-                prevTime = exercise_assessment.pTime;
-                durationReset = exercise_assessment.durationReset;
-              }
-
-              if(exercise_assessment.count == 0.5){
-                repsProgress = exercise_assessment.count;
-                countReset = exercise_assessment.countReset;
-
-              }else if(exercise_assessment.count == 1){
-                curTime = exercise_assessment.cTime;
-                let repsSpeed = (exercise_assessment.cTime - prevTime)/1000;
-                setSpeed(repsSpeed);
-                setReps((prevReps)=> prevReps + 1);
-                countReset = exercise_assessment.countReset;
-                repsProgress = 0;
-                durationReset = true;
-              };
-
-              curPrediction = result;
-
-            }
-          });
-          if(prevPrediction == curPrediction){
-            // console.log("Changed");
-            prevPrediction = curPrediction;
-          }else{
+          // SET VALUE OF prevPrediction to the CURRENT PREDICTION RESULT FROM ML MODEL
+          if(prevPrediction == undefined){
+            prevPrediction = result;
           }
 
+          // GET THE EXERCISE ASSESSMENT USING validateExercise() FUNCTION AND SEND THE FF. ARGUMENTS REQUIRED
+          let exercise_assessment = validateExercise(exercise, landmark, prevPrediction, result, countReset, durationReset, repsProgress);
 
-        } catch (error) {
-          console.error(error);
+          console.log(stopSesssion);
+          
+          if(exercise_assessment != undefined && stopSesssion == false){
+
+            if(exercise_assessment.startPosition != undefined) prevPrediction = exercise_assessment.startPosition;
+
+            if(exercise_assessment.count == 0 && durationReset == true){
+              prevTime = exercise_assessment.pTime;
+              durationReset = exercise_assessment.durationReset;
+            }
+
+            if(exercise_assessment.count == 0.5){
+              repsProgress = exercise_assessment.count;
+              countReset = exercise_assessment.countReset;
+
+            }else if(exercise_assessment.count == 1){
+              curTime = exercise_assessment.cTime;
+              let repsSpeed = (exercise_assessment.cTime - prevTime)/1000;
+              setSpeed(repsSpeed);
+              setReps((prevReps)=> prevReps + 1);
+              countReset = exercise_assessment.countReset;
+              repsProgress = 0;
+              durationReset = true;
+            };
+
+            curPrediction = result;
+
+          }
+        });
+        if(prevPrediction == curPrediction){
+          // console.log("Changed");
+          prevPrediction = curPrediction;
+        }else{
         }
+
+      } catch (error) {
+        console.error(error);
+      }
         
     }
 
@@ -184,8 +218,8 @@ const Session = () => {
           onFrame: async () => {
             await pose.send({image: videoElement});
           },
-          width: 1280,
-          height: 720
+          width: 1920,
+          height: 1080
         });
         camera.start();
     }
@@ -230,33 +264,40 @@ const Session = () => {
         <div className="h-full flex">
             <div className="h-full w-4/5 ">
                 <div className="h-5% p-5">
-                    <button className="flex items-center" onClick={() => router.push('/dashboard')}><IoArrowBack size="30px" color="grey"/> Go Back</button>
+                  <button className="flex items-center" onClick={() => router.push('/Dashboard')}><IoArrowBack size="30px" color="grey"/> Go Back</button>
                 </div>
                 <div className="h-95% flex items-center justify-center">
-                    <canvas className="output_canvas" width="1000px" height="600px"></canvas>
+                    <canvas className="output_canvas h-95% w-95% bg-grey rounded-3xl flex justify-center items-center" width={"1280"} height={"720"}>
+                    </canvas>
+                    <div className="z-10 stopwatch-display text-black">{formatTime(time)}</div>
                 </div>
             </div>
             <div className="h-full w-1/5 flex flex-col justify-around items-center">
-                <div className="bg-cambg flex justify-center items-center gap-2 w-72 rounded-full p-2">
+                <div className="bg-cambg flex justify-center items-center gap-2 w-72 rounded-full p-2 shadow-lg shadow-rgba(3,4,94,0.3)">
                     <HiVideoCamera color="#0096C7"/>
                     <select id="camera-select" name="cameras" className="bg-cambg w-56 text-center">
                     </select>
                 </div>
-                <div className="bg-repsbg w-72 rounded-xl flex justify-around items-center gap-2 p-4">
+                <div className="bg-repsbg w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
                     <MdTimer size="40px" color="white"/>
+                    
                     <h1 className="font-mono font-bold text-white text-center text-3xl">Reps <br /> Count:</h1>
                     <h1 className="font-mono font-bold text-white text-5xl">{reps}</h1>
                 </div>
-                <div className="bg-speedbg w-72 rounded-xl flex justify-around items-center gap-2 p-4">
+                <div className="bg-speedbg w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
                     <IoSpeedometer size="40px" color="white"/>
                     <h1 className="font-mono font-bold text-white text-center text-3xl">Reps <br /> Speed:</h1>
                     <h1 className="font-mono font-bold text-white text-5xl">{speed}s</h1>
                 </div>
-                <div className="bg-cambg w-72 p-7 flex flex-col items-center gap-10 rounded-xl">
+                <div className="bg-cambg w-72 p-7 flex flex-col items-center gap-10 rounded-xl shadow-lg shadow-rgba(3,4,94,0.3)">
                     <h1 className="font-bold text-4xl">Session:</h1>
                     <button onClick={() =>{
-              if(count==true){initMediapipe();}}} className="bg-btnstart w-56 p-3 font-mono font-bold text-white text-5xl rounded-full flex items-center justify-center">Start <HiPlay size="55px"/></button>
-                    <button className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-5xl rounded-full flex items-center justify-center" onClick={handleStopButton}>Stop <HiStop size="55px"/></button>
+                      stopSesssion=false;
+                      if(count==true && sessionStarted==false){
+                        initMediapipe("Sit Up");
+                        handleStart();
+                        }}} className="bg-btnstart w-56 p-3 font-mono font-bold text-white text-5xl rounded-full flex items-center justify-center">Start <HiPlay size="55px"/></button>
+                    <button className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-5xl rounded-full flex items-center justify-center" onClick={()=>{handleStopButton();}}>Stop <HiStop size="55px"/></button>
                 </div>
             </div>
         </div>
