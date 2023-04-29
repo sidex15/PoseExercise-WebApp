@@ -199,8 +199,58 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         }
     }
 
-    function plankValidator(){
+    function plankValidator(landmarks){
         
+        const leftShoulder = [landmarks[11].x, landmarks[11].y, landmarks[11].z];
+        const leftElbow = [landmarks[13].x, landmarks[13].y, landmarks[13].z];
+        const leftWrist = [landmarks[15].x, landmarks[15].y, landmarks[15].z];
+        const rightShoulder = [landmarks[12].x, landmarks[12].y, landmarks[12].z];
+        const rightWrist = [landmarks[16].x, landmarks[16].y, landmarks[16].z];
+        const rightElbow = [landmarks[14].x, landmarks[14].y, landmarks[14].z];
+        const leftHip = [landmarks[23].x, landmarks[23].y, landmarks[23].z];
+        const leftKnee = [landmarks[25].x, landmarks[25].y, landmarks[25].z];
+        const leftAnkle = [landmarks[27].x, landmarks[27].y, landmarks[27].z];
+        const rightHip = [landmarks[24].x, landmarks[24].y, landmarks[24].z];
+        const rightKnee = [landmarks[26].x, landmarks[26].y, landmarks[26].z];
+        const rightAnkle = [landmarks[28].x, landmarks[28].y, landmarks[28].z];
+
+        var leftArm = calcAngle(leftWrist, leftElbow, leftShoulder);
+        var rightArm = calcAngle(rightWrist, rightElbow, rightShoulder);
+        var leftCore = calcAngle(leftShoulder, leftHip, leftKnee);
+        var rightCore = calcAngle(rightShoulder, rightHip, rightKnee);
+        var leftLeg = calcAngle(leftHip, leftKnee, leftAnkle);
+        var rightLeg = calcAngle(rightHip, rightKnee, rightAnkle);
+        var leftPit = calcAngle(leftElbow, leftShoulder, leftHip);
+        var rightPit = calcAngle(rightElbow, rightShoulder, rightHip);  
+        var hipDistance = Math.abs((landmarks[12].y*100) - (landmarks[23].y*100));
+
+        // console.log("Left Arm: " + leftArm + " Right Arm: " + rightArm);
+        // console.log("Left Core: " + leftCore + " Right Core: " + rightCore);
+        // console.log("Left Pit: " + leftPit + " Right Pit: " + rightPit);
+
+        // console.log("Shoulder(Y): " + landmarks[12].y*100 + " Hip(Y): " + landmarks[23].y*100);
+        // console.log(hipDistance);
+
+        var counter = 0;
+        const exercise_assessment = {
+            count: counter,
+            countReset: countReset,
+            durationReset: durationReset,
+            pTime: undefined,
+            cTime: undefined,
+            startPosition: undefined
+        }
+
+        if(currentPred == "Plank"){
+            if((leftArm >= 80 || rightArm >= 80) && ((leftCore >= 140 && leftCore <= 170) || (rightCore >= 145 && rightCore <= 170)) && (leftPit >= 75 || rightPit >= 75) && hipDistance <= 8){
+                exercise_assessment.count = 1;
+                console.log("Right Plank");
+            }else{
+                console.log("Wrong Plank");
+            }
+            return exercise_assessment;
+        }
+
     }
 
     function squatValidator(landmarks){
