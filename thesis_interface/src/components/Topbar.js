@@ -8,7 +8,7 @@ const Topbar = () => {
     const Backlogin = (e) => {
         Cookies.remove('token');
         e.preventDefault();
-        router.push('/Login');
+        router.push('/login');
     }
 
 

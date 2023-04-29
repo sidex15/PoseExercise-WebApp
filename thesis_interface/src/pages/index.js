@@ -1,4 +1,4 @@
-import Login from "./Login";
+import Login from "./login";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,7 +19,7 @@ function Routes() {
                 const { message } = await res.json();
                 throw new Error(message);
             }
-          router.push('/Dashboard');
+          router.push('/dashboard');
         } catch (error) {
           return (<Login />);
         }

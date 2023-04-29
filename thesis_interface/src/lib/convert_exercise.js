@@ -1,4 +1,4 @@
-export function convertExercise(val){
+export default function convertExercise(val){
 
     // CONVERTS THE NUMERICAL OR STRING VALUE FROM THE REQUEST PREDICTION (EX. 1,2,3, ETC.) AND CONVERTS IT TO READABLE TEXT
     switch (val){
