@@ -2,8 +2,13 @@ import '@/styles/globals.css'
 import Cookies from 'js-cookie';
 import { useRouter,usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import ExerciseContext from "../pages/api/exercise-context";
 
 export default function App({ Component, pageProps }) {
+
+  const [exerName, setExerName] = useState("");
+  const [postValue, setPostValue] = useState([]);
+
   const router = useRouter();
   const token = Cookies.get('token');
   const pathname = usePathname();
@@ -41,5 +46,7 @@ export default function App({ Component, pageProps }) {
         router.push('/signup');
       }
   }, []);
-  return <Component {...pageProps} />
+  return <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
+      <Component {...pageProps} />
+    </ExerciseContext.Provider>
 }
