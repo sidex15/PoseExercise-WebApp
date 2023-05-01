@@ -222,7 +222,8 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         var rightLeg = calcAngle(rightHip, rightKnee, rightAnkle);
         var leftPit = calcAngle(leftElbow, leftShoulder, leftHip);
         var rightPit = calcAngle(rightElbow, rightShoulder, rightHip);  
-        var hipDistance = Math.abs((landmarks[12].y*100) - (landmarks[23].y*100));
+        var rightHipDistance = Math.abs((landmarks[12].y*100) - (landmarks[24].y*100));
+        var leftHipDistance = Math.abs((landmarks[11].y*100) - (landmarks[23].y*100));
 
         // console.log("Left Arm: " + leftArm + " Right Arm: " + rightArm);
         // console.log("Left Core: " + leftCore + " Right Core: " + rightCore);
@@ -242,7 +243,7 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         }
 
         if(currentPred == "Plank"){
-            if((leftArm >= 80 || rightArm >= 80) && ((leftCore >= 140 && leftCore <= 170) || (rightCore >= 145 && rightCore <= 170)) && (leftPit >= 75 || rightPit >= 75) && hipDistance <= 8){
+            if((leftArm >= 80 || rightArm >= 80) && ((leftCore >= 135 && leftCore <= 170) || (rightCore >= 135 && rightCore <= 170)) && (leftPit >= 70 || rightPit >= 70) && (leftHipDistance <= 8 || rightHipDistance <= 8)){
                 exercise_assessment.count = 1;
                 console.log("Right Plank");
             }else{
@@ -272,7 +273,7 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
             startPosition: undefined
         }
 
-        console.log("Current:" + currentPred, "Previous:" + prevPred);
+        // console.log("Current:" + currentPred, "Previous:" + prevPred);
         if(currentPred == "Squat Down" && prevPred == "Squat Up"){
             if(countReset == true){
                 countReset = false; 
