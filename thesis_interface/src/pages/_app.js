@@ -6,7 +6,7 @@ import ExerciseContext from "../pages/api/exercise-context";
 
 export default function App({ Component, pageProps }) {
 
-  const [exerName, setExerName] = useState("");
+  const [exerName, setExerName] = useState("PUSH-UPS");
   const [postValue, setPostValue] = useState([]);
 
   const router = useRouter();

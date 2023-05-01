@@ -28,7 +28,7 @@ const PostQuestions = (props) => {
                     <label className="font-mono font-bold text-cyan-blue text-4xl">{choice.title}</label>
                 </div>
             ))}
-            <div className="flex justify-end mt-5">
+            <div className="flex justify-end mt-5 gap-11">
                 <button type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32" onClick={handleSubmit}>Submit</button>
             </div>
         </div>

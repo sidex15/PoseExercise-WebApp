@@ -58,11 +58,12 @@ const Session = () => {
       setquestion1(false);
       setquestion2(true);
     }
+    
     if (qid == "2") {
-      setanswer2(answer);
-      setquestion2(false)
+      console.log(answer)
+      setanswer2(answer); // this shit is not working
       passToContext();
-    router.push('/dashboard')
+      router.push('/session-results')
     }
   };
 
