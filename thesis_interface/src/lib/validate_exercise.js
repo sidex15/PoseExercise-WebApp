@@ -9,6 +9,17 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         const rightWrist = [landmarks[16].x, landmarks[16].y, landmarks[16].z];
         const rightElbow = [landmarks[14].x, landmarks[14].y, landmarks[14].z];
         const rightShoulder = [landmarks[12].x, landmarks[12].y, landmarks[12].z];
+        const leftHip = [landmarks[23].x, landmarks[23].y, landmarks[23].z];
+        const leftKnee = [landmarks[25].x, landmarks[25].y, landmarks[25].z];
+        const rightKnee = [landmarks[26].x, landmarks[26].y, landmarks[26].z];
+        const rightHip = [landmarks[24].x, landmarks[24].y, landmarks[24].z];
+
+        var leftCore = calcAngle(leftShoulder, leftHip, leftKnee);
+        var rightCore = calcAngle(rightShoulder, rightHip, rightKnee);
+        var leftHand = calcAngle(leftWrist, leftElbow, leftShoulder);
+        var rightHand = calcAngle(rightWrist, rightElbow, rightShoulder);
+
+        // console.log("Left Core: " + leftCore + " Right Core: " + rightCore);
 
         var counter = 0;
 
@@ -26,12 +37,10 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
             if(countReset == true){
                 countReset = false; 
             }
-            var leftHand = calcAngle(leftWrist, leftElbow, leftShoulder);
-            var rightHand = calcAngle(rightWrist, rightElbow, rightShoulder);
 
-            console.log("Left Hand: " + leftHand + " Right Hand: " + rightHand);
+            // console.log("Left Hand: " + leftHand + " Right Hand: " + rightHand);
 
-            if(rightHand <= 100 || leftHand <= 100){
+            if((rightHand <= 100 || leftHand <= 100) && (rightCore >= 150 || leftCore >= 150)){
                 
                 if(prevPred == "Pushups Up" && countReset == false){
                     counter = 0.5;
@@ -243,7 +252,7 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         }
 
         if(currentPred == "Plank"){
-            if((leftArm >= 80 || rightArm >= 80) && ((leftCore >= 135 && leftCore <= 170) || (rightCore >= 135 && rightCore <= 170)) && (leftPit >= 70 || rightPit >= 70) && (leftHipDistance <= 8 || rightHipDistance <= 8)){
+            if((leftArm >= 85 || rightArm >= 85) && ((leftCore >= 150 && leftCore <= 170) || (rightCore >= 135 && rightCore <= 170)) && (leftPit >= 80 || rightPit >= 80) && ((leftLeg >= 160 && leftLeg <= 180) || (rightLeg >= 160 && rightLeg <= 180)) && (leftHipDistance <= 8 || rightHipDistance <= 8)){
                 exercise_assessment.count = 1;
                 console.log("Right Plank");
             }else{
@@ -281,8 +290,8 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
             var left = calcAngle(leftHip, leftKnee, leftAnkle);
             var right = calcAngle(rightHip, rightKnee, rightAnkle);
 
-            // console.log("Left: " + left + " Right: " + right);
-            if(right <= 70 || left <= 70){
+            console.log("Left: " + left + " Right: " + right);
+            if(right <= 75 || left <= 75){
                 if(prevPred == "Squat Up" && countReset == false){
                     console.log("Flag 1");
                     counter = 0.5;
@@ -314,15 +323,15 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         }
     }
     switch(type){
-        case "Push Up":
+        case "PUSH-UPS":
             return pushupValidator(landmarks);
-        case "Sit Up":
+        case "SIT-UPS":
             return situpValidator(landmarks);
-        case "Plank":
+        case "PLANKING":
             return plankValidator(landmarks);
-        case "Squat":
+        case "SQUATS":
             return squatValidator(landmarks);
-        case "Jumping Jack":
+        case "JUMPING JACK":
             return jumpjackValidator(landmarks);
     }
 }

@@ -26,9 +26,12 @@ import { Camera } from "@mediapipe/camera_utils/camera_utils";
 // GLOBAL VARIABLES ONLY FOR THIS CCOMPONENT
 var stopSesssion = false;
 var sessionStarted = false;
+var timePaused = false;
 
 const Session = () => {
   const router = useRouter();
+
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const [stop, setStop] = useState(false);
 
@@ -38,13 +41,17 @@ const Session = () => {
     stopSesssion = true;
   };
 
-  const { exerName, postValue, setPostValue } = useContext(ExerciseContext)
+  const { exerName, setExerName, postValue, setPostValue } = useContext(ExerciseContext);
+
+  if(exerName == '' || exerName == undefined){
+    setExerName("SQUAT");
+  }
 
   const [question1, setquestion1] = useState(true);
   const [question2, setquestion2] = useState(false);
   const [answer1, setanswer1] = useState('');
   const [answer2, setanswer2] = useState('');
-
+  
   const getQuestion = (qid, answer) => {
     if (qid == "1") {
       setanswer1(answer);
@@ -58,7 +65,7 @@ const Session = () => {
     router.push('/dashboard')
     }
   };
-  
+
   function passToContext() {
     const exercise_name = exerName;
     const post_answer1 = answer1;
@@ -66,8 +73,6 @@ const Session = () => {
     const newPostValue = { exercise_name, post_answer1, post_answer2};
     setPostValue([...postValue, newPostValue])
   }
-
-  
 
   const [count, setCount] = useState(false);
 
@@ -101,7 +106,9 @@ const Session = () => {
   const handleStart = () => {
     setIsRunning(true);
     intervalRef.current = setInterval(() => {
-      setTime((prevTime) => prevTime + 1);
+      if (timePaused == false) {
+        setTime((prevTime) => prevTime + 1);
+      }
     }, 1000);
   };
 
@@ -110,8 +117,18 @@ const Session = () => {
     setIsRunning(false);
   };
 
+  const handlePause = () => {
+    timePaused = true;
+  };
+
+  const handleContinue = () => {
+    timePaused = false;
+  }
+
   function initMediapipe(exercise) {
     sessionStarted = true;
+
+    setIsDisabled(true);
 
     const canvasElement = document.getElementsByClassName("output_canvas")[0];
     const canvasCtx = canvasElement.getContext("2d");
@@ -158,6 +175,8 @@ const Session = () => {
         getPrediction(flattenedLandmarks).then((result) => {
           const landmark = results.poseLandmarks;
 
+          console.log(result);
+
           // SET VALUE OF prevPrediction to the CURRENT PREDICTION RESULT FROM ML MODEL
           if (prevPrediction == undefined) {
             prevPrediction = result;
@@ -174,7 +193,7 @@ const Session = () => {
             repsProgress
           );
 
-          console.log(stopSesssion);
+          // console.log(stopSesssion);
 
           if (exercise_assessment != undefined && stopSesssion == false) {
             if (exercise_assessment.startPosition != undefined)
@@ -191,6 +210,7 @@ const Session = () => {
             } else if (exercise_assessment.count == 1) {
               curTime = exercise_assessment.cTime;
               let repsSpeed = (exercise_assessment.cTime - prevTime) / 1000;
+              repsSpeed = repsSpeed.toFixed(2);
               setSpeed(repsSpeed);
               setReps((prevReps) => prevReps + 1);
               countReset = exercise_assessment.countReset;
@@ -248,15 +268,27 @@ const Session = () => {
         videoElement.play();
       };
 
-      // Create a Camera object and start it
+      // Create a Camera object and start it (TEST CODE FOR SETTING THE VIDEO RESOLUTION BASED ON DEVICE SPECS)
+      const track = mediaStream.getVideoTracks()[0];
+      const settings = track.getSettings();
       const camera = new Camera(videoElement, {
         onFrame: async () => {
           await pose.send({ image: videoElement });
         },
-        width: 1920,
-        height: 1080,
+        width: settings.width,
+        height: settings.height,
       });
       camera.start();
+
+      // Create a Camera object and start it
+      // const camera = new Camera(videoElement, {
+      //   onFrame: async () => {
+      //     await pose.send({ image: videoElement });
+      //   },
+      //   width: 1920,
+      //   height: 1080,
+      // });
+      // camera.start();
     }
   }
 
@@ -373,11 +405,12 @@ const Session = () => {
             <button
               onClick={() => {
                 stopSesssion = false;
-                if (count == true && sessionStarted == false) {
-                  initMediapipe("Sit Up");
+                if (count == true) {
+                  initMediapipe(exerName);
                   handleStart();
                 }
               }}
+              disabled={isDisabled} 
               className="bg-btnstart w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"
             >
               Start <HiPlay size="40px" />
@@ -391,6 +424,8 @@ const Session = () => {
             >
               Stop <HiStop size="40px" />
             </button>
+            <button onClick={handlePause}>Pause</button>
+            <button onClick={handleContinue}>Continue</button>
           </div>
         </div>
       </div>

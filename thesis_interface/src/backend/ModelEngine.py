@@ -33,8 +33,12 @@ def predict():
     
     # pose_prob = model.predict_proba(data)[0]
     prediction = model.predict(data)[0]
+    pose_prob = model.predict_proba(data)[0]
     
-    response = {'prediction': prediction}
+    if(pose_prob[pose_prob.argmax()]>=.90):
+        response = {'prediction': prediction}
+    else:
+        response = {'prediction': 'undefined'}
     return jsonify(response)    
     
 if __name__ == '__main__':

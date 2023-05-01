@@ -46,7 +46,9 @@ export default function App({ Component, pageProps }) {
         router.push('/signup');
       }
   }, []);
-  return <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
+  return(
+    <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
       <Component {...pageProps} />
     </ExerciseContext.Provider>
+  )
 }
