@@ -250,9 +250,21 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
             cTime: undefined,
             startPosition: undefined
         }
+        if(!(leftArm >= 80 || rightArm >= 80)){
+            console.log("Arms should be at 85 degrees in angle. " + leftArm + " " + rightArm);
+        }
+        if(!((leftCore >= 150 && leftCore <= 170) || (rightCore >= 135 && rightCore <= 170))){
+            console.log("Core should be at 150 degrees in angle. " + leftCore + " " + rightCore);
+        }
+        if(!(leftPit >= 80 || rightPit >= 80)){
+            console.log("Pit should be above 80 degrees. " + leftPit + " " + rightPit);
+        }
+        if(!((leftLeg >= 155 && leftLeg <= 180) || (rightLeg >= 155 && rightLeg <= 180))){
+            console.log("Leg should be in between 160 deg and 180. " + leftLeg + " " + rightLeg)
+        }
 
         if(currentPred == "Plank"){
-            if((leftArm >= 85 || rightArm >= 85) && ((leftCore >= 150 && leftCore <= 170) || (rightCore >= 135 && rightCore <= 170)) && (leftPit >= 80 || rightPit >= 80) && ((leftLeg >= 160 && leftLeg <= 180) || (rightLeg >= 160 && rightLeg <= 180)) && (leftHipDistance <= 8 || rightHipDistance <= 8)){
+            if((leftArm >= 80 || rightArm >= 80) && ((leftCore >= 150 && leftCore <= 170) || (rightCore >= 150 && rightCore <= 170)) && (leftPit >= 80 || rightPit >= 80) && ((leftLeg >= 155 && leftLeg <= 180) || (rightLeg >= 155 && rightLeg <= 180))){
                 exercise_assessment.count = 1;
                 console.log("Right Plank");
             }else{
@@ -290,7 +302,7 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
             var left = calcAngle(leftHip, leftKnee, leftAnkle);
             var right = calcAngle(rightHip, rightKnee, rightAnkle);
 
-            console.log("Left: " + left + " Right: " + right);
+            // console.log("Left: " + left + " Right: " + right);
             if(right <= 75 || left <= 75){
                 if(prevPred == "Squat Up" && countReset == false){
                     console.log("Flag 1");

@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import { useRouter,usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ExerciseContext from "../pages/api/exercise-context";
+import UserInfoContext from '@/pages/api/user_info-conntext';
 
 export default function App({ Component, pageProps }) {
 
@@ -47,8 +48,12 @@ export default function App({ Component, pageProps }) {
       }
   }, []);
   return(
-    <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
-      <Component {...pageProps} />
-    </ExerciseContext.Provider>
+    // USER DATA/INFORMATIONS FOR THE UserInfo CONTEXT
+    //  value={{userID, setUserID, fname, setFname, mname, setMname, weight, setWeight, age, setAge}}
+    <UserInfoContext.Provider>
+      <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
+        <Component {...pageProps} />
+      </ExerciseContext.Provider>
+    </UserInfoContext.Provider>
   )
 }

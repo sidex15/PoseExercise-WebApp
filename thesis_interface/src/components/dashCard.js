@@ -17,7 +17,7 @@ const Card = (props) => {
 
   return (
     <div className="flex p-7">
-      <div className="h-80 w-80 rounded-lg shadow-md shadow-#03045E">
+      <div className="h-80 w-80 rounded-lg shadow-2xl shadow-rgba(3,4,94,0.71)">
         <div className="absolute w-80 text-center mt-20">
           <p className="font-mono font-bold text-5xl text-white">
             {props.name}

@@ -31,12 +31,13 @@ var timePaused = false;
 const Session = () => {
   const router = useRouter();
 
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isStartBtnDisabled, setStartBtnIsDisabled] = useState(false);
+  const [isStopBtnDisabled, setStopBtnIsDisabled] = useState(true);
+  const [isCameraBtnDisabled, setCameraBtnIsDisabled] = useState(false);
 
   const [stop, setStop] = useState(false);
 
   const handleStopButton = () => {
-    console.log("Test");
     setStop(true);
     stopSesssion = true;
   };
@@ -44,9 +45,8 @@ const Session = () => {
   const { exerName, setExerName, postValue, setPostValue } = useContext(ExerciseContext);
 
   if(exerName == '' || exerName == undefined){
-    setExerName("SQUAT");
+    setExerName("PLANKING");
   }
-
   const [question1, setquestion1] = useState(true);
   const [question2, setquestion2] = useState(false);
   const [answer1, setanswer1] = useState('');
@@ -92,6 +92,13 @@ const Session = () => {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
 
+  const [repsSpeedArray, setRepsSpeedArray] = useState([]);
+
+  useEffect(()=>{
+    setRepsSpeedArray(prevRepsSpeedArray => [...prevRepsSpeedArray, speed]);
+    console.log(repsSpeedArray);
+  },[speed]);
+
   const formatTime = (timeInSeconds) => {
     // const hours = Math.floor(timeInSeconds / 3600);
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
@@ -127,9 +134,17 @@ const Session = () => {
   }
 
   function initMediapipe(exercise) {
+
+    if(sessionStarted == false){
+      setTime(0);
+      console.log("reset time to 0")
+    }
+
     sessionStarted = true;
 
-    setIsDisabled(true);
+    setStartBtnIsDisabled(true);
+    setStopBtnIsDisabled(false);
+    setCameraBtnIsDisabled(true);
 
     const canvasElement = document.getElementsByClassName("output_canvas")[0];
     const canvasCtx = canvasElement.getContext("2d");
@@ -176,7 +191,7 @@ const Session = () => {
         getPrediction(flattenedLandmarks).then((result) => {
           const landmark = results.poseLandmarks;
 
-          console.log(result);
+          // console.log(result);
 
           // SET VALUE OF prevPrediction to the CURRENT PREDICTION RESULT FROM ML MODEL
           if (prevPrediction == undefined) {
@@ -196,7 +211,7 @@ const Session = () => {
 
           // console.log(stopSesssion);
 
-          if (exercise_assessment != undefined && stopSesssion == false) {
+          if (exercise_assessment != undefined && stopSesssion == false && exerName != "PLANKING") {
             if (exercise_assessment.startPosition != undefined)
               prevPrediction = exercise_assessment.startPosition;
 
@@ -212,14 +227,27 @@ const Session = () => {
               curTime = exercise_assessment.cTime;
               let repsSpeed = (exercise_assessment.cTime - prevTime) / 1000;
               repsSpeed = repsSpeed.toFixed(2);
-              setSpeed(repsSpeed);
-              setReps((prevReps) => prevReps + 1);
-              countReset = exercise_assessment.countReset;
-              repsProgress = 0;
-              durationReset = true;
+              console.log(repsSpeed);
+              if(repsSpeed!=NaN){
+                setSpeed(repsSpeed);
+                setReps((prevReps) => prevReps + 1);
+                countReset = exercise_assessment.countReset;
+                repsProgress = 0;
+                durationReset = true;
+              }else{
+                setSpeed(0);
+              }
             }
-
             curPrediction = result;
+          }else if(exerName == "PLANKING" && exercise_assessment != undefined && stopSesssion == false){
+            setReps("--");
+            setSpeed("--");
+            timePaused = true;
+            if(exercise_assessment.count == 1){
+              handleContinue();
+            }else{
+              handlePause();
+            }
           }
         });
         if (prevPrediction == curPrediction) {
@@ -228,7 +256,7 @@ const Session = () => {
         } else {
         }
       } catch (error) {
-        console.error(error);
+        
       }
     }
 
@@ -245,6 +273,14 @@ const Session = () => {
       minTrackingConfidence: 0.7,
     });
     pose.onResults(onResults);
+
+    // function stopPose() {
+    //   pose.close();
+    //   canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    //   poseIsActive = false;
+    // }
+
+    // stopPose();
 
     startCamera();
 
@@ -320,7 +356,7 @@ const Session = () => {
 
   return (
     <Layout>
-      <div className={`${stop ? "block" : "hidden"} h-screen w-screen absolute`}>
+      <div className={`${stop ? "block" : "hidden"} h-screen w-screen absolute z-10`}>
         <div className={`${question1 ? "block" : "hidden"}`}>
           <PostQuestions
             id="1"
@@ -353,7 +389,7 @@ const Session = () => {
             </button>
           </div>
           <div className="h-95% flex items-center justify-center pl-7">
-            <div className="bg-black opacity-75 absolute w-96 self-start text-center rounded-xl p-2">
+            <div className="bg-black opacity-75 absolute w-96 self-start text-center rounded-xl p-2 z-1">
               <h1 className="text-white text-4xl">{exerName}</h1>
             </div>
             <canvas
@@ -371,6 +407,7 @@ const Session = () => {
               id="camera-select"
               name="cameras"
               className="bg-cambg w-56 text-center"
+              disabled={isCameraBtnDisabled}
             ></select>
           </div>
           <div className="bg-repsbg w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
@@ -387,10 +424,10 @@ const Session = () => {
               Reps <br /> Speed:
             </h1>
             <h1 className="font-mono font-bold text-white text-5xl">
-              {speed}s
+              {speed}
             </h1>
           </div>
-          <div className="bg-timberwolf w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
+          <div className="bg-slate-600 w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
             <FaHourglass size="40px" color="white" />
             <div>
               <h1 className="font-mono font-bold text-white text-center text-3xl">
@@ -408,25 +445,26 @@ const Session = () => {
                 stopSesssion = false;
                 if (count == true) {
                   initMediapipe(exerName);
-                  handleStart();
+                  handleStart(false);
                 }
               }}
-              disabled={isDisabled} 
+              disabled={isStartBtnDisabled} 
               className="bg-btnstart w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"
             >
               Start <HiPlay size="40px" />
             </button>
             <button
-              className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"
               onClick={() => {
                 handleStopButton();
                 getQuestion();
               }}
+              disabled={isStopBtnDisabled}
+              className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"
             >
               Stop <HiStop size="40px" />
             </button>
-            <button onClick={handlePause}>Pause</button>
-            <button onClick={handleContinue}>Continue</button>
+            {/* <button onClick={handlePause}>Pause</button>
+            <button onClick={handleContinue}>Continue</button> */}
           </div>
         </div>
       </div>
