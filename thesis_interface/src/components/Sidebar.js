@@ -10,13 +10,12 @@ const Sidebar = ({open}) => {
     const router = useRouter();
 
     const Menus = [
-        { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "dashboard", },
-        { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "session", },
-        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "exer_records", },
-        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "stud_records", },
-        { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, path: "profile", gap: true},
+        { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "/dashboard", },
+        { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "/session", },
+        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "/exer_records", },
+        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "/stud_records", },
+        { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, path: "/profile", gap: true},
     ]
-
     
 
     return ( <>
@@ -24,7 +23,7 @@ const Sidebar = ({open}) => {
             <ul className='lg:pt-56 pt-0 lg:block h-full flex flex-col justify-center items-center'>
                 <div>
                     {Menus.map((menu, index) => (
-                    <li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md ${menu.gap ? "lg:absolute static inset-x-0 bottom-0" : "mt-2"} `} onClick={() => router.push(menu.path)}>
+                    <li key={index} className={`${router.pathname === menu.path ? 'bg-#00B4D8 hover:bg-#00B4D8' : ''} text-white text-sm flex items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md ${menu.gap ? "lg:absolute static inset-x-0 bottom-0" : "mt-2"} `} onClick={() => {router.push(menu.path)}}>
                         {menu.icon}
                         <span className={`${!open && 'hidden'} origin-left duration-300`}>{menu.title}</span>
                     </li>
