@@ -18,6 +18,7 @@ module.exports = {
         "#D9D9D9": "#D9D9D9",
         "timberwolf": "#D3D3D3",
         "#03045E": "#03045E",
+        "#00B4D8": "#00B4D8",
       },
       height:{
         "30vh": "30vh",

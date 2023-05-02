@@ -5,6 +5,9 @@ import Image from 'next/image';
 import loginbanner from "@/img/loginbanner.png";
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Layout from "@/components/Layout";
 
 
 const Register = () => {
@@ -16,7 +19,6 @@ const Register = () => {
         username: '',
         password: '',
       });
-    
     const hashPassword = async (password) => {
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
@@ -31,20 +33,51 @@ const Register = () => {
     const Personal_details = async (e) => {
         e.preventDefault();
         if (formData.password !== confirmPassword) {
-            alert("Passwords do not match");
+            toast.error('Password do not match.', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000, // close after 3 seconds
+                hideProgressBar: true, // hide the progress bar
+                closeOnClick: true, // close on click
+                pauseOnHover: true, // pause on hover
+                draggable: true, // allow dragging
+            });
             return;
         }
-        const hashedPassword = await hashPassword(formData.password);
-        const userData = { ...formData, password: hashedPassword };
-        localStorage.setItem('formData', JSON.stringify(userData));
-        router.push('/personal_details');
+
+        try {
+            const res = await fetch('/api/verifyuser', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: formData.username }),
+            });
+      
+            if (!res.ok) {
+              const { message } = await res.json();
+              throw new Error(message);
+            }
+            const hashedPassword = await hashPassword(formData.password);
+            const userData = { ...formData, password: hashedPassword };
+            localStorage.setItem('formData', JSON.stringify(userData));
+            router.push('/personal_details');  
+            
+          } catch (error) {
+              toast.error('Username already exist.', {
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose: 3000, // close after 3 seconds
+                  hideProgressBar: true, // hide the progress bar
+                  closeOnClick: true, // close on click
+                  pauseOnHover: true, // pause on hover
+                  draggable: true, // allow dragging
+                });
+          }
       }
     const back = (e) => {
         e.preventDefault()
         router.push('/login')
     }   
     return ( 
-        <div className="h-screen w-screen flex">
+    <Layout>
+        <div className="h-full w-full flex">
             <div className="lg:w-1/2 w-full h-full flex justify-center items-center">
                 <div className="">
                     <h1 className='font-mono font-bold lg:text-8xl text-5xl text-cyan-blue text-center'>Create Account</h1>
@@ -76,7 +109,10 @@ const Register = () => {
                 <h1 className='absolute font-mono font-bold text-5xl text-white self-center mt-56'>Create your <br /> account and <br /> track your <br /> exercise records <br /> and stats</h1>
                 <Image className="h-full" src={loginbanner} alt="loginimg"/>
             </div>
+            <ToastContainer />
         </div>
+        
+    </Layout>
      );
 }
  
