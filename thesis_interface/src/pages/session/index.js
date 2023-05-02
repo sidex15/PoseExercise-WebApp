@@ -11,6 +11,9 @@ import PostQuestions from "@/components/questions";
 import { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import ExerciseContext from "@/pages/api/exercise-context";
+import { ToastContainer, toast } from 'react-toastify';
+import formatTime from "@/lib/format_time";
+import SessionContext from "@/pages/api/session_result";
 
 import getPrediction from "@/lib/get_prediction";
 import validateExercise from "@/lib/validate_exercise";
@@ -36,12 +39,54 @@ const Session = () => {
   const [isCameraBtnDisabled, setCameraBtnIsDisabled] = useState(false);
 
   const [stop, setStop] = useState(false);
+  const [question1, setquestion1] = useState(true);
+  const [question2, setquestion2] = useState(false);
+  const [answer1, setAnswer1] = useState('');
+  const [answer2, setAnswer2] = useState('');
 
-  var arr = [];
+  const [reps, setReps] = useState(0);
+  const [speed, setSpeed] = useState(0);
+
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
+
+  const {exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, caloriesBurned, setCaloriesBurned} = useContext(SessionContext);
+
+  var avgRepsSpd = [];
 
   const handleStopButton = () => {
-    setStop(true);
-    stopSesssion = true;
+
+    function average(arr) {
+      // Calculates the average of a set of numbers in an array
+      if (arr.length === 0) {
+        return 0;
+      }
+      const sum = arr.reduce((acc, curr) => acc + curr);
+      return sum / arr.length;
+    }
+
+    if(reps==0){
+      toast.error("No activity detected during your Session. Redirecting you to Dashboard.", 
+      {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000, // close after 3 seconds
+        hideProgressBar: true, // hide the progress bar
+        closeOnClick: true, // close on click
+        pauseOnHover: true, // pause on hover
+        draggable: true, // allow dragging
+      });
+      // setTimeout(()=>{router.push('/dashboard')}, 3000);
+    }else{
+      setStop(true);
+      stopSesssion = true;
+      getQuestion();
+      handleStop();
+      setExerciseReps(reps);
+      setAvgRepsSpeed(average(avgRepsSpd));
+      setExerciseDuration(formatTime(time));
+      setCaloriesBurned("32")
+    }
   };
 
   const { exerName, setExerName, postValue, setPostValue } = useContext(ExerciseContext);
@@ -49,10 +94,6 @@ const Session = () => {
   if(exerName == '' || exerName == undefined){
     setExerName("PLANKING");
   }
-  const [question1, setquestion1] = useState(true);
-  const [question2, setquestion2] = useState(false);
-  const [answer1, setAnswer1] = useState('');
-  const [answer2, setAnswer2] = useState('');
   
   const getQuestion = (qid, answer) => {
     if (qid == "1") {
@@ -71,7 +112,7 @@ const Session = () => {
       router.push('/session-results')
     }
   };
-
+  
   function passToContext() {
     const exercise_name = exerName;
     const post_answer1 = answer1;
@@ -90,31 +131,12 @@ const Session = () => {
     fetchCameraDevice();
   }
 
-  const [reps, setReps] = useState(0);
-  const [speed, setSpeed] = useState(0);
-
-  const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef(null);
-
   // const [repsSpeedArray, setRepsSpeedArray] = useState([]);
 
   // useEffect(()=>{
   //   setRepsSpeedArray(prevRepsSpeedArray => [...prevRepsSpeedArray, speed]);
   //   console.log(repsSpeedArray);
   // },[speed]);
-
-  const formatTime = (timeInSeconds) => {
-    // const hours = Math.floor(timeInSeconds / 3600);
-    const minutes = Math.floor((timeInSeconds % 3600) / 60);
-    const seconds = Math.floor(timeInSeconds % 60);
-    // return `${hours.toString().padStart(2, '0')}:${minutes
-    //   .toString()
-    //   .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
-  };
 
   const handleStart = () => {
     setIsRunning(true);
@@ -197,7 +219,7 @@ const Session = () => {
         getPrediction(flattenedLandmarks).then((result) => {
           const landmark = results.poseLandmarks;
 
-          console.log(result);
+          // console.log(result);
 
           // SET VALUE OF prevPrediction to the CURRENT PREDICTION RESULT FROM ML MODEL
           if (prevPrediction == undefined) {
@@ -247,9 +269,10 @@ const Session = () => {
                 // console.log(repsSpeed);
                 // console.log(!isNaN(repsSpeed));
                 setSpeed(repsSpeed);
-                arr.push(repsSpeed);
-                console.log(arr);
+                avgRepsSpd.push(repsSpeed);
+                console.log(avgRepsSpd);
                 setReps((prevReps) => prevReps + 1);
+                // console.log("Count=" + reps);
               }
               countReset = exercise_assessment.countReset;
               repsSpeedStart = false;
@@ -475,8 +498,6 @@ const Session = () => {
             <button
               onClick={() => {
                 handleStopButton();
-                getQuestion();
-                handleStop();
               }}
               disabled={isStopBtnDisabled}
               className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"
