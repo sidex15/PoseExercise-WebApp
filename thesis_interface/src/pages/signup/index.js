@@ -5,6 +5,7 @@ import Image from 'next/image';
 import loginbanner from "@/img/loginbanner.png";
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
+import Layout from "@/components/Layout";
 
 
 const Register = () => {
@@ -44,6 +45,7 @@ const Register = () => {
         router.push('/login')
     }   
     return ( 
+    <Layout>
         <div className="h-screen w-screen flex">
             <div className="lg:w-1/2 w-full h-full flex justify-center items-center">
                 <div className="">
@@ -77,6 +79,7 @@ const Register = () => {
                 <Image className="h-full" src={loginbanner} alt="loginimg"/>
             </div>
         </div>
+    </Layout>
      );
 }
  

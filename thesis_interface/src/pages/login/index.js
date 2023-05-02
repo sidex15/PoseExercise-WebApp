@@ -7,6 +7,7 @@ import loginbanner from "@/img/loginbanner.png"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
+import Layout from "@/components/Layout";
 
 function Login () {
     const router = useRouter();
@@ -54,7 +55,8 @@ function Login () {
         router.push('/signup')
       } 
     return ( 
-        <div className="h-screen w-screen flex">
+      <Layout>
+        <div className="h-full w-full flex">
             <div className="lg:w-1/2 w-full h-full flex justify-center items-center">
                 <div className="">
                     <h1 className='font-mono font-bold lg:text-8xl text-5xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
@@ -84,6 +86,7 @@ function Login () {
             </div>
             <ToastContainer />
         </div>
+        </Layout>
      );
 }
  
