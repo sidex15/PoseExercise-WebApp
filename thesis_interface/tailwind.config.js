@@ -44,6 +44,7 @@ module.exports = {
       },
       backgroundImage: {
         'dash-banner': "url('/src/img/banner.jpg')",
+        'drinkwater': "url(/src/img/drinkwater.jpg)",
       },
       screens: {
         'mobileL': '425px'
