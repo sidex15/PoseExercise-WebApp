@@ -1,11 +1,11 @@
-import { MongoClient } from 'mongodb';
+import clientPromise from '@/lib/mongodb';
 
 
 export default async function verifyuser(req, res) {
   const { username } = req.body;
 
   // Connect to MongoDB
-  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const client = await clientPromise;
   const db = client.db('thesis');
 
   // Find the user in the database
