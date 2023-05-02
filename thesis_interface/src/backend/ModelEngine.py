@@ -37,8 +37,11 @@ def predict():
     
     if(pose_prob[pose_prob.argmax()]>=.90):
         response = {'prediction': prediction}
+    elif(pose_prob[pose_prob.argmax()]>=.50):
+        response = {'prediction': prediction}
     else:
-        response = {'prediction': 'undefined'}
+        response = {'prediction': prediction}
+        
     return jsonify(response)    
     
 if __name__ == '__main__':

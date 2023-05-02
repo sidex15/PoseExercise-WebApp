@@ -1,6 +1,6 @@
 import calcAngle from './angle_calculator';
 
-function validateExercise(type, landmarks, prevPred, currentPred, countReset, durationReset, repsProgress) {
+function validateExercise(type, landmarks, prevPred, currentPred, countReset, repsSpeedStart, repsProgress, startDetected) {
 
     function pushupValidator(){
         const leftWrist = [landmarks[15].x, landmarks[15].y, landmarks[15].z];
@@ -14,55 +14,66 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         const rightKnee = [landmarks[26].x, landmarks[26].y, landmarks[26].z];
         const rightHip = [landmarks[24].x, landmarks[24].y, landmarks[24].z];
 
-        var leftCore = calcAngle(leftShoulder, leftHip, leftKnee);
-        var rightCore = calcAngle(rightShoulder, rightHip, rightKnee);
-        var leftHand = calcAngle(leftWrist, leftElbow, leftShoulder);
-        var rightHand = calcAngle(rightWrist, rightElbow, rightShoulder);
-
+        
         // console.log("Left Core: " + leftCore + " Right Core: " + rightCore);
-
-        var counter = 0;
-
-        const exercise_assessment = {
-            count: counter,
+        
+        var exercise_assessment = {
+            count: repsProgress,
             countReset: countReset,
-            durationReset: durationReset,
+            repsSpeedStart: repsSpeedStart,
             pTime: undefined,
             cTime: undefined,
-            startPosition: undefined
+            startPosition: undefined, 
+            isDetectedStart: startDetected
         }
-
+        console.log(exercise_assessment.isDetectedStart);
         // console.log("Current:" + currentPred, "Previous:" + prevPred);
-        if(currentPred == "Pushups Down" && prevPred == "Pushups Up"){
-            if(countReset == true){
-                countReset = false; 
-            }
-
+        
+        if(currentPred == "Pushups Down" && prevPred == "Pushups Up" && exercise_assessment.isDetectedStart == true && countReset == false){
+            
+            var leftCore = calcAngle(leftShoulder, leftHip, leftKnee);
+            var rightCore = calcAngle(rightShoulder, rightHip, rightKnee);
+            var leftHand = calcAngle(leftWrist, leftElbow, leftShoulder);
+            var rightHand = calcAngle(rightWrist, rightElbow, rightShoulder);
             // console.log("Left Hand: " + leftHand + " Right Hand: " + rightHand);
 
+            
             if((rightHand <= 100 || leftHand <= 100) && (rightCore >= 150 || leftCore >= 150)){
+                // console.log("!!!!!!!!!");
+                
+                // console.log("Prev: " + prevPred + " Count Reset: " + countReset);
                 
                 if(prevPred == "Pushups Up" && countReset == false){
-                    counter = 0.5;
+                    exercise_assessment.count = 0.5;
+                    exercise_assessment.countReset = true;
                 }else{
-                    counter = 0;
+                    exercise_assessment.count = 0;
                 }
-                exercise_assessment.count = counter;
-                countReset = false;
             }
             return exercise_assessment;
+
         }else if(currentPred == "Pushups Up"){
             
-            if(repsProgress == 0 && durationReset == true){
-                exercise_assessment.count = 0;
-                exercise_assessment.pTime = Date.now();
-                exercise_assessment.durationReset = false;
+            // console.log("Reps Progress: " + repsProgress + " Count Reset: " + countReset);
+
+            if(repsProgress == 0 && countReset == false){
+                exercise_assessment.isDetectedStart = true;
+                if(repsSpeedStart == false){
+                    exercise_assessment.count = 0;
+                    exercise_assessment.pTime = Date.now();
+                    // console.log("QWEQWEEQWQEW" + exercise_assessment.pTime);
+                    exercise_assessment.repsSpeedStart = true;
+                    // console.log("PTIME: " + exercise_assessment.pTime);
+                }
             }
 
-            if(repsProgress == 0.5){
+            if(repsProgress == 0.5 && countReset == true){
                 exercise_assessment.count = 1;
                 exercise_assessment.cTime = Date.now();
-                countReset = true;
+                // console.log("CTIME: " + exercise_assessment.cTime);
+                exercise_assessment.countReset = false;
+                // exercise_assessment.repsSpeedStart = false;
+                // console.log(" Flag !!!!!!!!!!!!");
             }
             return exercise_assessment;
         }
@@ -85,19 +96,18 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         var counter = 0;
 
         const exercise_assessment = {
-            count: counter,
+            count: repsProgress,
             countReset: countReset,
-            durationReset: durationReset,
+            repsSpeedStart: repsSpeedStart,
             pTime: undefined,
             cTime: undefined,
-            startPosition: undefined
+            startPosition: undefined,
+            isDetectedStart: startDetected
         }
-
+        console.log(exercise_assessment.isDetectedStart);
         // console.log("Current:" + currentPred, "Previous:" + prevPred);
-        if(currentPred == "Situps Up" && prevPred== "Situps Down"){
-            if(countReset == true){
-                countReset = false; 
-            }
+        if(currentPred == "Situps Up" && prevPred== "Situps Down" && exercise_assessment.isDetectedStart == true && countReset == false){
+            
             var leftLeg = calcAngle(leftHip, leftKnee, leftAnkle);
             var rightLeg = calcAngle(rightHip, rightKnee, rightAnkle);
             var leftCore = calcAngle(leftShoulder, leftHip, leftKnee);
@@ -108,26 +118,29 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
             if(rightCore <= 40 || leftCore <= 40){
                 
                 if(prevPred == "Situps Down" && countReset == false){
-                    counter = 0.5;
+                    exercise_assessment.count = 0.5;
+                    exercise_assessment.countReset = true;
                 }else{
-                    counter = 0;
+                    exercise_assessment.count = 0;
                 }
-                exercise_assessment.count = counter;
-                countReset = false;
             }
             return exercise_assessment;
+
         }else if(currentPred == "Situps Down"){
             
-            if(repsProgress == 0 && durationReset == true){
-                exercise_assessment.count = 0;
-                exercise_assessment.pTime = Date.now();
-                exercise_assessment.durationReset = false;
+            if(repsProgress == 0 && countReset == false){
+                exercise_assessment.isDetectedStart = true;
+                if(repsSpeedStart == false){
+                    exercise_assessment.count = 0;
+                    exercise_assessment.pTime = Date.now();
+                    exercise_assessment.repsSpeedStart = true;
+                }
             }
 
-            if(repsProgress == 0.5){
+            if(repsProgress == 0.5 && countReset == true){
                 exercise_assessment.count = 1;
                 exercise_assessment.cTime = Date.now();
-                countReset = true;
+                exercise_assessment.countReset = false;
             }
             return exercise_assessment;
         }
@@ -149,21 +162,19 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         const leftKnee = [landmarks[27].x, landmarks[27].y, landmarks[27].z];
         const rightKnee = [landmarks[26].x, landmarks[26].y, landmarks[26].z];
 
-        var counter = 0;
         const exercise_assessment = {
-            count: counter,
+            count: repsProgress,
             countReset: countReset,
-            durationReset: durationReset,
+            repsSpeedStart: repsSpeedStart,
             pTime: undefined,
             cTime: undefined,
-            startPosition: undefined
+            startPosition: undefined,
+            isDetectedStart: startDetected
         }
 
         // console.log("Current:" + currentPred, "Previous:" + prevPred);
-        if(currentPred == "Jumping Jack Up/End" && prevPred == "Jumping Jack Down/Start"){
-            if(countReset == true){
-                countReset = false; 
-            }
+        if(currentPred == "Jumping Jack Up/End" && prevPred == "Jumping Jack Down/Start" && exercise_assessment.isDetectedStart == true && countReset == false){
+
             var leftHand = calcAngle(leftElbow, leftShoulder, leftHip);
             var rightHand = calcAngle(rightElbow, rightShoulder, rightHip);
             var leftLeg = calcAngle(rightHip, leftHip, leftKnee);
@@ -178,26 +189,28 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
                 // console.log("Flag 3", countReset, " Prev Predict: " + prevPred);
 
                 if(prevPred == "Jumping Jack Down/Start" && countReset == false){
-                    counter = 0.5;
+                    exercise_assessment.count = 0.5;
+                    exercise_assessment.countReset = true;
                 }else{
-                    counter = 0;
+                    exercise_assessment.count = 0;
                 }
-                exercise_assessment.count = counter;
-                countReset = false;
             }
             return exercise_assessment;
         }else if(currentPred == "Jumping Jack Down/Start"){
             
-            if(repsProgress == 0 && durationReset == true){
-                exercise_assessment.count = 0;
-                exercise_assessment.pTime = Date.now();
-                exercise_assessment.durationReset = false;
+            if(repsProgress == 0 && countReset == false){
+                exercise_assessment.isDetectedStart = true;
+                if(repsSpeedStart == false){
+                    exercise_assessment.count = 0;
+                    exercise_assessment.pTime = Date.now();
+                    exercise_assessment.repsSpeedStart = true;
+                }
             }
 
-            if(repsProgress == 0.5){
+            if(repsProgress == 0.5 && countReset == true){
                 exercise_assessment.count = 1;
                 exercise_assessment.cTime = Date.now();
-                countReset = true;
+                exercise_assessment.countReset = false;
             }
 
             return exercise_assessment;
@@ -243,12 +256,13 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
 
         var counter = 0;
         const exercise_assessment = {
-            count: counter,
+            count: repsProgress,
             countReset: countReset,
-            durationReset: durationReset,
+            repsSpeedStart: repsSpeedStart,
             pTime: undefined,
             cTime: undefined,
-            startPosition: undefined
+            startPosition: undefined,
+            isDetectedStart: startDetected
         }
         if(!(leftArm >= 80 || rightArm >= 80)){
             console.log("Arms should be at 85 degrees in angle. " + leftArm + " " + rightArm);
@@ -286,46 +300,46 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, du
         
         var counter = 0;
         const exercise_assessment = {
-            count: counter,
+            count: repsProgress,
             countReset: countReset,
-            durationReset: durationReset,
+            repsSpeedStart: repsSpeedStart,
             pTime: undefined,
             cTime: undefined,
-            startPosition: undefined
+            startPosition: undefined,
+            isDetectedStart: startDetected
         }
 
         // console.log("Current:" + currentPred, "Previous:" + prevPred);
-        if(currentPred == "Squat Down" && prevPred == "Squat Up"){
-            if(countReset == true){
-                countReset = false; 
-            }
+        if(currentPred == "Squat Down" && prevPred == "Squat Up" && exercise_assessment.isDetectedStart == true && countReset == false){
+
             var left = calcAngle(leftHip, leftKnee, leftAnkle);
             var right = calcAngle(rightHip, rightKnee, rightAnkle);
 
             // console.log("Left: " + left + " Right: " + right);
             if(right <= 75 || left <= 75){
                 if(prevPred == "Squat Up" && countReset == false){
-                    console.log("Flag 1");
-                    counter = 0.5;
+                    exercise_assessment.count = 0.5;
+                    exercise_assessment.countReset = true;
                 }else{
-                    counter = 0;
+                    exercise_assessment.count = 0;
                 }
-                exercise_assessment.count = counter;
-                countReset = false;
             }
             return exercise_assessment;
         }else if(currentPred == "Squat Up"){
-            
-            if(repsProgress == 0 && durationReset == true){
-                exercise_assessment.count = 0;
-                exercise_assessment.pTime = Date.now();
-                exercise_assessment.durationReset = false;
+
+            if(repsProgress == 0 && countReset == false){
+                exercise_assessment.isDetectedStart = true;
+                if(repsSpeedStart == false){
+                    exercise_assessment.count = 0;
+                    exercise_assessment.pTime = Date.now();
+                    exercise_assessment.repsSpeedStart = true;
+                }
             }
 
-            if(repsProgress == 0.5){
+            if(repsProgress == 0.5 && countReset == true){
                 exercise_assessment.count = 1;
                 exercise_assessment.cTime = Date.now();
-                countReset = true;
+                exercise_assessment.countReset = false;
             }
             return exercise_assessment;
         }

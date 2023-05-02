@@ -37,6 +37,8 @@ const Session = () => {
 
   const [stop, setStop] = useState(false);
 
+  var arr = [];
+
   const handleStopButton = () => {
     setStop(true);
     stopSesssion = true;
@@ -49,19 +51,22 @@ const Session = () => {
   }
   const [question1, setquestion1] = useState(true);
   const [question2, setquestion2] = useState(false);
-  const [answer1, setanswer1] = useState('');
-  const [answer2, setanswer2] = useState('');
+  const [answer1, setAnswer1] = useState('');
+  const [answer2, setAnswer2] = useState('');
   
   const getQuestion = (qid, answer) => {
     if (qid == "1") {
-      setanswer1(answer);
+      console.log(answer);
+      setAnswer1(answer);
+      console.log("State val: " + answer1);
       setquestion1(false);
       setquestion2(true);
     }
     
     if (qid == "2") {
       console.log(answer)
-      setanswer2(answer); // this shit is not working
+      setAnswer2((prevAnswer)=>prevAnswer + answer); // this shit is not working
+      console.log("State val: " + answer2);
       passToContext();
       router.push('/session-results')
     }
@@ -92,12 +97,12 @@ const Session = () => {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
 
-  const [repsSpeedArray, setRepsSpeedArray] = useState([]);
+  // const [repsSpeedArray, setRepsSpeedArray] = useState([]);
 
-  useEffect(()=>{
-    setRepsSpeedArray(prevRepsSpeedArray => [...prevRepsSpeedArray, speed]);
-    console.log(repsSpeedArray);
-  },[speed]);
+  // useEffect(()=>{
+  //   setRepsSpeedArray(prevRepsSpeedArray => [...prevRepsSpeedArray, speed]);
+  //   console.log(repsSpeedArray);
+  // },[speed]);
 
   const formatTime = (timeInSeconds) => {
     // const hours = Math.floor(timeInSeconds / 3600);
@@ -153,9 +158,10 @@ const Session = () => {
     var curPrediction = undefined;
     var prevTime;
     var curTime;
-    var countReset = true;
-    var durationReset = true;
+    var countReset = false;
+    var repsSpeedStart = false;
     var repsProgress = 0;
+    var startDetected = false;
 
     function onResults(results) {
       canvasCtx.save();
@@ -191,7 +197,7 @@ const Session = () => {
         getPrediction(flattenedLandmarks).then((result) => {
           const landmark = results.poseLandmarks;
 
-          // console.log(result);
+          console.log(result);
 
           // SET VALUE OF prevPrediction to the CURRENT PREDICTION RESULT FROM ML MODEL
           if (prevPrediction == undefined) {
@@ -205,38 +211,50 @@ const Session = () => {
             prevPrediction,
             result,
             countReset,
-            durationReset,
-            repsProgress
+            repsSpeedStart,
+            repsProgress,
+            startDetected
           );
 
           // console.log(stopSesssion);
 
           if (exercise_assessment != undefined && stopSesssion == false && exerName != "PLANKING") {
-            if (exercise_assessment.startPosition != undefined)
+            if (exercise_assessment.startPosition != undefined){
               prevPrediction = exercise_assessment.startPosition;
+            }
 
-            if (exercise_assessment.count == 0 && durationReset == true) {
-              prevTime = exercise_assessment.pTime;
-              durationReset = exercise_assessment.durationReset;
+            if (exercise_assessment.count == 0 && exercise_assessment.countReset == false) {
+              startDetected = exercise_assessment.isDetectedStart;
+              if(repsSpeedStart == false){
+                prevTime = exercise_assessment.pTime;
+                repsSpeedStart = true;
+              }
+              // console.log("PTIME: " + prevTime);
+              // durationReset = exercise_assessment.durationReset;
             }
 
             if (exercise_assessment.count == 0.5) {
               repsProgress = exercise_assessment.count;
+              // startDetected = exercise_assessment.isDetectedStart;
               countReset = exercise_assessment.countReset;
-            } else if (exercise_assessment.count == 1) {
+            }
+
+            if (exercise_assessment.count == 1 && countReset == true) {
               curTime = exercise_assessment.cTime;
-              let repsSpeed = (exercise_assessment.cTime - prevTime) / 1000;
-              repsSpeed = repsSpeed.toFixed(2);
-              console.log(repsSpeed);
-              if(repsSpeed!=NaN){
+              if(prevTime != undefined && curTime != undefined){
+                let repsSpeed = (exercise_assessment.cTime - prevTime) / 1000;
+                repsSpeed = repsSpeed.toFixed(2);
+                // console.log(repsSpeed);
+                // console.log(!isNaN(repsSpeed));
                 setSpeed(repsSpeed);
+                arr.push(repsSpeed);
+                console.log(arr);
                 setReps((prevReps) => prevReps + 1);
-                countReset = exercise_assessment.countReset;
-                repsProgress = 0;
-                durationReset = true;
-              }else{
-                setSpeed(0);
               }
+              countReset = exercise_assessment.countReset;
+              repsSpeedStart = false;
+              repsProgress = 0;
+              countReset = false;
             }
             curPrediction = result;
           }else if(exerName == "PLANKING" && exercise_assessment != undefined && stopSesssion == false){
@@ -250,6 +268,7 @@ const Session = () => {
             }
           }
         });
+        curPrediction = result;
         if (prevPrediction == curPrediction) {
           // console.log("Changed");
           prevPrediction = curPrediction;
@@ -457,6 +476,7 @@ const Session = () => {
               onClick={() => {
                 handleStopButton();
                 getQuestion();
+                handleStop();
               }}
               disabled={isStopBtnDisabled}
               className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"

@@ -15,7 +15,9 @@ const PostQuestions = (props) => {
     }
 
     const handleSubmit = () => {
-        props.submit(props.id, selectedValue)
+        if(selectedValue!=''){
+            props.submit(props.id, selectedValue)
+        }
     }
 
     return ( 
