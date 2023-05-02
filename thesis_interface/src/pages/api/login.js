@@ -24,7 +24,8 @@ export default async function handler(req, res) {
     return res.status(401).json({ message: 'Invalid password' });
   }
 
+  const iduser = user._id;
   // TODO: Create a session and return a JWT token
   const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET);
-  res.status(200).json({ message: 'Login successful',token });
+  res.status(200).json({ message: 'Login successful',token,iduser });
 }

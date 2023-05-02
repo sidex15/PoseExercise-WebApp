@@ -8,6 +8,7 @@ const Topbar = () => {
 
     const Backlogin = (e) => {
         Cookies.remove('token');
+        Cookies.remove('userinfoid');
         e.preventDefault();
         router.push('/login');
     }

@@ -2,11 +2,39 @@ import Layout from "@/components/Layout";
 import { SlUser, SlUserFemale } from "react-icons/sl";
 import { RiEditLine, RiSave3Fill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
 
 const Profile = () => {
     const [sex, setSex] = useState()
 
+    const userid = Cookies.get('userinfoid');
+    const [userinfo,setuserinfo] = useState('');
+    useEffect(() => {
+        const fetchuserinfo = async (e) => {
+            try {
+                const res = await fetch('/api/fetchuserinfo', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({userid}),
+                });
+
+            if (!res.ok) {
+                const { message } = await res.json();
+                throw new Error(message);
+            }
+
+            // store the token in a cookie
+            const { userinfo } = await res.json();
+            setuserinfo(userinfo);
+      
+            } catch (error) {
+                console.log('error found');
+            }
+        };
+        fetchuserinfo();
+    }, []);
+    
     const handleSex = (e) => {
         setSex(e.target.value)
     }
@@ -28,11 +56,11 @@ const Profile = () => {
                             <div className="flex flex-col gap-5 w-full">
                                 <div className="flex w-full">
                                     <label htmlFor="name" className="text-3xl text-cyan-blue">Name: </label>
-                                    <div className="w-full flex justify-end"><input type='text' name='name' className="text-3xl w-72 border-2"/></div>
+                                    <div className="w-full flex justify-end"><input type='text' name='name' placeholder={userinfo.firstName + ' ' + userinfo.middleName + ' ' + userinfo.lastName} className="text-3xl w-72 border-2"/></div>
                                 </div>
                                 <div className="flex items-center">
                                     <label htmlFor="birthdate" className="text-3xl text-cyan-blue">Birthdate: </label>
-                                    <div className="w-full flex justify-end"><input type='date' name='birthdate' className="text-3xl w-72 border-2"/></div>
+                                    <div className="w-full flex justify-end"><input type='date' name='birthdate' value={userinfo.birthDate} className="text-3xl w-72 border-2"/></div>
                                 </div>
                                 <div className="flex items-center">
                                     <label htmlFor="Gender" className="text-3xl text-cyan-blue">Sex: </label>
@@ -45,11 +73,11 @@ const Profile = () => {
                                 </div>
                                 <div className="flex items-center">
                                     <label htmlFor="height" className="text-3xl text-cyan-blue">Height: </label>
-                                    <div className="w-full flex justify-end"><input type='text' name='height' className="text-3xl w-72 border-2"/></div>
+                                    <div className="w-full flex justify-end"><input type='text' name='height' placeholder={userinfo.height} className="text-3xl w-72 border-2"/></div>
                                 </div>
                                 <div className="flex items-center">
                                     <label htmlFor="weight" className="text-3xl text-cyan-blue">Weight: </label>
-                                    <div className="w-full flex justify-end"><input type='text' name='weight' className="text-3xl w-72 border-2"/></div>
+                                    <div className="w-full flex justify-end"><input type='text' name='weight' placeholder={userinfo.weight} className="text-3xl w-72 border-2"/></div>
                                 </div>
                             </div>
                         </div>

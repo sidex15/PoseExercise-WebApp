@@ -30,9 +30,11 @@ function Login () {
         throw new Error(message);
       }
 
-      const { token } = await res.json();
+      // store the token in a cookie
+      const { token,iduser } = await res.json();
       Cookies.set('token', token);
-       // store the token in a cookie
+      Cookies.set('userinfoid', iduser);
+
       router.push('/dashboard');
       
     } catch (error) {
@@ -56,7 +58,7 @@ function Login () {
       } 
     return ( 
       <Layout>
-        <div className="h-full w-full flex">
+        <div className="h-screen w-screen flex items-center justify-center">
             <div className="lg:w-1/2 w-full h-full flex justify-center items-center">
                 <div className="">
                     <h1 className='font-mono font-bold lg:text-8xl text-5xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
