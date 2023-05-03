@@ -1,11 +1,11 @@
-import { MongoClient } from 'mongodb';
+import clientPromise from '@/lib/mongodb';
 
 
 export default async function verifyuser(req, res) {
   const { username } = req.body;
 
   // Connect to MongoDB
-  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const client = await clientPromise;
   const db = client.db('thesis');
 
   // Find the user in the database
@@ -15,7 +15,9 @@ export default async function verifyuser(req, res) {
     
     res.status(200).json({ message: 'User Not Found'});
   }
-
+  else {
+    return res.status(401).json({ message: 'User found' });
+  }
   // TODO: Create a session and return a JWT token
-  return res.status(401).json({ message: 'User found' });
+  
 }

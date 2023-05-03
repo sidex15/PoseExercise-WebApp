@@ -1,5 +1,5 @@
 import { compare } from 'bcryptjs';
-import { MongoClient } from 'mongodb';
+import clientPromise from '@/lib/mongodb';
 import jwt from 'jsonwebtoken';
 import Cookies from 'js-cookie';
 
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   const { username, password } = req.body;
 
   // Connect to MongoDB
-  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const client = await clientPromise;
   const db = client.db('thesis');
 
   // Find the user in the database

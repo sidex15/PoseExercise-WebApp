@@ -1,10 +1,10 @@
-import { MongoClient } from 'mongodb';
+import clientPromise from '@/lib/mongodb';
 
 
 export default async function createUser(req, res) {
   const { username, password, firstName, middleName, lastName, birthDate, weight, height, sex } = req.body;
 
-  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const client = await clientPromise;
   // Validate the form data
   // ...
 
@@ -27,7 +27,5 @@ export default async function createUser(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
-  } finally {
-    await client.close();
   }
 }
