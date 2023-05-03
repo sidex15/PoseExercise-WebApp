@@ -16,5 +16,5 @@ export default async function fetchuser(req, res) {
   }
 
   const userinfo = user;
-  res.status(200).json({ message: 'Login successful',userinfo });
+  res.status(200).json({ message: 'User Info Fetched',userinfo });
 }

@@ -10,6 +10,12 @@ const Topbar = () => {
         Cookies.remove('token');
         Cookies.remove('userinfoid');
         e.preventDefault();
+        router.push('/');
+    }
+    const gotologin = (e) => {
+        Cookies.remove('token');
+        Cookies.remove('userinfoid');
+        e.preventDefault();
         router.push('/login');
     }
 
@@ -50,6 +56,10 @@ const Topbar = () => {
                 <div className={`${ isLogin ? 'flex' : 'hidden' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={Backlogin}>
                     <RiLogoutBoxRLine size="28px" color="white"/>
                     <span>Logout</span>
+                </div>
+                <div className={`${ isLogin ? 'hidden' : 'flex' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={gotologin}>
+                    <HiOutlineUserCircle size="28px" color="white"/>
+                    <span>Login</span>
                 </div>
                 <div className={`${ isLogin ? 'hidden' : 'flex' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={SignUp}>
                     <HiOutlineUserCircle size="28px" color="white"/>

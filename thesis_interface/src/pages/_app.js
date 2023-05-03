@@ -34,6 +34,16 @@ export default function App({ Component, pageProps }) {
                 const { message } = await res.json();
                 throw new Error(message);
             }
+            
+            if (pathname === '/personal_details' 
+            || pathname === '/biometrics' 
+            || pathname === '/invite-code' 
+            || pathname === '/reg-success') {
+              router.push('/signup');
+            }
+            else if (pathname === '/login'){
+              router.push('/dashboard');
+            }   
         } catch (error) {
           if (pathname === '/personal_details' 
           || pathname === '/biometrics' 
@@ -41,16 +51,10 @@ export default function App({ Component, pageProps }) {
           || pathname === '/reg-success') {
             router.push('/signup');
           }
-            router.push('/login');
+            //router.push('/login');
         }
     }
     verifyToken();
-    if (pathname === '/personal_details' 
-      || pathname === '/biometrics' 
-      || pathname === '/invite-code' 
-      || pathname === '/reg-success') {
-        router.push('/signup');
-      }
   }, []);
   return(
     // USER DATA/INFORMATIONS FOR THE UserInfo CONTEXT
