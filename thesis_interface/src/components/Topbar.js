@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import Cookies from 'js-cookie';
@@ -13,12 +13,30 @@ const Topbar = () => {
         router.push('/login');
     }
 
-    const [isLogin , setIsLogin] = useState(true)
+    const [isLogin , setIsLogin] = useState()
+    const token = Cookies.get('token');
 
-
-    // if condition {
-    //     setIsLogin(false)
-    // }
+    useEffect(() => {
+        const verifyToken = async () => {
+            try {
+                const res = await fetch('/api/verify-token', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+        
+                if (!res.ok) {
+                    const { message } = await res.json();
+                    throw new Error(message);
+                }
+                setIsLogin(true);
+            } catch (error) {
+                setIsLogin(false);
+            }
+        }
+        verifyToken();
+        
+    }, []);
 
     const SignUp = (e) => {
         e.preventDefault();
