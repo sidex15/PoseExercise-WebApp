@@ -15,7 +15,9 @@ export default async function verifyuser(req, res) {
     
     res.status(200).json({ message: 'User Not Found'});
   }
-
+  else {
+    return res.status(401).json({ message: 'User found' });
+  }
   // TODO: Create a session and return a JWT token
-  return res.status(401).json({ message: 'User found' });
+  
 }

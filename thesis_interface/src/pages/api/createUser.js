@@ -27,7 +27,5 @@ export default async function createUser(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
-  } finally {
-    await client.close();
   }
 }
