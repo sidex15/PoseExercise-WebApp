@@ -4,11 +4,11 @@ function evalExercise(breathlessness, speechAbility){
 
     let exercise_intensity;
 
-    if (breathlessness === 'borderline uncomfortable' && speechAbility === 'can speak a sentence') {
+    if (breathlessness === 'Borderline uncomfortable' && speechAbility === 'Can speak a sentence') {
         exercise_intensity = 'Vigorous Activity';
-    } else if (breathlessness === 'breathing heavily' && speechAbility === 'can hold a short conversation') {
+    } else if (breathlessness === 'Breathing heavily' && speechAbility === 'Can hold a short conversation') {
         exercise_intensity = 'Moderate Activity';
-    } else if (breathlessness === 'comfortable' && speechAbility === 'easy to breath and carry a conversation') {
+    } else if (breathlessness === 'Comfortable' && speechAbility === 'Easy to breath and carry a conversation') {
         exercise_intensity = 'Light Activity';
     } else {
         exercise_intensity = 'Light Activity';
