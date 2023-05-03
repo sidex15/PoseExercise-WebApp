@@ -18,18 +18,20 @@ import SessionContext from "@/pages/api/session_result";
 import getPrediction from "@/lib/get_prediction";
 import validateExercise from "@/lib/validate_exercise";
 
+import { POSE_CONNECTIONS, Pose } from "@mediapipe/pose/pose";
+import { Camera } from "@mediapipe/camera_utils/camera_utils";
 import {
   drawLandmarks,
   drawConnectors,
   PoseConnection,
 } from "@mediapipe/drawing_utils/drawing_utils";
-import { POSE_CONNECTIONS, Pose } from "@mediapipe/pose/pose";
-import { Camera } from "@mediapipe/camera_utils/camera_utils";
 
 // GLOBAL VARIABLES ONLY FOR THIS CCOMPONENT
 var stopSesssion = false;
 var sessionStarted = false;
 var timePaused = false;
+var avgRepsSpd = [];
+var borgAnswers = [];
 
 const Session = () => {
   const router = useRouter();
@@ -51,21 +53,10 @@ const Session = () => {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
 
-  const {exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, caloriesBurned, setCaloriesBurned} = useContext(SessionContext);
+  const {exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA} = useContext(SessionContext);
 
-  var avgRepsSpd = [];
 
   const handleStopButton = () => {
-
-    function average(arr) {
-      // Calculates the average of a set of numbers in an array
-      if (arr.length === 0) {
-        return 0;
-      }
-      const sum = arr.reduce((acc, curr) => acc + curr);
-      return sum / arr.length;
-    }
-
     if(reps==0){
       toast.error("No activity detected during your Session. Redirecting you to Dashboard.", 
       {
@@ -83,9 +74,10 @@ const Session = () => {
       getQuestion();
       handleStop();
       setExerciseReps(reps);
-      setAvgRepsSpeed(average(avgRepsSpd));
-      setExerciseDuration(formatTime(time));
-      setCaloriesBurned("32")
+      console.log(avgRepsSpd)
+      setAvgRepsSpeed(avgRepsSpd);
+      setExerciseDuration(time);
+      setBorgQnA(borgAnswers);
     }
   };
 
@@ -99,7 +91,8 @@ const Session = () => {
     if (qid == "1") {
       console.log(answer);
       setAnswer1(answer);
-      console.log("State val: " + answer1);
+      borgAnswers[0] = answer;
+      // console.log("State val: " + answer1);
       setquestion1(false);
       setquestion2(true);
     }
@@ -107,7 +100,8 @@ const Session = () => {
     if (qid == "2") {
       console.log(answer)
       setAnswer2((prevAnswer)=>prevAnswer + answer); // this shit is not working
-      console.log("State val: " + answer2);
+      borgAnswers[1] = answer;
+      // console.log("State val: " + answer2);
       passToContext();
       router.push('/session-results')
     }
@@ -126,6 +120,16 @@ const Session = () => {
   useEffect(() => {
     setCount(true);
   }, [count]);
+
+  useEffect(() => {
+    console.log("Component is mounted.");
+    avgRepsSpd.length = 0;
+    borgAnswers.length = 0;
+    return () => {
+      console.log('Component is about to be unmounted.');
+      sessionStarted = false;
+    };
+  }, []);
 
   if (count == true) {
     fetchCameraDevice();
@@ -164,7 +168,6 @@ const Session = () => {
 
     if(sessionStarted == false){
       setTime(0);
-      console.log("reset time to 0")
     }
 
     sessionStarted = true;
@@ -269,8 +272,8 @@ const Session = () => {
                 // console.log(repsSpeed);
                 // console.log(!isNaN(repsSpeed));
                 setSpeed(repsSpeed);
-                avgRepsSpd.push(repsSpeed);
-                console.log(avgRepsSpd);
+                avgRepsSpd.push(parseFloat(repsSpeed));
+                // console.log(avgRepsSpd);
                 setReps((prevReps) => prevReps + 1);
                 // console.log("Count=" + reps);
               }
@@ -295,7 +298,6 @@ const Session = () => {
         if (prevPrediction == curPrediction) {
           // console.log("Changed");
           prevPrediction = curPrediction;
-        } else {
         }
       } catch (error) {
         
@@ -314,7 +316,9 @@ const Session = () => {
       minDetectionConfidence: 0.7,
       minTrackingConfidence: 0.7,
     });
-    pose.onResults(onResults);
+    if(sessionStarted == true){
+      pose.onResults(onResults);
+    }
 
     // function stopPose() {
     //   pose.close();

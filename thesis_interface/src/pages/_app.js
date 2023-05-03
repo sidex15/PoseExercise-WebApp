@@ -11,9 +11,9 @@ export default function App({ Component, pageProps }) {
   const [exerName, setExerName] = useState("PUSH-UPS");
   const [postValue, setPostValue] = useState([]);
   const [exerciseReps, setExerciseReps] = useState();
-  const [avgRepsSpeed, setAvgRepsSpeed] = useState();
+  const [avgRepsSpeed, setAvgRepsSpeed] = useState([]);
   const [exerciseDuration, setExerciseDuration] = useState();
-  const [caloriesBurned, setCaloriesBurned] = useState();
+  const [borgQnA, setBorgQnA] = useState([]);
 
   const router = useRouter();
   const token = Cookies.get('token');
@@ -57,7 +57,7 @@ export default function App({ Component, pageProps }) {
     //  value={{userID, setUserID, fname, setFname, mname, setMname, weight, setWeight, age, setAge}}
     <UserInfoContext.Provider>
       <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
-        <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, caloriesBurned, setCaloriesBurned}}>
+        <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
           <Component {...pageProps} />
         </SessionContext.Provider>
       </ExerciseContext.Provider>

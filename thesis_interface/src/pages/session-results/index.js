@@ -9,29 +9,40 @@ import ExerciseContext from "@/pages/api/exercise-context";
 import SessionContext from "@/pages/api/session_result";
 import drinkwater from '@/img/drinkwater.jpg'
 import Image from "next/image";
+import average from "@/lib/get_arrayAverage";
+import evalExercise from "@/lib/borgRPE_eval";
+import calcCalorie from "@/lib/calorie_calculator";
+import formatTime from "@/lib/format_time";
 
 const Result = () => {
 
     const router = useRouter()
 
-    const { postValue } = useContext(ExerciseContext);
-    const { exerciseReps, exerciseDuration, avgRepsSpeed, caloriesBurned } = useContext(SessionContext);
+    const { exerName, postValue } = useContext(ExerciseContext);
+    const { exerciseReps, exerciseDuration, avgRepsSpeed, borgQnA } = useContext(SessionContext);
 
     const handleProceed = () => {
         console.log(postValue)
         router.push('/dashboard')
     }
 
-    const [calorieBurned, setCalorieBurned] = useState(0);
+    const [caloriesBurned, setCaloriesBurned] = useState(0);
     const [exerDuration, setExerDuration] = useState(0);
     const [exerRep, setExerRep] = useState(0);
     const [avgRepsSpd, setAvgRepsSpd] = useState(0);
 
     useEffect(()=>{
-        setCalorieBurned(caloriesBurned);
-        setExerDuration(exerciseDuration);
+        console.log(borgQnA);
+        // setCalorieBurned(caloriesBurned);
+        let MET_val = evalExercise(borgQnA[0], borgQnA[1]);
+        let duration_min = exerciseDuration/60;
+        let weight = 84;
+        setCaloriesBurned(calcCalorie(duration_min, MET_val, weight).toFixed(2));
+        setExerDuration(formatTime(exerciseDuration));
         setExerRep(exerciseReps);
-        setAvgRepsSpd(avgRepsSpeed);
+        console.log(avgRepsSpeed);
+        console.log(average(avgRepsSpeed));
+        setAvgRepsSpd(average(avgRepsSpeed).toFixed(2));
     },[]);
 
     return ( 
@@ -44,7 +55,7 @@ const Result = () => {
                        <div className="bg-grey rounded-2xl flex justify-around p-6 gap-7 shadow-lg shadow-rgba(3,4,94,0.3)">
                             <div className="flex items-center gap-3">
                                 <IoFlame size="60px" color="red" />
-                                <h1 className="font-mono font-bold text-#03045E text-5xl">{calorieBurned}</h1>
+                                <h1 className="font-mono font-bold text-#03045E text-5xl">{caloriesBurned}</h1>
                                 <h1 className="font-mono font-bold text-cyan-blue text-center text-2xl">Calories <br /> Burned</h1>
                             </div>
                             <div className="flex items-center gap-3">

@@ -26,7 +26,7 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, re
             startPosition: undefined, 
             isDetectedStart: startDetected
         }
-        console.log(exercise_assessment.isDetectedStart);
+        // console.log(exercise_assessment.isDetectedStart);
         // console.log("Current:" + currentPred, "Previous:" + prevPred);
         
         if(currentPred == "Pushups Down" && prevPred == "Pushups Up" && exercise_assessment.isDetectedStart == true && countReset == false){
@@ -104,7 +104,7 @@ function validateExercise(type, landmarks, prevPred, currentPred, countReset, re
             startPosition: undefined,
             isDetectedStart: startDetected
         }
-        console.log(exercise_assessment.isDetectedStart);
+        // console.log(exercise_assessment.isDetectedStart);
         // console.log("Current:" + currentPred, "Previous:" + prevPred);
         if(currentPred == "Situps Up" && prevPred== "Situps Down" && exercise_assessment.isDetectedStart == true && countReset == false){
             
