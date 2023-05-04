@@ -2,22 +2,12 @@ import Layout from "@/components/Layout";
 import { SlUser, SlUserFemale } from "react-icons/sl";
 import { RiEditLine, RiSave3Fill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
-import { useState, useEffect } from "react";
-import Cookies from 'js-cookie';
-import fetchuserinfo from "@/pages/api/userinfo";
+import { useState, useEffect, useContext } from "react";
+import UserInfoContext from '@/pages/api/user_info-conntext';
 
 const Profile = () => {
     const [sex, setSex] = useState()
-    const [info, setinfo] = useState({})
-
-    const userid = Cookies.get('userinfoid');
-    
-    useEffect(() => {
-        const fetchinfo = async (e) => {
-            const userinfo = await fetchuserinfo(userid);
-            setinfo(userinfo);
-        }
-        fetchinfo()},[]);
+    const { info } = useContext(UserInfoContext);
     
     const handleSex = (e) => {
         setSex(e.target.value)
