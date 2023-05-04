@@ -16,6 +16,7 @@ import calcCalorie from "@/lib/calorie_calculator";
 import formatTime from "@/lib/format_time";
 import fetchuserinfo from "@/pages/api/userinfo";
 import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Result = () => {
 
@@ -60,7 +61,9 @@ const Result = () => {
 
     useEffect(() => {
         console.log(borgQnA);
-        const MET_val = evalExercise(borgQnA[0], borgQnA[1]);
+        let exerEval = evalExercise(borgQnA[0], borgQnA[1])
+        const MET_val = exerEval[0];
+        const result = exerEval[1];
         const duration_min = exerciseDuration/60;
         const weight = info.weight;
         console.log(weight);
@@ -77,7 +80,7 @@ const Result = () => {
             reps: exerciseReps, 
             avgreps: average(avgRepsSpeed).toFixed(2), 
             duration: formatTime(exerciseDuration),
-            result: MET_val,
+            result: result,
         };
         addrecord(formData);
     },[]);
@@ -120,9 +123,8 @@ const Result = () => {
                         <button type="submit" className={`bg-cyan-blue font-bold rounded-2xl text-white p-4`} onClick={() => {handleProceed();}}>Proceed to Dashboard</button> 
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         </Layout>
-     );
+    );
 }
- 
-export default Result;

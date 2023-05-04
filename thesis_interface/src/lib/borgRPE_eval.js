@@ -15,15 +15,19 @@ function evalExercise(breathlessness, speechAbility){
     }
 
     if(exercise_intensity == 'Vigorous Activity'){
-        return 9;
+        return [9, exercise_intensity];
     }else if(exercise_intensity == 'Moderate Activity'){
-        return 3.8;
+        return [3.8, exercise_intensity];
     }else if(exercise_intensity == 'Light Activity'){
-        return 2.8;
+        return [2.8, exercise_intensity];
     }
 
 }
 
+// let met_val = evalExercise('Borderline uncomfortable', 'Can speak a sentence');
+// let val1 = met_val[0];
+// let val2 = met_val[1];
+// console.log(val1);
 
 export default evalExercise;
 
