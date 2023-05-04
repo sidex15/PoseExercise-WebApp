@@ -7,12 +7,15 @@ import { IoSpeedometer } from "react-icons/io5";
 import { useContext, useState, useEffect, use } from "react";
 import ExerciseContext from "@/pages/api/exercise-context";
 import SessionContext from "@/pages/api/session_result";
+import UserInfoContext from '@/pages/api/user_info-conntext';
 import drinkwater from '@/img/drinkwater.jpg'
 import Image from "next/image";
 import average from "@/lib/get_arrayAverage";
 import evalExercise from "@/lib/borgRPE_eval";
 import calcCalorie from "@/lib/calorie_calculator";
 import formatTime from "@/lib/format_time";
+import fetchuserinfo from "@/pages/api/userinfo";
+import Cookies from 'js-cookie';
 
 const Result = () => {
 
@@ -20,7 +23,7 @@ const Result = () => {
 
     const { exerName, postValue } = useContext(ExerciseContext);
     const { exerciseReps, exerciseDuration, avgRepsSpeed, borgQnA } = useContext(SessionContext);
-
+    const { info } = useContext(UserInfoContext);
     const handleProceed = () => {
         console.log(postValue)
         router.push('/dashboard')
@@ -30,13 +33,19 @@ const Result = () => {
     const [exerDuration, setExerDuration] = useState(0);
     const [exerRep, setExerRep] = useState(0);
     const [avgRepsSpd, setAvgRepsSpd] = useState(0);
+    //const userid = Cookies.get('userinfoid');
+    /*const fetchinfo = async (e) => {
+        const userinfo = await fetchuserinfo(userid);
+        setinfo(userinfo);
+    }*/
 
-    useEffect(()=>{
+    useEffect(() => {
+        //fetchinfo();
         console.log(borgQnA);
         // setCalorieBurned(caloriesBurned);
         let MET_val = evalExercise(borgQnA[0], borgQnA[1]);
         let duration_min = exerciseDuration/60;
-        let weight = 84;
+        const weight = info.weight;
         setCaloriesBurned(calcCalorie(duration_min, MET_val, weight).toFixed(2));
         setExerDuration(formatTime(exerciseDuration));
         setExerRep(exerciseReps);

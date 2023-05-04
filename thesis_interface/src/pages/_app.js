@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import ExerciseContext from "../pages/api/exercise-context";
 import UserInfoContext from '@/pages/api/user_info-conntext';
 import SessionContext from '@/pages/api/session_result';
+import fetchuserinfo from "@/pages/api/userinfo";
 
 export default function App({ Component, pageProps }) {
 
@@ -14,7 +15,10 @@ export default function App({ Component, pageProps }) {
   const [avgRepsSpeed, setAvgRepsSpeed] = useState([]);
   const [exerciseDuration, setExerciseDuration] = useState();
   const [borgQnA, setBorgQnA] = useState([]);
-
+  const [info, setinfo] = useState({})
+  
+  const userid = Cookies.get('userinfoid');
+  
   const router = useRouter();
   const token = Cookies.get('token');
   const pathname = usePathname();
@@ -54,12 +58,17 @@ export default function App({ Component, pageProps }) {
             //router.push('/login');
         }
     }
+    const fetchinfo = async (e) => {
+      const userinfo = await fetchuserinfo(userid);
+      setinfo(userinfo);
+    }
     verifyToken();
+    fetchinfo();
   }, []);
   return(
     // USER DATA/INFORMATIONS FOR THE UserInfo CONTEXT
     //  value={{userID, setUserID, fname, setFname, mname, setMname, weight, setWeight, age, setAge}}
-    <UserInfoContext.Provider>
+    <UserInfoContext.Provider value={{info, setinfo}}>
       <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
         <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
           <Component {...pageProps} />
