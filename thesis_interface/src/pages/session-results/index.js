@@ -20,7 +20,7 @@ import Cookies from 'js-cookie';
 const Result = () => {
 
     const router = useRouter()
-
+    const dateTime = new Date();
     const { exerName, postValue } = useContext(ExerciseContext);
     const { exerciseReps, exerciseDuration, avgRepsSpeed, borgQnA } = useContext(SessionContext);
     const { info } = useContext(UserInfoContext);
@@ -33,25 +33,53 @@ const Result = () => {
     const [exerDuration, setExerDuration] = useState(0);
     const [exerRep, setExerRep] = useState(0);
     const [avgRepsSpd, setAvgRepsSpd] = useState(0);
-    //const userid = Cookies.get('userinfoid');
-    /*const fetchinfo = async (e) => {
-        const userinfo = await fetchuserinfo(userid);
-        setinfo(userinfo);
-    }*/
+    const userid = Cookies.get('userinfoid');
+    const addrecord = async (formData) => {
+        console.log(formData);
+        if(!formData.reps == 0||!formData.reps === ''){
+            try {
+                const response = await fetch('/api/addrecord', {
+                  method: 'POST',
+                  body: JSON.stringify(formData),
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                });
+            
+                if (response.ok) {
+                  const data = await response.json();
+                  console.log(data.message);
+                } else {
+                  console.error(`HTTP error! status: ${response.status}`);
+                }
+              } catch (error) {
+                console.error(error);
+              }
+        }
+    }
 
     useEffect(() => {
-        //fetchinfo();
         console.log(borgQnA);
-        // setCalorieBurned(caloriesBurned);
-        let MET_val = evalExercise(borgQnA[0], borgQnA[1]);
-        let duration_min = exerciseDuration/60;
+        const MET_val = evalExercise(borgQnA[0], borgQnA[1]);
+        const duration_min = exerciseDuration/60;
         const weight = info.weight;
+        console.log(weight);
         setCaloriesBurned(calcCalorie(duration_min, MET_val, weight).toFixed(2));
         setExerDuration(formatTime(exerciseDuration));
         setExerRep(exerciseReps);
         console.log(avgRepsSpeed);
         console.log(average(avgRepsSpeed));
         setAvgRepsSpd(average(avgRepsSpeed).toFixed(2));
+        const formData={ 
+            userid: userid,
+            extype: exerName, 
+            calburn: calcCalorie(duration_min, MET_val, weight).toFixed(2), 
+            reps: exerciseReps, 
+            avgreps: average(avgRepsSpeed).toFixed(2), 
+            duration: formatTime(exerciseDuration),
+            result: MET_val,
+        };
+        addrecord(formData);
     },[]);
 
     return ( 

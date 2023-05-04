@@ -19,7 +19,7 @@ export default async function createUser(req, res) {
 
     // Save the user to the database
     const result = await usersCollection.insertOne(newUser);
-    if (result.insertedCount === 1) {
+    if (result.acknowledged == true) {
       res.status(200).json({ message: 'Registration successful!' });
     } else {
       res.status(500).json({ message: 'User creation failed' });
