@@ -29,6 +29,7 @@ import {
 // GLOBAL VARIABLES ONLY FOR THIS CCOMPONENT
 var stopSesssion = false;
 var sessionStarted = false;
+var sessionFinished = false;
 var timePaused = false;
 var avgRepsSpd = [];
 var borgAnswers = [];
@@ -67,7 +68,7 @@ const Session = () => {
         pauseOnHover: true, // pause on hover
         draggable: true, // allow dragging
       });
-      // setTimeout(()=>{router.push('/dashboard')}, 3000);
+      setTimeout(()=>{router.push('/dashboard')}, 3000);
     }else{
       setStop(true);
       stopSesssion = true;
@@ -78,6 +79,7 @@ const Session = () => {
       setAvgRepsSpeed(avgRepsSpd);
       setExerciseDuration(time);
       setBorgQnA(borgAnswers);
+      sessionFinished = true;
     }
   };
 
@@ -119,15 +121,18 @@ const Session = () => {
 
   useEffect(() => {
     setCount(true);
-  }, [count]);
-
-  useEffect(() => {
-    console.log("Component is mounted.");
+    // console.log("Component is mounted.");
     avgRepsSpd.length = 0;
     borgAnswers.length = 0;
+    console.log("Mounted Array: " + avgRepsSpd);
+    sessionFinished = false;
+    // console.log(borgAnswers);
     return () => {
-      console.log('Component is about to be unmounted.');
+      // console.log('Component is about to be unmounted.');
       sessionStarted = false;
+      console.log("Unmounted Array: " + avgRepsSpd);
+      sessionFinished = true;
+      // console.log(borgAnswers);
     };
   }, []);
 
@@ -165,6 +170,10 @@ const Session = () => {
   }
 
   function initMediapipe(exercise) {
+
+    if(sessionFinished == true){
+      return;
+    }
 
     if(sessionStarted == false){
       setTime(0);
@@ -272,6 +281,7 @@ const Session = () => {
                 // console.log(repsSpeed);
                 // console.log(!isNaN(repsSpeed));
                 setSpeed(repsSpeed);
+                // console.log("Multiverse Reps Speed: " + repsSpeed);
                 avgRepsSpd.push(parseFloat(repsSpeed));
                 // console.log(avgRepsSpd);
                 setReps((prevReps) => prevReps + 1);
@@ -316,6 +326,7 @@ const Session = () => {
       minDetectionConfidence: 0.7,
       minTrackingConfidence: 0.7,
     });
+
     if(sessionStarted == true){
       pose.onResults(onResults);
     }
@@ -327,7 +338,6 @@ const Session = () => {
     // }
 
     // stopPose();
-
     startCamera();
 
     async function startCamera() {
@@ -373,6 +383,8 @@ const Session = () => {
       // });
       // camera.start();
     }
+
+    return null;
   }
 
   function fetchCameraDevice() {
@@ -512,6 +524,7 @@ const Session = () => {
             <button onClick={handleContinue}>Continue</button> */}
           </div>
         </div>
+        <ToastContainer />
       </div>
     </Layout>
   );
