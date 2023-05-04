@@ -13,6 +13,7 @@
 
 # misc
 /src/backend/modelenv
+/src/backend/__pycache__
 .next/
 ../test
 .DS_Store
