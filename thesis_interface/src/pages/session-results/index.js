@@ -18,7 +18,7 @@ import fetchuserinfo from "@/pages/api/userinfo";
 import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 
-const Result = () => {
+export default function Result (){
 
     const router = useRouter()
     const dateTime = new Date();

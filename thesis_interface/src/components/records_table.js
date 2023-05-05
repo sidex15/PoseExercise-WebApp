@@ -116,7 +116,7 @@ function RecordsTable(props){
   const columns = useMemo(
       () => [
         // Cell: ({ value }) => <div className="px-4 py-2 items-center text-center">{value}</div>,
-        { Header: 'Date', accessor: 'date', },
+        { Header: 'Date', accessor: 'date', Cell: ({ value }) => new Date(value).toLocaleString(), },
         { Header: 'Exercise Type', accessor: 'extype', },
         { Header: 'Calories Burned', accessor: 'calburn', },
         { Header: 'Reps', accessor: 'reps', },
@@ -125,6 +125,7 @@ function RecordsTable(props){
         { Header: 'Result', accessor: 'result', },
         { Header: 'Action', accessor: 'test', }
       ],
+      []
   );
   
   return(
