@@ -4,6 +4,10 @@ import { RiEditLine, RiSave3Fill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import { useState, useEffect, useContext } from "react";
 import UserInfoContext from '@/pages/api/user_info-conntext';
+import male_avatar from '@/img/male_avatar.png';
+import female_avatar from '@/img/female_avatar.png';
+import Image from "next/image";
+import Userinfo from "../personal_details";
 
 const Profile = () => {
     const [sex, setSex] = useState()
@@ -12,57 +16,63 @@ const Profile = () => {
     const handleSex = (e) => {
         setSex(e.target.value)
     }
-    return ( 
+
+    const handleSexSelected = () => {
+        if(info.sex=="male"){
+            return male_avatar;
+        }else if(info.sex=="female"){
+            return female_avatar;
+        }
+    }
+
+    return (
         <Layout>
-            <div className="h-full w-full bg-grey flex justify-center items-center">
-                <div className="bg-white h-95% w-4/5 border-2 rounded-xl flex flex-col items-center pt-11 gap-24">
-                    <h1 className="font-medium text-5xl text-cyan-blue">Your Profile</h1>
-                    <div className="flex w-4/6 p-7 rounded-xl shadow-#023E8A">
-                        <div className="flex w-full items-center p-3">
-                            <div className=" w-full flex justify-center p-7">
-                                <div className="h-72 w-72 border-2 border-cyan-blue rounded-full flex justify-center pt-5">
-                                    <SlUser className="w-60 h-52 text-cyan-blue"/>
+            <div className="h-full w-full bg-white flex justify-center items-center">
+                <form className="h-auto w-full flex flex-col items-center">
+                    <fieldset className="flex flex-col items-center w-3/4 p-7 rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
+                        <div className="pb-10">
+                            <h1 className="font-medium text-5xl text-cyan-blue">Your Profile</h1>
+                        </div>
+                        <div className="w-full items-center p-3">
+                            <div className="grid grid-cols-5 gap-5 2xl:gap-20 w-full">
+                                <div className="grid col-span-2">
+                                    <Image src={male_avatar}></Image>
                                 </div>
-                                {/* <div className="h-72 w-72 border-2 border-cyan-blue rounded-full flex justify-center pt-5">
-                                    <SlUserFemale className="w-60 h-52 text-cyan-blue"/>
-                                </div> */}
-                            </div>
-                            <div className="flex flex-col gap-5 w-full">
-                                <div className="flex w-full">
-                                    <label htmlFor="name" className="text-3xl text-cyan-blue">Name: </label>
-                                    <div className="w-full flex justify-end"><input type='text' name='name' placeholder={info.firstName + ' ' + info.middleName + ' ' + info.lastName} className="text-3xl w-72 border-2"/></div>
-                                </div>
-                                <div className="flex items-center">
-                                    <label htmlFor="birthdate" className="text-3xl text-cyan-blue">Birthdate: </label>
-                                    <div className="w-full flex justify-end"><input type='date' name='birthdate' value={info.birthDate} className="text-3xl w-72 border-2"/></div>
-                                </div>
-                                <div className="flex items-center">
-                                    <label htmlFor="Gender" className="text-3xl text-cyan-blue">Sex: </label>
-                                    <div className="w-full flex justify-end">
-                                        <select name="sex" className="text-3xl w-72 border-2" onChange={handleSex}>
-                                            <option value='male'>Male</option>
-                                            <option value='female'>Female</option>
+                                <div className="grid xl:gap-4 2xl:gap-7 col-span-3">
+                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 w-full">
+                                        <label htmlFor="name" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Name: </label> 
+                                        <input type='text' name='name' value={info.firstName + ' ' + info.middleName + ' ' + info.lastName} 
+disabled placeholder="" className="xl:text-xl 2xl:text-2xl border-2 col-span-3"/>
+                                    </div>
+                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
+                                        <label htmlFor="birthdate" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Birthdate: </label>
+                                        <input type='date' name='birthdate' value={info.birthDate} disabled className="lg:text-xl 2xl:text-2xl border-2 col-span-3"/>
+                                    </div>
+                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
+                                        <label htmlFor="Gender" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Sex: </label>                                        <select name="sex" disabled className="xl:text-xl 2xl:text-2xl border-2 col-span-3" onChange={handleSex}>
+                                            <option selected={handleSexSelected} value='male'>Male</option>
+                                            <option selected={handleSexSelected} value='female'>Female</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div className="flex items-center">
-                                    <label htmlFor="height" className="text-3xl text-cyan-blue">Height: </label>
-                                    <div className="w-full flex justify-end"><input type='text' name='height' placeholder={info.height} className="text-3xl w-72 border-2"/></div>
-                                </div>
-                                <div className="flex items-center">
-                                    <label htmlFor="weight" className="text-3xl text-cyan-blue">Weight: </label>
-                                    <div className="w-full flex justify-end"><input type='text' name='weight' placeholder={info.weight} className="text-3xl w-72 border-2"/></div>
+                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
+                                        <label htmlFor="height" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Height: </label>
+                                        <input type='text' name='height' value={info.height} placeholder="" disabled className="xl:text-xl 2xl:text-2xl border-2 col-span-3"/>
+                                    </div>
+                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
+                                        <label htmlFor="weight" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Weight: </label>
+                                        <input type='text' name='weight' value={info.weight} disabled       placeholder="" className="xl:text-xl 2xl:text-2xl border-2 col-span-3"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex justify-centerw-10%">
+                        <div className="flex justify-center w-10%">
                             <RiEditLine size="30" color="#023E8A"/>
                         </div>
-                    </div>
-                </div>
-            </div> 
+                    </fieldset>
+                </form>
+            </div>
         </Layout>
     );
 }
- 
+
 export default Profile;
