@@ -1,11 +1,13 @@
 import { useTable, usePagination } from "react-table";
 import ReactPaginate from "react-paginate";
-import { useMemo, useState, useEffect, use } from "react";
+import { useMemo, useState, useEffect, use, useContext } from "react";
 import { MdDelete } from "react-icons/md";
 import { IoIosExit } from "react-icons/io";
 import { BiSkipPrevious } from "react-icons/bi";
 import { BiSkipNext } from "react-icons/bi";
 import Result from "@/pages/session-results";
+import UserInfoContext from '@/pages/api/user_info-conntext';
+
 
 function Table({ columns, data }){
   const {
@@ -105,133 +107,24 @@ function Table({ columns, data }){
 }
 
 function RecordsTable(props){
+  const { info } = useContext(UserInfoContext);
 
-  const data_array = [{
-    studid: 120,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Light Activity',
-    calories: '23.5',
-  },
-  {
-    studid: 121,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Light Activity',
-    calories: '23.5',
-  },
-  {
-    studid: 122,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Light Activity',
-    calories: '23.5',
-  },
-  {
-    studid: 123,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Light Activity',
-    calories: '23.5',
-  },
-  {
-    studid: 124,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Light Activity',
-    calories: '23.5',
-  },
-  {
-    studid: 125,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    calories: '23.5',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Vigorous Activity',
-  },
-  {
-    studid: 126,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    calories: '23.5',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Moderate Activity',
-  },
-  {
-    studid: 127,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    calories: '23.5',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Moderate Activity',
-  },
-  {
-    studid: 128,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    calories: '23.5',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Moderate Activity',
-  },
-  {
-    studid: 129,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    calories: '23.5',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Moderate Activity',
-  },
-  {
-    studid: 130,
-    date: 'May 4, 2023',
-    exerType: 'Push Up',
-    calories: '23.5',
-    reps: '12',
-    avgReps: '3.2',
-    duration: '01:23',
-    result: 'Vigorous Activity',
-},]
+  const data_array = info.records;
 
-  const data = useMemo(()=>data_array)
+  const data = data_array || []
 
   const columns = useMemo(
       () => [
         // Cell: ({ value }) => <div className="px-4 py-2 items-center text-center">{value}</div>,
         { Header: 'Date', accessor: 'date', },
-        { Header: 'Exercise Type', accessor: 'exerType', },
-        { Header: 'Calories Burned', accessor: 'calories', },
+        { Header: 'Exercise Type', accessor: 'extype', },
+        { Header: 'Calories Burned', accessor: 'calburn', },
         { Header: 'Reps', accessor: 'reps', },
-        { Header: 'Avg. Reps Speed', accessor: 'avgReps', },
+        { Header: 'Avg. Reps Speed', accessor: 'avgreps', },
         { Header: 'Session Duration', accessor: 'duration', },
         { Header: 'Result', accessor: 'result', },
         { Header: 'Action', accessor: 'test', }
       ],
-      []
   );
   
   return(

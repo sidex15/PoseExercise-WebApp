@@ -64,7 +64,8 @@ export default function App({ Component, pageProps }) {
     }
     verifyToken();
     fetchinfo();
-  }, []);
+    console.log(userid);
+  }, [userid,token]);
   return(
     // USER DATA/INFORMATIONS FOR THE UserInfo CONTEXT
     //  value={{userID, setUserID, fname, setFname, mname, setMname, weight, setWeight, age, setAge}}
