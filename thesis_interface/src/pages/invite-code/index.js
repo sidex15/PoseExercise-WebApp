@@ -4,6 +4,7 @@ import quartercircle from "@/img/quartercircle.png";
 import coach from "@/img/coach.png";
 import { useEffect, useState } from 'react';
 
+
 const Invcode = () => {
     const router = useRouter();
 
@@ -17,6 +18,7 @@ const Invcode = () => {
         sex: '',
         weight: '',
         height: '',
+        invcode: '',
       });
 
     
@@ -33,7 +35,7 @@ const Invcode = () => {
     }
 
     const registerUser = async (e) => {
-      
+
         try {
           const response = await fetch('/api/createUser', {
             method: 'POST',

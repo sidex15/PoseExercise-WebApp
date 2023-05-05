@@ -78,28 +78,28 @@ const Register = () => {
     return ( 
     <Layout>
         <div className="h-full w-full flex">
-            <div className="lg:w-1/2 w-full h-full flex justify-center items-center">
+            <div className="lg:w-1/2 w-full h-full flex justify-center items-center" onSubmit={Personal_details}>
                 <div className="">
                     <h1 className='font-mono font-bold lg:text-8xl text-5xl text-cyan-blue text-center'>Create Account</h1>
                     <div className="flex justify-center pt-12">
                     <form className="lg:w-full w-screen flex flex-col items-center">
                         <div>
                         <span className="absolute lg:p-4 p-3"><FaUser color="blue" className="lg:h-12 h-8 lg:w-12 w-8"/></span>
-                        <input type="text" name="username" value={formData.username} onChange={handleChange}  placeholder="Username"  size="50" className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
+                        <input type="text" name="username" value={formData.username} onChange={handleChange}  placeholder="Username"  size="50" className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" required/>    
                         </div>
                         <div className="mt-8">
                         <span className="absolute lg:p-4 p-3"><FaLock color="blue" className="lg:h-12 h-8 lg:w-12 w-8"/></span>
-                        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} size="50" className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
+                        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} size="50" className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" required/>    
                         </div>
                         <div className="mt-8">
                         <span className="absolute lg:p-4 p-3"><FaLock color="blue" className="lg:h-12 h-8 lg:w-12 w-8"/></span>
-                        <input type="password" name="confirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} size="50" className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
+                        <input type="password" name="confirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} size="50" className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" required/>    
                         </div>
                         <div className="flex justify-center mt-3">
                             <button type="submit" onClick={back} className=" font-bold rounded-3xl text-cyan-blue p-4">Already have an account? <span className="underline">Sign in</span></button>
                         </div>
                         <div className="flex justify-center mt-7">
-                            <button type="submit" onClick={Personal_details} className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
+                            <button type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
                         </div>
                     </form>
                     </div>
