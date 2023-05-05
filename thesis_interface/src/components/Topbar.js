@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from 'react';
-import { RiLogoutBoxRLine } from "react-icons/ri";
+import { RiLogoutBoxLine } from "react-icons/ri";
+import { RiLoginBoxLine } from "react-icons/ri";
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import Cookies from 'js-cookie';
 const Topbar = () => {
@@ -54,11 +55,11 @@ const Topbar = () => {
         <div className='w-full'>
             <nav className="flex items-center justify-end flex-wrap bg-cyan-blue h-14">
                 <div className={`${ isLogin ? 'flex' : 'hidden' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={Backlogin}>
-                    <RiLogoutBoxRLine size="28px" color="white"/>
+                    <RiLogoutBoxLine size="28px" color="white"/>
                     <span>Logout</span>
                 </div>
                 <div className={`${ isLogin ? 'hidden' : 'flex' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={gotologin}>
-                    <HiOutlineUserCircle size="28px" color="white"/>
+                    <RiLoginBoxLine size="28px" color="white"/>
                     <span>Login</span>
                 </div>
                 <div className={`${ isLogin ? 'hidden' : 'flex' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={SignUp}>
