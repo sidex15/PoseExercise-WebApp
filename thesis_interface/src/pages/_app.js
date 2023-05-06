@@ -16,6 +16,7 @@ export default function App({ Component, pageProps }) {
   const [exerciseDuration, setExerciseDuration] = useState();
   const [borgQnA, setBorgQnA] = useState([]);
   const [info, setinfo] = useState({})
+  const [updatedb, setupdatedb] = useState(0)
   
   const userid = Cookies.get('userinfoid');
   
@@ -64,12 +65,12 @@ export default function App({ Component, pageProps }) {
     }
     verifyToken();
     fetchinfo();
-    console.log(userid);
-  }, [userid,token]);
+    console.log('user updated...');
+  }, [userid,token, updatedb]);
   return(
     // USER DATA/INFORMATIONS FOR THE UserInfo CONTEXT
     //  value={{userID, setUserID, fname, setFname, mname, setMname, weight, setWeight, age, setAge}}
-    <UserInfoContext.Provider value={{info, setinfo}}>
+    <UserInfoContext.Provider value={{info, setinfo, updatedb, setupdatedb}}>
       <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
         <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
           <Component {...pageProps} />

@@ -24,7 +24,7 @@ export default function Result (){
     const dateTime = new Date();
     const { exerName, postValue } = useContext(ExerciseContext);
     const { exerciseReps, exerciseDuration, avgRepsSpeed, borgQnA } = useContext(SessionContext);
-    const { info } = useContext(UserInfoContext);
+    const { info, updatedb, setupdatedb } = useContext(UserInfoContext);
     const handleProceed = () => {
         console.log(postValue)
         router.push('/dashboard')
@@ -50,6 +50,7 @@ export default function Result (){
                 if (response.ok) {
                   const data = await response.json();
                   console.log(data.message);
+                  setupdatedb(updatedb+1);
                 } else {
                   console.error(`HTTP error! status: ${response.status}`);
                 }

@@ -50,8 +50,8 @@ disabled placeholder="" className="xl:text-xl 2xl:text-2xl border-2 col-span-3"/
                                     </div>
                                     <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
                                         <label htmlFor="Gender" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Sex: </label>                                        <select name="sex" disabled className="xl:text-xl 2xl:text-2xl border-2 col-span-3" onChange={handleSex}>
-                                            <option selected={handleSexSelected} value='male'>Male</option>
-                                            <option selected={handleSexSelected} value='female'>Female</option>
+                                            <option selected={info.sex} value='male'>Male</option>
+                                            <option selected={info.sex} value='female'>Female</option>
                                         </select>
                                     </div>
                                     <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
