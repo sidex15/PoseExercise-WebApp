@@ -25,6 +25,7 @@ import {
   drawConnectors,
   PoseConnection,
 } from "@mediapipe/drawing_utils/drawing_utils";
+import Head from "next/head";
 
 // GLOBAL VARIABLES ONLY FOR THIS CCOMPONENT
 var stopSesssion = false;
@@ -414,6 +415,7 @@ const Session = () => {
 
   return (
     <Layout>
+      <Head><title>Session</title></Head>
       <div className={`${stop ? "block" : "hidden"} h-screen w-screen absolute z-10`}>
         <div className={`${question1 ? "block" : "hidden"}`}>
           <PostQuestions

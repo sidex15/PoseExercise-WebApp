@@ -6,6 +6,7 @@ import ExerciseContext from "../pages/api/exercise-context";
 import UserInfoContext from '@/pages/api/user_info-conntext';
 import SessionContext from '@/pages/api/session_result';
 import fetchuserinfo from "@/pages/api/userinfo";
+import Head from 'next/head';
 
 export default function App({ Component, pageProps }) {
 
@@ -73,6 +74,9 @@ export default function App({ Component, pageProps }) {
     <UserInfoContext.Provider value={{info, setinfo, updatedb, setupdatedb}}>
       <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
         <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
+          <Head>
+            <link rel="icon" href="/favicon/ai.jpg" />
+          </Head>
           <Component {...pageProps} />
         </SessionContext.Provider>
       </ExerciseContext.Provider>

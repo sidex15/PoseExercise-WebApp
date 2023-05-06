@@ -10,7 +10,7 @@ const Sidebar = ({open}) => {
 
     const router = useRouter();
 
-    const [isCoach, setIsCoach] = useState(false);
+    const [isCoach, setIsCoach] = useState(true);
  
     // this condition set the student record button visible or not
     // if anyone enter the user coaching code {

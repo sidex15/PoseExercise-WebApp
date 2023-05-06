@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
 import Layout from "@/components/Layout";
+import Head from "next/head";
 
 function Login () {
     const router = useRouter();
@@ -58,6 +59,7 @@ function Login () {
       } 
     return ( 
       <Layout>
+        <Head><title>Login</title></Head>
         <div className="h-screen w-screen flex items-center justify-center">
             <div className="lg:w-1/2 w-full h-full flex justify-center items-center">
                 <div className="">

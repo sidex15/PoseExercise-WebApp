@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import regsuccess from "@/img/regsuccess.jpg"
+import Head from 'next/head';
 const RegSuccess = () => {
     const router = useRouter()
     const Content = (e) => {
@@ -9,6 +10,7 @@ const RegSuccess = () => {
       } 
     return ( 
         <div className="h-screen w-screen flex justify-center items-center">
+            <Head><title>Success</title></Head>
             <div className="absolute flex flex-col sm:gap-36 gap-16">
                 <h1 className='font-mono font-bold xl:text-9xl sm:text-6xl text-4xl text-white'>Congratulations, <br /> You are all set!</h1>
                 <div className="flex justify-center">

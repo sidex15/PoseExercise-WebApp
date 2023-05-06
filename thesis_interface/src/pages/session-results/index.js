@@ -88,6 +88,7 @@ export default function Result (){
 
     return ( 
         <Layout>
+            <Head><title>Session Result</title></Head>
             <div className="bg-grey h-full w-full flex flex-col justify-center items-center gap-6">
                 <h1 className="font-mono font-bold lg:text-5xl text-xl text-cyan-blue self-start ml-24">Exercise session result</h1>
                 <div className="relative w-3/4 h-3/4 shadow-lg shadow-rgba(3,4,94,0.7) rounded-3xl">

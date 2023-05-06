@@ -3,6 +3,7 @@ import Image from 'next/image';
 import quartercircle from "@/img/quartercircle.png";
 import coach from "@/img/coach.png";
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 
 const Invcode = () => {
@@ -60,6 +61,7 @@ const Invcode = () => {
 
     return ( 
     <div className="h-screen w-screen flex">
+        <Head><title>Invite Code</title></Head>
         <div className="h-screen lg:w-2/5 w-full">
             <div className="absolute h-full lg:w-2/5 w-full flex flex-col justify-center">
                 <h1 className='self-center font-mono font-bold lg:text-6xl text-5xl text-cyan-blue text-center'>Do you have a <br /> fitness coach?</h1>
@@ -71,7 +73,7 @@ const Invcode = () => {
             </div>
             <Image className="lg:h-1/2 sm:h-4/5 h-3/5" src={quartercircle} alt="circle"/>
         </div>
-        <div className="lg:flex hidden h-full w-3/5 flex justify-center">
+        <div className="lg:flex hidden h-full w-3/5 justify-center">
             <div className="absolute flex flex-col self-center">
                 <h1 className='font-mono font-bold text-5xl text-white'>Train Like A <br /> Champion Today, <br /> and let your coach <br /> track your exercise <br /> records, stats, and <br /> performance in our <br /> platform.</h1>
                 <div className="flex justify-center mt-36">

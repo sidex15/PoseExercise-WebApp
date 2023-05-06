@@ -8,6 +8,7 @@ import bcrypt from 'bcryptjs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from "@/components/Layout";
+import Head from "next/head";
 
 
 const Register = () => {
@@ -77,6 +78,7 @@ const Register = () => {
     }   
     return ( 
     <Layout>
+        <Head><title>Sign Up</title></Head>
         <div className="h-full w-full flex">
             <div className="lg:w-1/2 w-full h-full flex justify-center items-center" onSubmit={Personal_details}>
                 <div className="">

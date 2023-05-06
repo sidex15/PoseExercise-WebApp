@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import biometrics from "@/img/biometrics.png";
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 const Userinfo2 = () => {
     const router = useRouter();
@@ -38,6 +39,7 @@ const Userinfo2 = () => {
     } 
     return ( 
         <div className="h-screen w-screen flex items-center justify-center">
+            <Head><title>Biometrics</title></Head>
             <div className="lg:block hidden h-full w-1/2">
                 <Image className="h-full w-full" src={biometrics} alt="biometricsimg"/>
             </div>

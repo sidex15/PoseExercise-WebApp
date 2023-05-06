@@ -9,11 +9,15 @@ import squats from '@/img/squats.jpg'
 import flanking from '@/img/flanking.png'
 import Layout from '@/components/Layout';
 import Cookies from 'js-cookie';
+import Head from 'next/head';
 
 
 const Dashboard = () => {
 
     return <Layout >
+        <Head>
+            <title>Dashboard</title>
+        </Head>
         <div className='absolute overflow-scroll h-full w-full'>
             <div className=' flex justify-center items-center w-full'>
                 <Image className="object-cover lg:h-65vh h-30vh" src={banner} alt="dashboardimg" priority/>

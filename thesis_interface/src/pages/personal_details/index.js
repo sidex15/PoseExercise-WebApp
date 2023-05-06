@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import userinfobanner from "@/img/userinfobanner.png"
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 
 const Userinfo = () => {
@@ -36,6 +37,7 @@ const Userinfo = () => {
 
     return ( 
         <div className="h-screen w-screen flex">
+            <Head><title>Personal Details</title></Head>
             <div className="h-full lg:w-1/2 w-full flex justify-center items-center">
                 <div className="lg:relavite absolute lg:bg-inherit bg-white/50 lg:w-full sm:w-4/5 w-90% lg:p-0 p-7 rounded-xl lg:shadow-none shadow-#023E8A">
                     <h1 className='font-mono font-bold text-6xl text-cyan-blue text-center'>Personal Details</h1>
@@ -47,7 +49,7 @@ const Userinfo = () => {
                             </div>
                             <div className="">
                                 <label for="fn" className="absolute p-1 bg-white text-xs ml-3">MIDDLE NAME</label>
-                                <input type="text" name="middleName" value={formData.middleName} onChange={handleChange} size="35" className="border-solid border-2 border-cyan-blue bg-white rounded-md mt-3 p-2" required/>  
+                                <input type="text" name="middleName" value={formData.middleName} onChange={handleChange} size="35" className="border-solid border-2 border-cyan-blue bg-white rounded-md mt-3 p-2"/>  
                             </div>
                             <div className="">
                                 <label for="fn" className="absolute p-1 bg-white text-xs ml-3">LAST NAME</label>

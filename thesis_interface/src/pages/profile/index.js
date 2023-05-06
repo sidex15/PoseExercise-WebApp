@@ -11,6 +11,7 @@ import male_avatar from '@/img/male_avatar.png';
 import female_avatar from '@/img/female_avatar.png';
 import Image from "next/image";
 import Userinfo from "../personal_details";
+import Head from "next/head";
 
 const Profile = () => {
     const [sex, setSex] = useState()
@@ -31,7 +32,7 @@ const Profile = () => {
 
     return (
         <Layout>
-
+            <Head><title>Profile</title></Head>
             <div className="absolute h-full w-full bg-white overflow-scroll">
                 <form className="h-auto w-full flex flex-col items-center pt-12 2xl:pt-20">
                     <fieldset className="flex flex-col items-center w-3/4 p-7 rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
