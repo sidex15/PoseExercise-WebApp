@@ -22,7 +22,7 @@ const Profile = () => {
     const [weight, setWeight] = useState();
 
     useEffect(()=>{
-        setName(`${info.firstName} ${info.middleName} ${info.lastName}`);
+        setName(info.firstName + ' ' + info.middleName + ' ' + info.lastName);
         setBday(info.birthDate);
         setSex(info.sex);
         setHeight(info.height);
@@ -48,6 +48,10 @@ const Profile = () => {
 
     const handleSex = (e) => {
         setSex(e.target.value);
+    }
+
+    const handleDateChange = (event) => {
+        setBday(event.target.value);
     }
 
     return (
@@ -103,7 +107,7 @@ const Profile = () => {
                                     }
                                     <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                         <label htmlFor="birthdate" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Birthdate: </label>
-                                        <input type='date' name='birthdate' value={bday} disabled={isEditing==true?false:true} className="px-4 py-1 lg:text-xl 2xl:text-2xl border-2 col-span-3 text-blue-500"/>
+                                        <input type='date' name='birthdate' value={bday} onChange={handleDateChange} disabled={isEditing==true?false:true} className="px-4 py-1 lg:text-xl 2xl:text-2xl border-2 col-span-3 text-blue-500"/>
                                     </div>
                                     <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                         <label htmlFor="Gender" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Sex: </label>                                 
