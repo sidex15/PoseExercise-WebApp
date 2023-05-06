@@ -61,7 +61,7 @@ function Table({ columns, data }){
                       {/* <button >
                         <IoIosExit className="text-slate-900 lg:text-xl"/>
                       </button> */}
-                      <button onClick={()=>console.log(row.cells[val].row.original.studid)}>
+                      <button onClick={()=>console.log(row.cells[val].row.original.records_id)}>
                         <MdDelete className="text-red-600 lg:text-xl"/>
                       </button>
                       </td>;
@@ -110,6 +110,8 @@ function RecordsTable(props){
   const { info } = useContext(UserInfoContext);
 
   const data_array = info.records;
+
+  console.log(info.records)
 
   const data = data_array || []
 

@@ -1,7 +1,10 @@
 import Layout from "@/components/Layout";
 import { SlUser, SlUserFemale } from "react-icons/sl";
 import { RiEditLine, RiSave3Fill } from "react-icons/ri";
-import { RxCross2 } from "react-icons/rx";
+import { RxCross1 } from "react-icons/rx";
+import { VscEdit } from "react-icons/vsc";
+import { FiEdit } from "react-icons/fi";
+import { VscClose } from "react-icons/vsc";
 import { useState, useEffect, useContext } from "react";
 import UserInfoContext from '@/pages/api/user_info-conntext';
 import male_avatar from '@/img/male_avatar.png';
@@ -12,64 +15,91 @@ import Userinfo from "../personal_details";
 const Profile = () => {
     const [sex, setSex] = useState()
     const { info } = useContext(UserInfoContext);
+    const [isEditing, setIsEditing] = useState(true);
     
-    const handleSex = (e) => {
-        setSex(e.target.value)
-    }
-
-    const handleSexSelected = () => {
-        if(info.sex=="male"){
+    const handleAvatarSelected = () => {
+        if(info.sex=="male" || setSex=="male"){
             return male_avatar;
-        }else if(info.sex=="female"){
+        }else if(info.sex=="female" || setSex=="female"){
             return female_avatar;
         }
+    }
+    
+    const handleSex = (e) => {
+        setSex(e.target.value);
     }
 
     return (
         <Layout>
-            <div className="h-full w-full bg-white flex justify-center items-center">
-                <form className="h-auto w-full flex flex-col items-center">
+
+            <div className="absolute h-full w-full bg-white overflow-scroll">
+                <form className="h-auto w-full flex flex-col items-center pt-12 2xl:pt-20">
                     <fieldset className="flex flex-col items-center w-3/4 p-7 rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
+                        <div className="w-full flex justify-end items-center">
+                            <button type="button" onClick={()=>setIsEditing(true)}><FiEdit className="text-2xl" color="#023E8A"/></button>
+                            <button type="button" onClick={()=>setIsEditing(false)}><RxCross1 className="text-2xl" color="#023E8A"/></button>
+                            </div>
                         <div className="pb-10">
                             <h1 className="font-medium text-5xl text-cyan-blue">Your Profile</h1>
                         </div>
                         <div className="w-full items-center p-3">
                             <div className="grid grid-cols-5 gap-5 2xl:gap-20 w-full">
                                 <div className="grid col-span-2">
-                                    <Image src={male_avatar}></Image>
+                                    <div className="flex items-center justify-center">
+                                        <Image src={handleAvatarSelected()} className="w-3/4"></Image>
+                                    </div>
                                 </div>
                                 <div className="grid xl:gap-4 2xl:gap-7 col-span-3">
-                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 w-full">
+                                    <div className="grid grid-cols-5 xl:gap-1 2xl:gap-8 items-center">
                                         <label htmlFor="name" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Name: </label> 
-                                        <input type='text' name='name' value={info.firstName + ' ' + info.middleName + ' ' + info.lastName} 
-disabled placeholder="" className="xl:text-xl 2xl:text-2xl border-2 col-span-3"/>
+                                        <input type='text' name='name' placeholder={`${info.firstName} ${info.middleName} ${info.lastName}`} 
+                                            disabled={isEditing==true?false:true} 
+                                            className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500"
+                                        />
                                     </div>
-                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
+                                    <div className="grid grid-cols-5 xl:gap-1 2xl:gap-8 items-center">
                                         <label htmlFor="birthdate" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Birthdate: </label>
-                                        <input type='date' name='birthdate' value={info.birthDate} disabled className="lg:text-xl 2xl:text-2xl border-2 col-span-3"/>
+                                        <input type='date' name='birthdate' placeholder={info.birthDate} disabled={isEditing==true?false:true} className="px-4 py-1 lg:text-xl 2xl:text-2xl border-2 col-span-3 text-blue-500"/>
                                     </div>
-                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
-                                        <label htmlFor="Gender" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Sex: </label>                                        <select name="sex" disabled className="xl:text-xl 2xl:text-2xl border-2 col-span-3" onChange={handleSex}>
-                                            <option selected={info.sex} value='male'>Male</option>
-                                            <option selected={info.sex} value='female'>Female</option>
+                                    <div className="grid grid-cols-5 xl:gap-1 2xl:gap-8 items-center">
+                                        <label htmlFor="Gender" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Sex: </label>                                 
+                                        <select name="sex" disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 text-blue-500" onChange={handleSex}>
+                                            <option selected={info.sex=="male" ? true : false} value='male' classname="">Male</option>
+                                            <option selected={info.sex=="female" ? true : false} value='female'>Female</option>
                                         </select>
                                     </div>
-                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
+                                    <div className="grid grid-cols-5 xl:gap-1 2xl:gap-8 items-center">
                                         <label htmlFor="height" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Height: </label>
-                                        <input type='text' name='height' value={info.height} placeholder="" disabled className="xl:text-xl 2xl:text-2xl border-2 col-span-3"/>
+                                        <input type='text' name='height' placeholder={`${info.height} ${!isEditing==true?'cm' : ''}`} disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500"/>
                                     </div>
-                                    <div className="grid grid-cols-5 xl:gap-5 2xl:gap-8 items-center">
+                                    <div className="grid grid-cols-5 xl:gap-1 2xl:gap-8 items-center">
                                         <label htmlFor="weight" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Weight: </label>
-                                        <input type='text' name='weight' value={info.weight} disabled       placeholder="" className="xl:text-xl 2xl:text-2xl border-2 col-span-3"/>
+                                        <input type='text' name='weight' placeholder={`${info.weight} ${!isEditing==true?'kg' : ''}`} disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex justify-center w-10%">
-                            <RiEditLine size="30" color="#023E8A"/>
-                        </div>
                     </fieldset>
                 </form>
+                <div className="h-auto w-full flex flex-col items-center mt-20">
+                    <div className="flex flex-col items-center w-3/4 p-7 rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
+                        <h1 className="font-medium text-5xl text-cyan-blue">Your Coach</h1>
+                        <div class="p-6 bg-gray-100 text-gray-800">
+                            <h2 class="text-3xl font-bold mb-4">Introducing our Coach feature</h2>
+                            <p class="text-lg mb-4">Welcome to our fitness web app! Our platform is designed to help you achieve your fitness goals by providing you with the tools and resources you need to stay on track. One of the key features of our app is the ability to work with a professional coach.</p>
+                            <div class="container mx-auto mt-10">
+                                <h1 class="text-2xl font-bold mb-5">Our Fitness Web App</h1>
+                                <ul class="list-disc list-inside">
+                                    <li class="mb-3">Our fitness web app helps you achieve your fitness goals with tools and resources.</li>
+                                    <li class="mb-3">The app includes a feature to connect with a professional coach.</li>
+                                    <li class="mb-3">The coach can view your exercise records to provide personalized feedback and support.</li>
+                                    <li class="mb-3">Only one coach can be connected at a time to ensure focused attention and support.</li>
+                                    <li class="mb-3">The coach feature can help you stay motivated and on track towards achieving your goals.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </Layout>
     );
