@@ -63,11 +63,11 @@ const Userinfo = () => {
                                 <p className="ml-3">SEX</p>
                                 <div className="ml-7 flex">
                                     <div>
-                                        <input type="radio" name="sex" value="male" checked={formData.sex === 'male'} onChange={handleChange} required/>
+                                        <input type="radio" name="sex" value="male" checked={formData.sex === 'Male'} onChange={handleChange} required/>
                                         <label for="male">Male</label>
                                     </div>
                                     <div className="ml-4">
-                                        <input type="radio" name="sex" value="female" checked={formData.sex === 'female'} onChange={handleChange} required/>
+                                        <input type="radio" name="sex" value="female" checked={formData.sex === 'Female'} onChange={handleChange} required/>
                                         <label for="female">Female</label>
                                     </div>
                                 </div>
