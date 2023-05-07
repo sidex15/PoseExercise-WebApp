@@ -28,41 +28,42 @@ import 'react-toastify/dist/ReactToastify.css';
 const Profile = () => {
     const { info, updatedb, setupdatedb } = useContext(UserInfoContext);
     const [isEditing, setIsEditing] = useState(false);
-    const [name, setName] = useState();
+    const [name, setName] = useState({});
     const [bday, setBday] = useState();
     const [sex, setSex] = useState();
     const [height, setHeight] = useState();
     const [weight, setWeight] = useState();
     const [saveBtnToggled, setSaveBtnToggled] = useState(false);
     const [userHaveCoach, setUserHaveCoach] = useState(false);
-    const currentdata = {
-        userid: Cookies.get('userinfoid'),
-        firstName: info.firstName,
-        middleName: info.middleName,
-        lastName: info.lastName,
-        birthDate: info.birthDate,
-        sex: info.sex,
-        weight: info.weight,
-        height: info.height,
-    }
+    const userid = Cookies.get('userinfoid');
     let counter = updatedb
 
-    const [formData, setformData] = useState({});
-
-    const changeprofile = () =>{
-        setformData(currentdata)
-    };
+    useEffect(() => {
+        setName({
+            firstName: info.firstName,
+            middleName: info.middleName,
+            lastName: info.lastName,
+        })
+        setBday(info.birthDate)
+        setSex(info.sex)
+        setHeight(info.height)
+        setWeight(info.weight)
+        console.log(weight)
+    },[info])
 
     const handleChange = (e) => {
         setformData({ ...formData, [e.target.name]: e.target.value });
     };
     
     const updateuser = async (e) => {
-
+        const updatedprofile = {
+            ...name, sex: sex, userid, birthDate: bday, weight:weight, height:height
+        }
+        console.log(updatedprofile);
         try {
           const response = await fetch('/api/updateuser', {
             method: 'POST',
-            body: JSON.stringify(formData),
+            body: JSON.stringify(updatedprofile),
             headers: {
               'Content-Type': 'application/json'
             }
@@ -89,14 +90,19 @@ const Profile = () => {
       };
     
     const handleAvatarSelected = () => {
-        if(info.sex=="Male"){
+        if(info.sex=="Male" || setSex=="Male"){
             return male_avatar;
-        }else if(info.sex=="Female"){
+        }else if(info.sex=="Female" || setSex=="Female"){
             return female_avatar;
         }
     }
 
     const discardEditing = () => {
+        setName({
+            firstName: info.firstName,
+            middleName: info.middleName,
+            lastName: info.lastName,
+        })
         setIsEditing(false);
         setBday(info.birthDate);
         setSex(info.sex);
@@ -109,8 +115,20 @@ const Profile = () => {
         setSex(e.target.value);
     }
 
+    const handlename = (e) => {
+        setName({...name, [e.target.name]: e.target.value});
+    }
+
     const handleDateChange = (event) => {
         setBday(event.target.value);
+    }
+
+    const handleweight = (e) => {
+        setWeight(e.target.value);
+    }
+
+    const handleheight = (e) => {
+        setHeight(e.target.value);
     }
 
     return (
@@ -126,7 +144,7 @@ const Profile = () => {
                                 <button type="button" onClick={discardEditing}><RxCross1 className="text-2xl" color="#023E8A"/></button>
 
                             ):
-                                <button type="button" onClick={()=>{setIsEditing(true); changeprofile()}}><FiEdit className="text-2xl" color="#023E8A"/></button>
+                                <button type="button" onClick={()=>{setIsEditing(true)}}><FiEdit className="text-2xl" color="#023E8A"/></button>
                             }
                             </div>
                         <div className="pb-10 text-center">
@@ -143,25 +161,25 @@ const Profile = () => {
                                     {!isEditing?(
                                         <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                             <label htmlFor="name" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Name: </label> 
-                                            <input type='text' name='name' placeholder={info.firstName + ' ' + info.middleName + ' ' + info.lastName} disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
+                                            <input type='text' name='name' placeholder={name.firstName + ' ' + name.middleName + ' ' + name.lastName} disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
                                         </div>
                                     ):
                                         <>
                                         <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                             <label htmlFor="fname" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">First Name: </label> 
-                                            <input type='text' name='firstName' value={formData.firstName} onChange={handleChange} placeholder={info.firstName}
+                                            <input type='text' name='firstName' value={name.firstName} onChange={handlename} placeholder={info.firstName}
                                                 disabled={isEditing==true?false:true} 
                                                 className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
                                         </div>
                                         <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                             <label htmlFor="mname" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Middle Name: </label> 
-                                            <input type='text' name='middleName' value={formData.middleName} onChange={handleChange} placeholder={info.middleName}
+                                            <input type='text' name='middleName' value={name.middleName} onChange={handlename} placeholder={info.middleName}
                                                 disabled={isEditing==true?false:true} 
                                                 className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
                                         </div>
                                         <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                             <label htmlFor="lname" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Last Name: </label> 
-                                            <input type='text' name='lastName' value={formData.lastName} onChange={handleChange} placeholder={info.lastName}
+                                            <input type='text' name='lastName' value={name.lastName} onChange={handlename} placeholder={info.lastName}
                                                 disabled={isEditing==true?false:true} 
                                                 className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
                                         </div>
@@ -169,22 +187,22 @@ const Profile = () => {
                                     }
                                     <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                         <label htmlFor="birthdate" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Birthdate: </label>
-                                        <input type='date' name='birthDate' value={formData.birthDate} onChange={handleChange} disabled={isEditing==true?false:true} className="px-4 py-1 lg:text-xl 2xl:text-2xl border-2 col-span-3 text-blue-500"/>
+                                        <input type='date' name='birthDate' value={bday} onChange={handleDateChange} disabled={isEditing==true?false:true} className="px-4 py-1 lg:text-xl 2xl:text-2xl border-2 col-span-3 text-blue-500"/>
                                     </div>
                                     <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                         <label htmlFor="Gender" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Sex: </label>                                 
-                                        <select name="sex" disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 text-blue-500" value={formData.sex} onChange={handleChange}>
-                                            <option selected={info.sex==='Male' ? true : false}>Male</option>
-                                            <option selected={info.sex==='Female' ? true : false}>Female</option>
+                                        <select name="sex" disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 text-blue-500" value={sex} onChange={handleSex}>
+                                            <option selected={sex=='Male' ? true : false} value='Male'>Male</option>
+                                            <option selected={sex=='Female' ? true : false}value='Female'>Female</option>
                                         </select>
                                     </div>
                                     <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                         <label htmlFor="height" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Height: </label>
-                                        <input type='number' name='height' value={formData.height} onChange={handleChange} placeholder={`${info.height} ${!isEditing==true?'cm' : ''}`} disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
+                                        <input type='number' name='height' value={height} onChange={handleheight} placeholder={`${info.height} ${!isEditing==true?'cm' : ''}`} disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
                                     </div>
                                     <div className="grid sm:grid-cols-1 xl:grid-cols-5 xl:gap-2 2xl:gap-8 items-center">
                                         <label htmlFor="weight" className="xl:text-2xl 2xl:text-3xl text-cyan-blue col-span-2">Weight: </label>
-                                        <input type='number' name='weight' value={formData.weight} onChange={handleChange} placeholder={`${info.weight} ${!isEditing==true?'kg' : ''}`} disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
+                                        <input type='number' name='weight' value={weight} onChange={handleweight} placeholder={`${info.weight} ${!isEditing==true?'kg' : ''}`} disabled={isEditing==true?false:true} className="px-4 py-1 xl:text-xl 2xl:text-2xl border-2 col-span-3 placeholder-blue-500 text-blue-500"/>
                                     </div>
                                     <div className="flex justify-end">
                                         {isEditing?(
