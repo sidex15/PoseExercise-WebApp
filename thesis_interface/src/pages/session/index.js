@@ -76,7 +76,7 @@ const Session = () => {
       getQuestion();
       handleStop();
       setExerciseReps(reps);
-      console.log(avgRepsSpd)
+      //console.log(avgRepsSpd)
       setAvgRepsSpeed(avgRepsSpd);
       setExerciseDuration(time);
       setBorgQnA(borgAnswers);
@@ -92,7 +92,7 @@ const Session = () => {
   
   const getQuestion = (qid, answer) => {
     if (qid == "1") {
-      console.log(answer);
+      //console.log(answer);
       setAnswer1(answer);
       borgAnswers[0] = answer;
       // console.log("State val: " + answer1);
@@ -101,7 +101,7 @@ const Session = () => {
     }
     
     if (qid == "2") {
-      console.log(answer)
+      //console.log(answer)
       setAnswer2((prevAnswer)=>prevAnswer + answer); // this shit is not working
       borgAnswers[1] = answer;
       // console.log("State val: " + answer2);
@@ -125,13 +125,13 @@ const Session = () => {
     // console.log("Component is mounted.");
     avgRepsSpd.length = 0;
     borgAnswers.length = 0;
-    console.log("Mounted Array: " + avgRepsSpd);
+    //console.log("Mounted Array: " + avgRepsSpd);
     sessionFinished = false;
     // console.log(borgAnswers);
     return () => {
       // console.log('Component is about to be unmounted.');
       sessionStarted = false;
-      console.log("Unmounted Array: " + avgRepsSpd);
+      //console.log("Unmounted Array: " + avgRepsSpd);
       sessionFinished = true;
       // console.log(borgAnswers);
     };

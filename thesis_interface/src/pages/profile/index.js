@@ -52,7 +52,7 @@ const Profile = () => {
         setSex(info.sex)
         setHeight(info.height)
         setWeight(info.weight)
-        console.log(weight)
+        //console.log(weight)
         const currentcoach = async(e) =>{
             try {
                 const res = await fetch('/api/fetchcoach', {
@@ -68,7 +68,7 @@ const Profile = () => {
         
             // store the token in a cookie
             const { coachinfo } = await res.json();
-            console.log(coachinfo);
+            //console.log(coachinfo);
             const fcoachinfo = coachinfo;
             setCoach(fcoachinfo);
             setUserHaveCoach(true);
@@ -102,7 +102,7 @@ const Profile = () => {
       
           if (response.ok) {
             const data = await response.json();
-            console.log(data.message);
+            //console.log(data.message);
             toast.success(data.message, {
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 3000, // close after 3 seconds
@@ -122,7 +122,7 @@ const Profile = () => {
 
     const setcoach = async (e) => {
         const coach = {invcode:Invcode, userid: userid}
-        console.log(coach);
+        //console.log(coach);
         if(Invcode==info.invcode){
             toast.error("Do not use your own Invite code", {
                 position: toast.POSITION.TOP_CENTER,
@@ -164,7 +164,7 @@ const Profile = () => {
     
     const deletecoach = async (e) => {
         const coach = {coachid:Coach._id, userid: userid}
-        console.log(coach);
+        //console.log(coach);
         try {
           const response = await fetch('/api/deletecoach', {
             method: 'POST',

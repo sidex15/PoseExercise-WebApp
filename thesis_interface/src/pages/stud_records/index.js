@@ -21,7 +21,7 @@ const StudentRecord = () => {
     let curcoach = info._id
 
     useEffect(()=>{
-        console.log(curcoach)
+        //console.log(curcoach)
         const currentcoach = async(e) =>{
             try {
                 const res = await fetch('/api/findstudents', {
@@ -68,7 +68,7 @@ const StudentRecord = () => {
           });
     }
 
-    console.log(students);
+    //console.log(students);
 
     const data = useMemo(()=>studentRecord||[]
     )

@@ -22,7 +22,7 @@ function Table({ columns, data }){
 
   const deleterecord = async (exce_id) => {
         const record = {userid:info._id, exceid: exce_id}
-        console.log(record);
+        //console.log(record);
         try {
           const response = await fetch('/api/deleterecord', {
             method: 'POST',
@@ -34,7 +34,7 @@ function Table({ columns, data }){
       
           if (response.ok) {
             const data = await response.json();
-            console.log(data.message);
+            //console.log(data.message);
             toast.info(data.message, {
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 3000, // close after 3 seconds
@@ -177,7 +177,7 @@ function RecordsTable(props){
 
   const data_array = info.records;
 
-  console.log(info.records)
+  //console.log(info.records)
 
   const data = data_array || []
 

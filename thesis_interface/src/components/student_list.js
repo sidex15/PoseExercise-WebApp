@@ -16,7 +16,7 @@ function Table({ columns, data }){
   let id = 0;
 
   const currentcoach = async(e) =>{
-    console.log(info.id)
+    //console.log(info.id)
     try {
         const res = await fetch('/api/findstudentrecord', {
         method: 'POST',
@@ -47,7 +47,7 @@ function Table({ columns, data }){
 
   const deletecoach = async (studid) => {
     const coach = {coachid: curcoach, studid: studid}
-    console.log(coach.studid);
+    //console.log(coach.studid);
     try {
       const response = await fetch('/api/deletestudents', {
         method: 'POST',
@@ -59,7 +59,7 @@ function Table({ columns, data }){
   
       if (response.ok) {
         const data = await response.json();
-        console.log(data.message);
+        //console.log(data.message);
       } else {
         console.error(`HTTP error! status: ${response.status}`);
       }
@@ -94,8 +94,8 @@ function Table({ columns, data }){
                                   // GET THE SELECTED STUDENT DATA HERE BY ACCESSING row OBJECT
 
                                   setSelectedName(row.values.StudentName);
-                                  console.log(row.values)
-                                  console.log(row.id)
+                                  //console.log(row.values)
+                                  //console.log(row.id)
                                   id = row.id;
                                   currentcoach();
                                 }

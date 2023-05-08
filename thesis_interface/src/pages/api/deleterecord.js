@@ -23,7 +23,7 @@ export default async function deleterecord(req, res) {
     const Userid = userid
     // Save the user to the database
     const deleterecord = await usersCollection.updateOne({_id: new ObjectId(Userid)},{$pull:{records: {exce_id: new ObjectId(exceid)}}});
-    console.log(deleterecord);
+    console.error(deleterecord);
     if (deleterecord.modifiedCount == true) {
       res.status(200).json({ message: "Record Removed" });
     } else {

@@ -27,7 +27,7 @@ export default function Result (){
     const { exerciseReps, exerciseDuration, avgRepsSpeed, borgQnA } = useContext(SessionContext);
     const { info, updatedb, setupdatedb } = useContext(UserInfoContext);
     const handleProceed = () => {
-        console.log(postValue)
+        //console.log(postValue)
         router.push('/dashboard')
     }
 
@@ -37,7 +37,6 @@ export default function Result (){
     const [avgRepsSpd, setAvgRepsSpd] = useState(0);
     const userid = Cookies.get('userinfoid');
     const addrecord = async (formData) => {
-        console.log(formData);
         if(!formData.reps == 0||!formData.reps === ''){
             try {
                 const response = await fetch('/api/addrecord', {
@@ -62,18 +61,18 @@ export default function Result (){
     }
 
     useEffect(() => {
-        console.log(borgQnA);
+        //console.log(borgQnA);
         let exerEval = evalExercise(borgQnA[0], borgQnA[1])
         const MET_val = exerEval[0];
         const result = exerEval[1];
         const duration_min = exerciseDuration/60;
         const weight = info.weight;
-        console.log(weight);
+        //console.log(weight);
         setCaloriesBurned(calcCalorie(duration_min, MET_val, weight).toFixed(2));
         setExerDuration(formatTime(exerciseDuration));
         setExerRep(exerciseReps);
-        console.log(avgRepsSpeed);
-        console.log(average(avgRepsSpeed));
+        //console.log(avgRepsSpeed);
+        //console.log(average(avgRepsSpeed));
         setAvgRepsSpd(average(avgRepsSpeed).toFixed(2));
         const formData={ 
             userid: userid,
