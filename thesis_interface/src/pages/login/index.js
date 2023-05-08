@@ -16,6 +16,14 @@ function Login () {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          document.getElementById('submit').click();
+        }
+      };
+      
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -72,13 +80,13 @@ function Login () {
                         </div>
                         <div className="mt-8">
                           <span className="absolute lg:p-4 p-3"><FaLock color="blue" className="lg:h-12 h-8 lg:w-12 w-8"/></span>
-                          <input type="password" placeholder="Password" onChange={handlePasswordChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
+                          <input type="password" placeholder="Password" onKeyDown={handleKeyDown} onChange={handlePasswordChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
                         </div>
                         <div className="flex justify-center mt-3">
                             <button type="submit" onClick={signup} className=" font-bold rounded-3xl text-cyan-blue p-4">Don't have an account yet? <span className="underline">Sign up</span></button>
                         </div>
                         <div className="flex justify-center mt-7">
-                            <button type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32" onClick={handleSubmit}>Login</button>
+                            <button id="submit" type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32" onClick={handleSubmit}>Login</button>
                         </div>
                     </form>
                     </div>
