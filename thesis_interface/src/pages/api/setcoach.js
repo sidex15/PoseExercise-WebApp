@@ -27,7 +27,7 @@ export default async function setcoach(req, res) {
     const insert = await usersCollection.updateOne({invcode: Invcode},{$push:{students: Userid}});
     const insertcoach = await usersCollection.updateOne({_id: new ObjectId(Userid)},{$set:{coach: String(coach._id)}});
     if (insert.acknowledged == true && insertcoach.acknowledged == true) {
-      console.error(insert,insertcoach,coach._id);
+      //console.error(insert,insertcoach,coach._id);
       res.status(200).json({ message: "Coach Added" });
     } else {
       res.status(500).json({ message: 'Coach failed' });
