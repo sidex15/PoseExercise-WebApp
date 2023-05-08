@@ -88,6 +88,8 @@ const StudentRecord = () => {
                 <h1 className="font-mono font-bold text-4xl 2xl:text-4xl text-cyan-blue ml-3">Student's List</h1>
                 <hr className="border-solid border-2 border-blue-900 my-4" />
                 <h1 className="text-center text-cyan-blue">Select one to view their Exercise sessions</h1>
+
+                {/* PASS THE DATA AS PROPS HERE TO THIS COMPONENT */}
                 <StudentList data={studentList}/>
             </div>
             <div className="h-full w-5/6 px-28 pt-4">
@@ -98,6 +100,8 @@ const StudentRecord = () => {
                     </div>
                     <h1 className='font-mono font-bold text-3xl text-cyan-blue mt-7'>Viewing <i>{name}</i> Exercise Sessions</h1>
                     <div className="bg-grey mt-7 h-2/3">
+
+                        {/* PASS THE DATA AS PROPS HERE TO THIS COMPONENT */}
                         <StudentRecordsTable data={data}/>
                     </div>
                 </div>
