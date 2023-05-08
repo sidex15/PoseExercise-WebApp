@@ -123,6 +123,16 @@ const Profile = () => {
     const setcoach = async (e) => {
         const coach = {invcode:Invcode, userid: userid}
         console.log(coach);
+        if(Invcode==info.invcode){
+            toast.error("Do not use your own Invite code", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000, // close after 3 seconds
+                hideProgressBar: true, // hide the progress bar
+                closeOnClick: true, // close on click
+                pauseOnHover: true, // pause on hover
+                draggable: true,}) // allow dragging
+            return;
+        }
         try {
           const response = await fetch('/api/setcoach', {
             method: 'POST',
