@@ -8,77 +8,63 @@ import StudentList from "@/components/student_list";
 import { Button } from "flowbite-react";
 import { Toast } from "flowbite-react";
 import StudentRecordsContext from "../api/stud_records-context";
+import UserInfoContext from '@/pages/api/user_info-conntext';
 
 const StudentRecord = () => {
 
-    const {selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername} = useContext(StudentRecordsContext);
+    const {selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername, studentRecord, setstudentRecord} = useContext(StudentRecordsContext);
     const [name, setName] = useState(selectedName);
+    const [students,setstudents]=useState([]);
+    const {info} = useContext(UserInfoContext);
     const [copyCode, setCopyCode] = useState('ABCD-1234');
+    let curcoach = info._id
 
     useEffect(()=>{
+        console.log(curcoach)
+        const currentcoach = async(e) =>{
+            try {
+                const res = await fetch('/api/findstudents', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({curcoach}),
+                });
+        
+            if (!res.ok) {
+                const { message } = await res.json();
+                throw new Error(message);
+            }
+        
+            // store the token in a cookie
+            const { coachinfo } = await res.json();
+            //console.log(coachinfo);
+            //const fcoachinfo = coachinfo;
+            //setCoach(fcoachinfo);
+            //setUserHaveCoach(true);
+            setstudents(coachinfo);
+
+            } catch (error) {
+                console.log(error);
+                //setUserHaveCoach(false)
+
+            }
+        }
+        currentcoach();
+
         setName(selectedName);
-    })
+        setCopyCode(info.invcode);
+    },[info,selectedName])
 
     function copyToClipboard() {
         navigator.clipboard.writeText(copyCode);
     }
 
-    const data = useMemo(()=>[
-        {
-            avgreps: "3.66",
-            calburn: "4.58",
-            date: "2023-05-04T14:00:45.035Z",
-            duration: "00:21",
-            extype: "SIT-UPS",
-            records_id: "6455f1594908fb9bf9c6555a",
-            reps: 4,
-            result: "Vigorous Activity"
-        },
-        {
-            avgreps: "5.66",
-            calburn: "10.28",
-            date: "2023-05-04T14:00:45.035Z",
-            duration: "00:21",
-            extype: "PUSH-UPS",
-            records_id: "6455f1594908fb9bf9c6555a",
-            reps: 4,
-            result: "Light Activity"
-        },
-        {
-            avgreps: "5.66",
-            calburn: "10.28",
-            date: "2023-05-04T14:00:45.035Z",
-            duration: "00:21",
-            extype: "PUSH-UPS",
-            records_id: "6455f1594908fb9bf9c6555a",
-            reps: 4,
-            result: "Light Activity"
-        }
-    ]
+    console.log(students);
+
+    const data = useMemo(()=>studentRecord||[]
     )
 
     const studentList = useMemo(
-        () => [
-          {
-            username: 'usn1',
-            firstName: 'First Name',
-            middleName: 'Middle Name',
-            lastName: 'Last Name'
-          },
-          {
-            username: 'usn2',
-            firstName: 'Hello2',
-            middleName: 'World',
-            lastName: '!!!!'
-          },
-          {
-            username: 'usn3',
-            firstName: 'Hello3',
-            middleName: 'World',
-            lastName: '!!!!'
-          },
-        ],
-        []
+        () => students
     )
     
     return ( <Layout>

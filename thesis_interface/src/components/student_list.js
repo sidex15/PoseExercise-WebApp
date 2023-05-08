@@ -6,12 +6,68 @@ import UserInfoContext from '@/pages/api/user_info-conntext';
 import { Button } from "flowbite-react";
 import { RxCross1 } from "react-icons/rx";
 import StudentRecordsContext from "@/pages/api/stud_records-context";
-
 function Table({ columns, data }){
 
-  const {selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername} = useContext(StudentRecordsContext);
-
+  const {selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername, studentRecord, setstudentRecord} = useContext(StudentRecordsContext);
+  const {info,setupdatedb} = useContext(UserInfoContext);
   const [isActive, setIsActive] = useState();
+  let curcoach = info._id
+  let counter = 0;
+  let id = 0;
+
+  const currentcoach = async(e) =>{
+    console.log(info.id)
+    try {
+        const res = await fetch('/api/findstudentrecord', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({curcoach,id}),
+        });
+
+    if (!res.ok) {
+        const { message } = await res.json();
+        throw new Error(message);
+    }
+
+    // store the token in a cookie
+    const { coachinfo } = await res.json();
+    //console.log(coachinfo);
+    //const fcoachinfo = coachinfo;
+    //setCoach(fcoachinfo);
+    //setUserHaveCoach(true);
+    //setstudents(coachinfo);
+    setstudentRecord(coachinfo);
+
+    } catch (error) {
+        console.log(error);
+        //setUserHaveCoach(false)
+
+    }
+  }
+
+  const deletecoach = async (studid) => {
+    const coach = {coachid: curcoach, studid: studid}
+    console.log(coach.studid);
+    try {
+      const response = await fetch('/api/deletestudents', {
+        method: 'POST',
+        body: JSON.stringify(coach),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+      } else {
+        console.error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setupdatedb(counter += 1);
+  };
   
     const {
         getTableProps,
@@ -39,6 +95,9 @@ function Table({ columns, data }){
 
                                   setSelectedName(row.values.StudentName);
                                   console.log(row.values)
+                                  console.log(row.id)
+                                  id = row.id;
+                                  currentcoach();
                                 }
                                 }>
                                     {cell.render('Cell')}
@@ -49,7 +108,7 @@ function Table({ columns, data }){
                     if(cell.column.Header=="Action"){
                         return (
                             <td {...cell.getCellProps()} className={`${isActive === row.id ? 'bg-sky-500' : ''} flex justify-center items-center col-span-1`}>
-                                <button className="">
+                                <button className="" onClick={()=>deletecoach(row.id)}>
                                     <RxCross1/>
                                 </button>
                             </td>

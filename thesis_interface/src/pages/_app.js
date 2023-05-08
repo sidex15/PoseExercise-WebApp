@@ -24,6 +24,7 @@ export default function App({ Component, pageProps }) {
   const [selectedStudent, setSelectedStudent] = useState();
   const [selectedName, setSelectedName] = useState();
   const [selectedUsername, setSelectedUsername] = useState();
+  const [studentRecord, setstudentRecord] = useState();
   
   const userid = Cookies.get('userinfoid');
   
@@ -80,7 +81,7 @@ export default function App({ Component, pageProps }) {
     <UserInfoContext.Provider value={{info, setinfo, updatedb, setupdatedb}}>
       <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
         <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
-          <StudentRecordsContext.Provider value={{selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername}}>
+          <StudentRecordsContext.Provider value={{selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername, studentRecord, setstudentRecord}}>
             <Head>
               <link rel="icon" href="/favicon/ai.jpg" />
             </Head>

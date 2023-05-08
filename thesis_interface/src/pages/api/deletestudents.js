@@ -4,8 +4,8 @@ import { useContext } from "react";
 import { ObjectId } from 'mongodb';
 
 
-export default async function deletecoach(req, res) {
-  const { userid, coachid} = req.body;
+export default async function deletestudents(req, res) {
+  const { coachid,studid} = req.body;
   //const { info } = useContext(UserInfoContext);
   //console.log(info);
   
@@ -21,11 +21,11 @@ export default async function deletecoach(req, res) {
     
     // Create a new user object
     const Coachid = coachid
-    const Userid = userid
+    const Studid = studid
     // Save the user to the database
     const coach = await usersCollection.findOne({_id: new ObjectId(Coachid)});
-    const deletestud = await usersCollection.updateOne({_id: new ObjectId(Coachid)},{$pull:{students: Userid}});
-    const deletecoach = await usersCollection.updateOne({_id: new ObjectId(Userid)},{$unset:{coach: String(coach._id)}});
+    const deletestud = await usersCollection.updateOne({_id: new ObjectId(Coachid)},{$pull:{students: coach.students[Studid]}});
+    const deletecoach = await usersCollection.updateOne({_id: new ObjectId(coach.students[Studid])},{$unset:{coach: String(coach._id)}});
     if (deletestud.acknowledged == true && deletecoach.acknowledged == true) {
       console.error(deletestud,deletecoach,coach._id);
       res.status(200).json({ message: "Coach Removed" });
