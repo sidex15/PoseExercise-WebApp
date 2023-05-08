@@ -4,8 +4,8 @@ import { useContext } from "react";
 import { ObjectId } from 'mongodb';
 
 
-export default async function addrecord(req, res) {
-  const { userid, extype, calburn, reps, avgreps, duration, result } = req.body;
+export default async function deleterecord(req, res) {
+  const { userid, exceid} = req.body;
   //const { info } = useContext(UserInfoContext);
   //console.log(info);
   
@@ -20,14 +20,14 @@ export default async function addrecord(req, res) {
     const usersCollection = database.collection('thesis');
     
     // Create a new user object
-    const newrecords = { exce_id: new ObjectId(), date: new Date(), extype, calburn, reps, avgreps, duration, result };
+    const Userid = userid
     // Save the user to the database
-    const insert = await usersCollection.updateOne({_id: new ObjectId(userid)},{$push:{records: newrecords}});
-    if (insert.acknowledged == true) {
-      console.error(newrecords);
-      res.status(200).json({ message: 'Records Added' });
+    const deleterecord = await usersCollection.updateOne({_id: new ObjectId(Userid)},{$pull:{records: {exce_id: new ObjectId(exceid)}}});
+    console.log(deleterecord);
+    if (deleterecord.modifiedCount == true) {
+      res.status(200).json({ message: "Record Removed" });
     } else {
-      res.status(500).json({ message: 'Add Records failed' });
+      res.status(500).json({ message: 'Record failed' });
     }
   } catch (error) {
     console.error(error);

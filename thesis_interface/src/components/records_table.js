@@ -11,10 +11,47 @@ import { Modal } from "flowbite-react";
 import { Button } from "flowbite-react";
 import { GiConfirmed } from "react-icons/gi";
 import { HiOutlineExclamation } from "react-icons/hi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Table({ columns, data }){
-
+  const { info,updatedb,setupdatedb } = useContext(UserInfoContext);
+  let counter = updatedb;
+  let [exceid,setexceid]=useState();
   const [deleteBtnToggled, setDeleteBtnToggled] = useState(false);
+
+  const deleterecord = async (exce_id) => {
+        const record = {userid:info._id, exceid: exce_id}
+        console.log(record);
+        try {
+          const response = await fetch('/api/deleterecord', {
+            method: 'POST',
+            body: JSON.stringify(record),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data.message);
+            toast.info(data.message, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000, // close after 3 seconds
+                hideProgressBar: true, // hide the progress bar
+                closeOnClick: true, // close on click
+                pauseOnHover: true, // pause on hover
+                draggable: true, // allow dragging
+              });
+          } else {
+            console.error(`HTTP error! status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+        setupdatedb(counter += 1);
+        setDeleteBtnToggled(false)
+    };
 
   const {
     getTableProps,
@@ -67,7 +104,7 @@ function Table({ columns, data }){
                       {/* <button >
                         <IoIosExit className="text-slate-900 lg:text-xl"/>
                       </button> */}
-                      <button onClick={()=>setDeleteBtnToggled(true)}>
+                      <button onClick={()=>{setDeleteBtnToggled(true);setexceid(cell.value)}}>
                         <MdDelete className="text-red-600 lg:text-xl"/>
                       </button>
                       </td>;
@@ -119,7 +156,7 @@ function Table({ columns, data }){
             <div className="flex justify-center gap-4">
                 
             {/* Insert onclick property and trigger delete query to db */}
-            <Button color="failure" onClick={"none"}>
+            <Button color="failure" onClick={()=>deleterecord(exceid)}>
                 Confirm
             </Button>
 
@@ -130,6 +167,7 @@ function Table({ columns, data }){
           </div>
         </Modal.Body>
       </Modal>
+      
     </>
   )
 }
@@ -153,7 +191,7 @@ function RecordsTable(props){
         { Header: 'Avg. Reps Speed', accessor: 'avgreps', },
         { Header: 'Session Duration', accessor: 'duration', },
         { Header: 'Result', accessor: 'result', },
-        { Header: 'Action', accessor: 'test', }
+        { Header: 'Action', accessor: 'exce_id', }
       ],
       []
   );
@@ -161,6 +199,7 @@ function RecordsTable(props){
   return(
     <>
       <Table columns={columns} data={data}/>
+      <ToastContainer/>
     </>
     
   )
