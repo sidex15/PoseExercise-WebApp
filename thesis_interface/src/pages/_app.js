@@ -75,7 +75,7 @@ export default function App({ Component, pageProps }) {
       <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
         <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
           <Head>
-            <link rel="icon" href="/favicon/ai.jpg" />
+            <link rel="icon" href="/favicon/favicon.ico" />
           </Head>
           <Component {...pageProps} />
         </SessionContext.Provider>

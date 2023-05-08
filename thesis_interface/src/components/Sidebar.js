@@ -11,12 +11,6 @@ const Sidebar = ({open}) => {
 
     const router = useRouter();
 
-    const [isCoach, setIsCoach] = useState(false);
- 
-    // this condition set the student record button visible or not
-    // if anyone enter the user coaching code {
-    //     setIsCoach(true);
-    // }
 
     const [isLogin, setIsLogin] = useState();
     const token = Cookies.get('token');
@@ -47,7 +41,7 @@ const Sidebar = ({open}) => {
         { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "/dashboard", display: true},
         { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "/session", display: true},
         { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "/exer_records", display: isLogin},
-        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "/stud_records", display: isCoach},
+        { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "/stud_records", display: isLogin},
         { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, path: "/profile", gap: true, display: isLogin},
     ]
     
