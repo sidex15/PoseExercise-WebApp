@@ -6,6 +6,7 @@ import ExerciseContext from "../pages/api/exercise-context";
 import UserInfoContext from '@/pages/api/user_info-conntext';
 import SessionContext from '@/pages/api/session_result';
 import fetchuserinfo from "@/pages/api/userinfo";
+import StudentRecordsContext from './api/stud_records-context';
 import Head from 'next/head';
 
 export default function App({ Component, pageProps }) {
@@ -16,8 +17,13 @@ export default function App({ Component, pageProps }) {
   const [avgRepsSpeed, setAvgRepsSpeed] = useState([]);
   const [exerciseDuration, setExerciseDuration] = useState();
   const [borgQnA, setBorgQnA] = useState([]);
-  const [info, setinfo] = useState({})
-  const [updatedb, setupdatedb] = useState(0)
+  const [info, setinfo] = useState({});
+  const [updatedb, setupdatedb] = useState(0);
+  
+  // STUDENT RECORDS CONTEXT
+  const [selectedStudent, setSelectedStudent] = useState();
+  const [selectedName, setSelectedName] = useState();
+  const [selectedUsername, setSelectedUsername] = useState();
   
   const userid = Cookies.get('userinfoid');
   
@@ -74,10 +80,12 @@ export default function App({ Component, pageProps }) {
     <UserInfoContext.Provider value={{info, setinfo, updatedb, setupdatedb}}>
       <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
         <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
-          <Head>
-            <link rel="icon" href="/favicon/ai.jpg" />
-          </Head>
-          <Component {...pageProps} />
+          <StudentRecordsContext.Provider value={{selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername}}>
+            <Head>
+              <link rel="icon" href="/favicon/ai.jpg" />
+            </Head>
+            <Component {...pageProps} />
+          </StudentRecordsContext.Provider>
         </SessionContext.Provider>
       </ExerciseContext.Provider>
     </UserInfoContext.Provider>
