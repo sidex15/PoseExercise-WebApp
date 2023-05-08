@@ -7,9 +7,15 @@ import { BiSkipPrevious } from "react-icons/bi";
 import { BiSkipNext } from "react-icons/bi";
 import Result from "@/pages/session-results";
 import UserInfoContext from '@/pages/api/user_info-conntext';
-
+import { Modal } from "flowbite-react";
+import { Button } from "flowbite-react";
+import { GiConfirmed } from "react-icons/gi";
+import { HiOutlineExclamation } from "react-icons/hi";
 
 function Table({ columns, data }){
+
+  const [deleteBtnToggled, setDeleteBtnToggled] = useState(false);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -61,7 +67,7 @@ function Table({ columns, data }){
                       {/* <button >
                         <IoIosExit className="text-slate-900 lg:text-xl"/>
                       </button> */}
-                      <button onClick={()=>console.log(row.cells[val].row.original.records_id)}>
+                      <button onClick={()=>setDeleteBtnToggled(true)}>
                         <MdDelete className="text-red-600 lg:text-xl"/>
                       </button>
                       </td>;
@@ -102,6 +108,28 @@ function Table({ columns, data }){
           </strong>{' '}
         </span>{' '}
       </div>
+      <Modal show={deleteBtnToggled} size="md" popup={true} onClose={()=>setDeleteBtnToggled(false)}>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamation className="mx-auto mb-4 h-14 w-14 text-red-600" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            Do you want to delete the selected records?
+            </h3>
+            <div className="flex justify-center gap-4">
+                
+            {/* Insert onclick property and trigger delete query to db */}
+            <Button color="failure" onClick={"none"}>
+                Confirm
+            </Button>
+
+            <Button color="gray" onClick={()=>setDeleteBtnToggled(false)}>
+                Cancel
+            </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   )
 }
@@ -131,7 +159,10 @@ function RecordsTable(props){
   );
   
   return(
-    <Table columns={columns} data={data} />
+    <>
+      <Table columns={columns} data={data}/>
+    </>
+    
   )
 }
 
