@@ -4,26 +4,51 @@ import { TbReportSearch } from "react-icons/tb";
 import { RiFileUserLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter } from "next/router";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const Sidebar = ({open}) => {
 
     const router = useRouter();
 
-    const [isCoach, setIsCoach] = useState(true);
+    const [isCoach, setIsCoach] = useState(false);
  
     // this condition set the student record button visible or not
     // if anyone enter the user coaching code {
     //     setIsCoach(true);
     // }
 
+    const [isLogin, setIsLogin] = useState();
+    const token = Cookies.get('token');
+
+    useEffect(() => {
+        const verifyToken = async () => {
+            try {
+                const res = await fetch('/api/verify-token', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (!res.ok) {
+                    const { message } = await res.json();
+                    throw new Error(message);
+                }
+                setIsLogin(true);
+            } catch (error) {
+                setIsLogin(false);
+            }
+        }
+        verifyToken();
+
+    }, []);
 
     const Menus = [
         { title: "Dashboard", icon: <RiHomeLine size='30px' color='white' />, path: "/dashboard", display: true},
         { title: "Workout Session", icon: <GiBiceps size='30px' color='white' />, path: "/session", display: true},
-        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "/exer_records", display: true},
+        { title: "Exercise Records", icon: <TbReportSearch size='30px' color='white' />, path: "/exer_records", display: isLogin},
         { title: "Student Records", icon: <RiFileUserLine size='30px' color='white' />, path: "/stud_records", display: isCoach},
-        { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, path: "/profile", gap: true, display: true},
+        { title: "Profile", icon: <IoSettingsOutline size='30px' color='white'/>, path: "/profile", gap: true, display: isLogin},
     ]
     
 
