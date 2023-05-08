@@ -62,13 +62,13 @@ const Userinfo = () => {
                             <div className="flex flex-col">
                                 <p className="ml-3">SEX</p>
                                 <div className="ml-7 flex">
-                                    <div>
-                                        <input type="radio" name="sex" value="male" checked={formData.sex === 'Male'} onChange={handleChange} required/>
-                                        <label for="male">Male</label>
+                                    <div className='flex items-center gap-1'>
+                                        <input type="radio" id='male' name="sex" value="Male" checked={formData.sex === 'Male'} onChange={handleChange} required/>
+                                        <label htmlFor="male">Male</label>
                                     </div>
-                                    <div className="ml-4">
-                                        <input type="radio" name="sex" value="female" checked={formData.sex === 'Female'} onChange={handleChange} required/>
-                                        <label for="female">Female</label>
+                                    <div className="ml-4 flex items-center gap-1">
+                                        <input type="radio" id='female' name="sex" value="Female" checked={formData.sex === 'Female'} onChange={handleChange} required/>
+                                        <label htmlFor="female">Female</label>
                                     </div>
                                 </div>
                             </div>

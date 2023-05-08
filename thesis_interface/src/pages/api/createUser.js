@@ -16,7 +16,7 @@ export default async function createUser(req, res) {
     
     // Create a new user object
     const invcode = generateCode(username);
-    console.log(newinvcode);
+    console.log(invcode);
     const newUser = { username, password, firstName, middleName, lastName, birthDate, weight, height, sex, invcode };
 
     // Save the user to the database
