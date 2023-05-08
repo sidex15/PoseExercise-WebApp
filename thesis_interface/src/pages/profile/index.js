@@ -24,6 +24,7 @@ import { TextInput } from "flowbite-react";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRowState } from "react-table";
 
 const Profile = () => {
     const { info, updatedb, setupdatedb } = useContext(UserInfoContext);
@@ -33,10 +34,13 @@ const Profile = () => {
     const [sex, setSex] = useState();
     const [height, setHeight] = useState();
     const [weight, setWeight] = useState();
+    const [Invcode,setInvcode] = useState();
+    const [Coach, setCoach] = useState({});
     const [saveBtnToggled, setSaveBtnToggled] = useState(false);
     const [userHaveCoach, setUserHaveCoach] = useState(false);
     const userid = Cookies.get('userinfoid');
     let counter = updatedb
+    let curcoach = info.coach
 
     useEffect(() => {
         setName({
@@ -49,10 +53,37 @@ const Profile = () => {
         setHeight(info.height)
         setWeight(info.weight)
         console.log(weight)
+        const currentcoach = async(e) =>{
+            try {
+                const res = await fetch('/api/fetchcoach', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({curcoach}),
+                });
+        
+            if (!res.ok) {
+                const { message } = await res.json();
+                throw new Error(message);
+            }
+        
+            // store the token in a cookie
+            const { coachinfo } = await res.json();
+            console.log(coachinfo);
+            const fcoachinfo = coachinfo;
+            setCoach(fcoachinfo);
+            setUserHaveCoach(true);
+        
+            } catch (error) {
+                console.log(error);
+                setUserHaveCoach(false)
+
+            }
+        }
+        currentcoach();
     },[info])
 
-    const handleChange = (e) => {
-        setformData({ ...formData, [e.target.name]: e.target.value });
+    const invcode = (e) => {
+        setInvcode(e.target.value);
     };
     
     const updateuser = async (e) => {
@@ -88,11 +119,84 @@ const Profile = () => {
         }
         setupdatedb(counter += 1);
       };
+
+    const setcoach = async (e) => {
+        const coach = {invcode:Invcode, userid: userid}
+        console.log(coach);
+        try {
+          const response = await fetch('/api/setcoach', {
+            method: 'POST',
+            body: JSON.stringify(coach),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data.message);
+            toast.success(data.message, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000, // close after 3 seconds
+                hideProgressBar: true, // hide the progress bar
+                closeOnClick: true, // close on click
+                pauseOnHover: true, // pause on hover
+                draggable: true, // allow dragging
+              });
+          } else {
+            console.error(`HTTP error! status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+        setupdatedb(counter += 1);
+      };
     
+    const deletecoach = async (e) => {
+        const coach = {coachid:Coach._id, userid: userid}
+        console.log(coach);
+        try {
+          const response = await fetch('/api/deletecoach', {
+            method: 'POST',
+            body: JSON.stringify(coach),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data.message);
+            toast.info(data.message, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000, // close after 3 seconds
+                hideProgressBar: true, // hide the progress bar
+                closeOnClick: true, // close on click
+                pauseOnHover: true, // pause on hover
+                draggable: true, // allow dragging
+              });
+          } else {
+            console.error(`HTTP error! status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+        setupdatedb(counter += 1);
+      };
     const handleAvatarSelected = () => {
-        if(info.sex=="Male" || setSex=="Male"){
+        
+        if(info.sex=="Male" || setSex=="Male" || Coach.sex=="Male"){
             return male_avatar;
-        }else if(info.sex=="Female" || setSex=="Female"){
+        }else if(info.sex=="Female" || setSex=="Female" || Coach.sex=="Female"){
+            return female_avatar;
+        }
+    }
+
+    const handleCoachAvatarSelected = () => {
+        
+        if(Coach.sex=="Male"){
+            return male_avatar;
+        }else if(Coach.sex=="Female"){
             return female_avatar;
         }
     }
@@ -251,7 +355,7 @@ const Profile = () => {
                                 {userHaveCoach?(
                                     <Dropdown inline={true} label="">
                                         <Dropdown.Item>
-                                        <a href="#" className="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <a href="#" className="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white" onClick={deletecoach}>
                                             Remove
                                         </a>
                                         </Dropdown.Item>
@@ -263,7 +367,7 @@ const Profile = () => {
                             <div className="flex flex-col items-center pb-4 px-10">
                                 {userHaveCoach?(
                                     // Make it dynamic by getting coach's sex or gender
-                                    <Image src={male_avatar} className="mb-3 h-24 w-24 rounded-full shadow-lg"></Image>
+                                    <Image src={handleCoachAvatarSelected()} className="mb-3 h-24 w-24 rounded-full shadow-lg"></Image>
                                 ):
                                     // Default Avatar
                                     <AiOutlineQuestionCircle className="mb-3 h-24 w-24 rounded-full shadow-lg text-lg text-gray-400"/>
@@ -272,7 +376,7 @@ const Profile = () => {
                                     {userHaveCoach?(
                                         <>
                                             {/* SET Coach's Name here */}
-                                            John Doe
+                                            {Coach.firstName+' '+Coach.middleName+' '+Coach.lastName}
                                         </>
                                     ):
                                         <>
@@ -297,10 +401,10 @@ const Profile = () => {
                                             <Label htmlFor="coachCode" value="Enter Coach code:"/>
                                         </div>
                                         <div className="col-span-3 flex justify-center items-center">
-                                            <TextInput id="coachCode" type="text" placeholder="Code" required={true}/>
+                                            <TextInput value={Invcode} onChange={invcode} type="text" placeholder="Code" required={true}/>
                                         </div>
                                         <div className="col-span-2 flex justify-end items-center">
-                                            <Button type="button">Continue</Button>
+                                            <Button type="button" onClick={setcoach}>Continue</Button>
                                         </div>
                                     </form>
                                 </Card>
