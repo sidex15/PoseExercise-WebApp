@@ -26,7 +26,7 @@ const PostQuestions = (props) => {
             <div className="bg-white flex flex-col items-center md:py-6 lg:py-12 px-14 absolute w-3/6">
                 <p className="font-mono font-bold text-cyan-blue text-4xl 2xl:text-5xl 2xl:pb-3 text-center">{props.question}</p>
                 {Choices.map((choice, index) => (
-                    <div key={index} className='border-2 border-cyan-blue bg-#D9D9D9 p-2 pl-5 w-4/5 flex gap-4 mt-3'>
+                    <div key={index} className='border-2 border-cyan-blue bg-#D9D9D9 p-2 pl-5 w-4/5 flex justify-start items-center gap-4 mt-3'>
                         <input type="radio" value={choice.title} checked={selectedValue === choice.title} onChange={handleChange} className="scale-150"/>
                         <label className="font-mono font-bold text-cyan-blue xl:text-xl 2xl:text-4xl">{choice.title}</label>
                     </div>

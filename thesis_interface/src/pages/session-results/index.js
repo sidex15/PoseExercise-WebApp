@@ -17,6 +17,7 @@ import formatTime from "@/lib/format_time";
 import fetchuserinfo from "@/pages/api/userinfo";
 import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
+import Head from "next/head";
 
 export default function Result (){
 
@@ -125,7 +126,7 @@ export default function Result (){
                         <button type="submit" className={`bg-cyan-blue font-bold rounded-2xl text-white p-4`} onClick={() => {handleProceed();}}>Proceed to Dashboard</button> 
                     </div>
                 </div>
-                <ToastContainer />
+                {/* <ToastContainer /> */}
             </div>
         </Layout>
     );
