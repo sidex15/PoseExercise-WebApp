@@ -9,10 +9,10 @@ import StudentRecordsContext from "@/pages/api/stud_records-context";
 function Table({ columns, data }){
 
   const {selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername, studentRecord, setstudentRecord} = useContext(StudentRecordsContext);
-  const {info,setupdatedb} = useContext(UserInfoContext);
+  const {info,updatedb,setupdatedb} = useContext(UserInfoContext);
   const [isActive, setIsActive] = useState();
   let curcoach = info._id
-  let counter = 0;
+  let counter = updatedb;
   let id = 0;
 
   const currentcoach = async(e) =>{
@@ -108,7 +108,7 @@ function Table({ columns, data }){
                     if(cell.column.Header=="Action"){
                         return (
                             <td {...cell.getCellProps()} className={`${isActive === row.id ? 'bg-sky-500' : ''} flex justify-center items-center col-span-1`}>
-                                <button className="" onClick={()=>deletecoach(row.id)}>
+                                <button className="" onClick={()=>deletecoach(row.values._id)}>
                                     <RxCross1/>
                                 </button>
                             </td>
@@ -134,7 +134,7 @@ function StudentList(props){
           },
           {
             Header: 'Action',
-            accessor: '',
+            accessor: '_id',
           },
         ],
         []
