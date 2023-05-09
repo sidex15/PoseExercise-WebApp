@@ -27,7 +27,7 @@ export default async function deletecoach(req, res) {
     const deletestud = await usersCollection.updateOne({_id: new ObjectId(Coachid)},{$pull:{students: Userid}});
     const deletecoach = await usersCollection.updateOne({_id: new ObjectId(Userid)},{$unset:{coach: String(coach._id)}});
     if (deletestud.acknowledged == true && deletecoach.acknowledged == true) {
-      console.error(deletestud,deletecoach,coach._id);
+      //console.error(deletestud,deletecoach,coach._id);
       res.status(200).json({ message: "Coach Removed" });
     } else {
       res.status(500).json({ message: 'Coach failed' });

@@ -9,6 +9,7 @@ import { Button } from "flowbite-react";
 import { Toast } from "flowbite-react";
 import StudentRecordsContext from "../api/stud_records-context";
 import UserInfoContext from '@/pages/api/user_info-conntext';
+import { ToastContainer, toast } from 'react-toastify';
 
 const StudentRecord = () => {
 
@@ -20,7 +21,7 @@ const StudentRecord = () => {
     let curcoach = info._id
 
     useEffect(()=>{
-        console.log(curcoach)
+        //console.log(curcoach)
         const currentcoach = async(e) =>{
             try {
                 const res = await fetch('/api/findstudents', {
@@ -56,9 +57,18 @@ const StudentRecord = () => {
 
     function copyToClipboard() {
         navigator.clipboard.writeText(copyCode);
+
+        toast.success("Copied to clipboard", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // close after 3 seconds
+            hideProgressBar: true, // hide the progress bar
+            closeOnClick: true, // close on click
+            pauseOnHover: true, // pause on hover
+            draggable: true, // allow dragging
+          });
     }
 
-    console.log(students);
+    //console.log(students);
 
     const data = useMemo(()=>studentRecord||[]
     )
@@ -92,6 +102,7 @@ const StudentRecord = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     </Layout>
     );

@@ -10,7 +10,7 @@ export default async function findstudents(req, res) {
 
   // Find the user in the database
   const coach = await db.collection('thesis').aggregate([{$match:{ coach: String(curcoach) }},{$project:{_id:1, username:1,firstName:1,middleName:1,lastName:1}},{$sort:{'students._id':-1}}]).toArray();
-  console.log(coach);
+  //console.error(coach);
   if (!coach) {
     return res.status(401).json({ message: 'Coach not found' });
   }

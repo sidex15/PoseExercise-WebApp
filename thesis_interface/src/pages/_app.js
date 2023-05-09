@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
 import { useRouter,usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';

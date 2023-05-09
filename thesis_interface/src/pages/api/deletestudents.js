@@ -24,10 +24,10 @@ export default async function deletestudents(req, res) {
     const Studid = studid
     // Save the user to the database
     const coach = await usersCollection.findOne({_id: new ObjectId(Coachid)});
-    const deletestud = await usersCollection.updateOne({_id: new ObjectId(Coachid)},{$pull:{students: coach.students[Studid]}});
-    const deletecoach = await usersCollection.updateOne({_id: new ObjectId(coach.students[Studid])},{$unset:{coach: String(coach._id)}});
+    const deletestud = await usersCollection.updateOne({_id: new ObjectId(Coachid)},{$pull:{students: Studid}});
+    const deletecoach = await usersCollection.updateOne({_id: new ObjectId(Studid)},{$unset:{coach: Coachid}});
     if (deletestud.acknowledged == true && deletecoach.acknowledged == true) {
-      console.error(deletestud,deletecoach,coach._id);
+      //console.error(deletestud,deletecoach);
       res.status(200).json({ message: "Coach Removed" });
     } else {
       res.status(500).json({ message: 'Coach failed' });

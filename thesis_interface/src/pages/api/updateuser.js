@@ -16,7 +16,7 @@ export default async function createUser(req, res) {
     
     // Create a new user object
     const newUser = { firstName, middleName, lastName, birthDate, weight, height, sex};
-    console.log(userid);
+    //console.log(userid);
     // Save the user to the database
     const result = await usersCollection.updateOne({_id: new ObjectId(userid)},{$set:newUser});
     if (result.acknowledged == true) {

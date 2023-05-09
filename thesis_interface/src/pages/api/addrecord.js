@@ -20,7 +20,7 @@ export default async function addrecord(req, res) {
     const usersCollection = database.collection('thesis');
     
     // Create a new user object
-    const newrecords = { date: new Date(), extype, calburn, reps, avgreps, duration, result };
+    const newrecords = { exce_id: new ObjectId(), date: new Date(), extype, calburn, reps, avgreps, duration, result };
     // Save the user to the database
     const insert = await usersCollection.updateOne({_id: new ObjectId(userid)},{$push:{records: newrecords}});
     if (insert.acknowledged == true) {
