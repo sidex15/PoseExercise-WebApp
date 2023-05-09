@@ -70,7 +70,7 @@ const StudentRecord = () => {
 
     //console.log(students);
 
-    const data = useMemo(()=>studentRecord||[]
+    const data = useMemo(()=>(studentRecord||[]).sort((a,b)=>{return new Date(b.date) - new Date(a.date)})
     )
 
     const studentList = useMemo(
