@@ -4,13 +4,22 @@ import { useMemo, useState, useEffect, use, useContext } from "react";
 import Result from "@/pages/session-results";
 import UserInfoContext from '@/pages/api/user_info-conntext';
 import { Button } from "flowbite-react";
-import { RxCross1 } from "react-icons/rx";
+import { RxCross2 } from "react-icons/rx";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import StudentRecordsContext from "@/pages/api/stud_records-context";
+import { Modal } from "flowbite-react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function Table({ columns, data }){
 
   const {selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername, studentRecord, setstudentRecord} = useContext(StudentRecordsContext);
   const {info,updatedb,setupdatedb} = useContext(UserInfoContext);
   const [isActive, setIsActive] = useState();
+  const [deleteBtnToggled, setDeleteBtnToggled] = useState(false);
+  const [removeStudentID, setRemoveStudentID] = useState();
+
   let curcoach = info._id
   let counter = updatedb;
   let id = 0;
@@ -59,6 +68,17 @@ function Table({ columns, data }){
   
       if (response.ok) {
         const data = await response.json();
+        setDeleteBtnToggled(false);
+        toast.info('Remove student success.', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
         //console.log(data.message);
       } else {
         console.error(`HTTP error! status: ${response.status}`);
@@ -78,17 +98,18 @@ function Table({ columns, data }){
     } = useTable({ columns, data })
 
     return (
+      <>
         <table {...getTableProps()} className="w-full h-full border-collapse">
           <tbody {...getTableBodyProps()} className="">
             {rows.map(row => {
               prepareRow(row)
               return (
-                <tr {...row.getRowProps()} className="grid grid-cols-5 bg-cyan border-t-2">
+                <tr {...row.getRowProps()} className="grid grid-cols-5 bg-cyan border-t-2 border-blue-800">
                   {row.cells.map((cell, val) => {
                     {if(cell.column.Header=="StudentName"){
                         return (
                             <td {...cell.getCellProps()} className="text-center text-cyan-blue grid col-span-4">
-                                <button className={`py-4 truncate ${isActive === row.id ? 'bg-sky-500' : ''}`} onClick={()=>{
+                                <button className={`py-4 truncate ${isActive === row.id ? 'bg-sky-500 text-white font-medium' : 'bg-white'}`} onClick={()=>{
                                   setIsActive(row.id);
 
                                   // GET THE SELECTED STUDENT DATA HERE BY ACCESSING row OBJECT
@@ -107,9 +128,9 @@ function Table({ columns, data }){
                     }
                     if(cell.column.Header=="Action"){
                         return (
-                            <td {...cell.getCellProps()} className={`${isActive === row.id ? 'bg-sky-500' : ''} flex justify-center items-center col-span-1`}>
-                                <button className="" onClick={()=>deletecoach(row.values._id)}>
-                                    <RxCross1/>
+                            <td {...cell.getCellProps()} className={`${isActive === row.id ? 'bg-sky-500 text-white' : 'bg-white text-cyan-blue'} flex justify-center items-center col-span-1`}>
+                                <button className="" onClick={()=>{setDeleteBtnToggled(true); setRemoveStudentID(row.values._id)}}>
+                                    <RxCross2/>
                                 </button>
                             </td>
                         )
@@ -120,6 +141,38 @@ function Table({ columns, data }){
             })}
           </tbody>
         </table>
+        <Modal
+          show={deleteBtnToggled}
+          size="md"
+          popup={true}
+          onClose={()=>setDeleteBtnToggled(false)}
+        >
+          <Modal.Header />
+          <Modal.Body>
+            <div className="text-center">
+              <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                Are you sure you want to remove your access to the records of {selectedName}?
+              </h3>
+              <div className="flex justify-center gap-4">
+                <Button
+                  color="failure"
+                  onClick={()=>deletecoach(removeStudentID)}
+                >
+                  Yes
+                </Button>
+                <Button
+                  color="gray"
+                  onClick={()=>setDeleteBtnToggled(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+        <ToastContainer/> 
+      </>
     )
 }
 
