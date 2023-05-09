@@ -66,6 +66,7 @@ const Session = () => {
   const [showInactivityModal, setShowInactivityModal] = useState(false);
 
   const {exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA} = useContext(SessionContext);
+  const { exerName, setExerName, postValue, setPostValue, exerSessionStarted, setExerSessionStarted} = useContext(ExerciseContext);
 
   const handleStopButton = () => {
     if(reps==0){
@@ -106,8 +107,6 @@ const Session = () => {
     }
   };
 
-  const { exerName, setExerName, postValue, setPostValue } = useContext(ExerciseContext);
-
   if(exerName == '' || exerName == undefined){
     setExerName("PUSH-UPS");
   }
@@ -142,7 +141,14 @@ const Session = () => {
 
   const [count, setCount] = useState(false);
 
+  function refreshPage() {
+    window.location.reload();
+  }
+
   useEffect(() => {
+    if(exerSessionStarted==true){
+      refreshPage();
+    }
     setCount(true);
     // console.log("Component is mounted.");
     avgRepsSpd.length = 0;
@@ -220,6 +226,8 @@ const Session = () => {
     if(sessionStarted == false){
       setTime(0);
     }
+
+    setExerSessionStarted(true);
 
     sessionStarted = true;
 
@@ -583,7 +591,7 @@ const Session = () => {
             <div className="text-center">
               <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Inactivity is detected during your session, your Session has been automatically stopeed.
+                Your exercise session has been automatically stopped due to inactivity.
               </h3>
               <h3 className="mb-5 text-lg font-normal text-red-500 dark:text-gray-400">
                 30 seconds has been deducted from your exercise duration.

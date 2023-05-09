@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }) {
 
   const [exerName, setExerName] = useState("PUSH-UPS");
   const [postValue, setPostValue] = useState([]);
+  const [exerSessionStarted, setExerSessionStarted] = useState(false);
   const [exerciseReps, setExerciseReps] = useState();
   const [avgRepsSpeed, setAvgRepsSpeed] = useState([]);
   const [exerciseDuration, setExerciseDuration] = useState();
@@ -80,7 +81,7 @@ export default function App({ Component, pageProps }) {
     // USER DATA/INFORMATIONS FOR THE UserInfo CONTEXT
     //  value={{userID, setUserID, fname, setFname, mname, setMname, weight, setWeight, age, setAge}}
     <UserInfoContext.Provider value={{info, setinfo, updatedb, setupdatedb}}>
-      <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue }}>
+      <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue, exerSessionStarted, setExerSessionStarted }}>
         <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
           <StudentRecordsContext.Provider value={{selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername, studentRecord, setstudentRecord}}>
             <Head>

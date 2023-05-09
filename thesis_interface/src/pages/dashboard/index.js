@@ -10,10 +10,21 @@ import flanking from '@/img/flanking.png'
 import Layout from '@/components/Layout';
 import Cookies from 'js-cookie';
 import Head from 'next/head';
-
+import ExerciseContext from "@/pages/api/exercise-context";
 
 const Dashboard = () => {
+    const { exerSessionStarted, setExerSessionStarted} = useContext(ExerciseContext);
 
+    function refreshPage() {
+        window.location.reload();
+    }
+
+    useEffect(()=>{
+        if(exerSessionStarted==true){
+            refreshPage();
+        }
+    }, [])
+    
     return <Layout >
         <Head>
             <title>Dashboard</title>

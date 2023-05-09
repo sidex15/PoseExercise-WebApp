@@ -54,18 +54,21 @@ const Topbar = () => {
     return ( 
         <div className='w-full'>
             <nav className="flex items-center justify-end flex-wrap bg-cyan-blue h-14">
-                <div className={`${ isLogin ? 'flex' : 'hidden' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={Backlogin}>
-                    <RiLogoutBoxLine size="28px" color="white"/>
-                    <span>Logout</span>
-                </div>
-                <div className={`${ isLogin ? 'hidden' : 'flex' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={gotologin}>
-                    <RiLoginBoxLine size="28px" color="white"/>
-                    <span>Login</span>
-                </div>
-                <div className={`${ isLogin ? 'hidden' : 'flex' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={SignUp}>
-                    <HiOutlineUserCircle size="28px" color="white"/>
-                    <span>Sign Up</span>
-                </div>
+                {!isLogin?(
+                    <div className={`${ isLogin ? 'hidden' : 'flex' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={gotologin}>
+                        <HiOutlineUserCircle size="28px" color="white"/>
+                        <span>Sign in</span>
+                    </div>
+                ):
+                    <div className={`${ isLogin ? 'flex' : 'hidden' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={Backlogin}>
+                        <RiLogoutBoxLine size="28px" color="white"/>
+                        <span>Logout</span>
+                    </div>
+                }
+                {/* // <div className={`${ isLogin ? 'hidden' : 'flex' } text-white text-sm items-center gap-x-2 cursor-pointer p-3 hover:bg-light-white rounded-md mr-4`} onClick={SignUp}>
+                //     <HiOutlineUserCircle size="28px" color="white"/>
+                //     <span>Sign Up</span>
+                // </div> */}
             </nav>
         </div>
     );
