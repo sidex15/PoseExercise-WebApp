@@ -179,7 +179,7 @@ function RecordsTable(props){
 
   //console.log(info.records)
 
-  const data = data_array || []
+  const data = (data_array || []).sort((a,b)=>{return new Date(b.date) - new Date(a.date)})
 
   const columns = useMemo(
       () => [
