@@ -12,11 +12,17 @@ import { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import ExerciseContext from "@/pages/api/exercise-context";
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import formatTime from "@/lib/format_time";
 import SessionContext from "@/pages/api/session_result";
+import { Tooltip } from "flowbite-react";
 
 import getPrediction from "@/lib/get_prediction";
 import validateExercise from "@/lib/validate_exercise";
+
+import { Modal } from "flowbite-react";
+import { Button } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi2";
 
 import { POSE_CONNECTIONS, Pose } from "@mediapipe/pose/pose";
 import { Camera } from "@mediapipe/camera_utils/camera_utils";
@@ -28,10 +34,11 @@ import {
 import Head from "next/head";
 
 // GLOBAL VARIABLES ONLY FOR THIS CCOMPONENT
-var stopSesssion = false;
+var stopSession = false;
 var sessionStarted = false;
 var sessionFinished = false;
 var timePaused = false;
+var inactivityTimePaused = false;
 var avgRepsSpd = [];
 var borgAnswers = [];
 
@@ -55,8 +62,10 @@ const Session = () => {
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
 
-  const {exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA} = useContext(SessionContext);
+  const [seconds, setSeconds] = useState(0);
+  const [showInactivityModal, setShowInactivityModal] = useState(false);
 
+  const {exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA} = useContext(SessionContext);
 
   const handleStopButton = () => {
     if(reps==0){
@@ -70,13 +79,26 @@ const Session = () => {
         draggable: true, // allow dragging
       });
       setTimeout(()=>{router.push('/dashboard')}, 3000);
-    }else{
+    }else if(seconds >= 30){
+      setShowInactivityModal(false);
       setStop(true);
-      stopSesssion = true;
+      stopSession = true;
       getQuestion();
       handleStop();
       setExerciseReps(reps);
-      console.log(avgRepsSpd)
+      // console.log(avgRepsSpd);
+      setAvgRepsSpeed(avgRepsSpd);
+      setExerciseDuration(time-30);
+      setBorgQnA(borgAnswers);
+      sessionFinished = true;
+    }else{
+      inactivityTimePaused = true;
+      setStop(true);
+      stopSession = true;
+      getQuestion();
+      handleStop();
+      setExerciseReps(reps);
+      // console.log(avgRepsSpd);
       setAvgRepsSpeed(avgRepsSpd);
       setExerciseDuration(time);
       setBorgQnA(borgAnswers);
@@ -87,7 +109,7 @@ const Session = () => {
   const { exerName, setExerName, postValue, setPostValue } = useContext(ExerciseContext);
 
   if(exerName == '' || exerName == undefined){
-    setExerName("PLANKING");
+    setExerName("PUSH-UPS");
   }
   
   const getQuestion = (qid, answer) => {
@@ -169,6 +191,25 @@ const Session = () => {
   const handleContinue = () => {
     timePaused = false;
   }
+  
+  function startInactivityTimer() {
+    const interval = setInterval(() => {
+      if (seconds < 30 && inactivityTimePaused == false) {
+        setSeconds((seconds) => seconds + 1);
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+  }
+
+  useEffect(()=>{
+    console.log(seconds);
+    if(seconds == 30){
+      inactivityTimePaused = true;
+      console.log("Timer reached 30 seconds");
+      setShowInactivityModal(true);
+    }
+  }, [seconds])
 
   function initMediapipe(exercise) {
 
@@ -253,7 +294,7 @@ const Session = () => {
 
           // console.log(stopSesssion);
 
-          if (exercise_assessment != undefined && stopSesssion == false && exerName != "PLANKING") {
+          if (exercise_assessment != undefined && stopSession == false && exerName != "PLANKING") {
             if (exercise_assessment.startPosition != undefined){
               prevPrediction = exercise_assessment.startPosition;
             }
@@ -286,6 +327,7 @@ const Session = () => {
                 avgRepsSpd.push(parseFloat(repsSpeed));
                 // console.log(avgRepsSpd);
                 setReps((prevReps) => prevReps + 1);
+                setSeconds(0);
                 // console.log("Count=" + reps);
               }
               countReset = exercise_assessment.countReset;
@@ -294,12 +336,13 @@ const Session = () => {
               countReset = false;
             }
             curPrediction = result;
-          }else if(exerName == "PLANKING" && exercise_assessment != undefined && stopSesssion == false){
+          }else if(exerName == "PLANKING" && exercise_assessment != undefined && stopSession == false){
             setReps("--");
             setSpeed("--");
             timePaused = true;
             if(exercise_assessment.count == 1){
               handleContinue();
+              setSeconds(0);
             }else{
               handlePause();
             }
@@ -494,18 +537,26 @@ const Session = () => {
                 Duration:
               </h1>
               <h1 className="font-mono font-bold text-white text-5xl">
-                {formatTime(time)}s
+                {formatTime(time)}
               </h1>
+              <Tooltip
+                content="Automatically stops your session when timer reach 30 seconds due to inactivity."
+                style="light"
+                placement="left"
+              >
+                <h4 className="text-white">Inactivity Timer: {seconds}</h4>
+              </Tooltip>
             </div>
           </div>
           <div className="bg-cambg w-72 p-7 flex flex-col items-center gap-7 rounded-xl shadow-lg shadow-rgba(3,4,94,0.3)">
             <h1 className="font-bold text-4xl">Session:</h1>
             <button
               onClick={() => {
-                stopSesssion = false;
+                stopSession = false;
                 if (count == true) {
                   initMediapipe(exerName);
-                  handleStart(false);
+                  startInactivityTimer();
+                  handleStart();
                 }
               }}
               disabled={isStartBtnDisabled} 
@@ -526,6 +577,28 @@ const Session = () => {
             <button onClick={handleContinue}>Continue</button> */}
           </div>
         </div>
+        <Modal show={showInactivityModal} size="md" popup={true} onClose={()=>handleStopButton()}>
+          <Modal.Header />
+          <Modal.Body>
+            <div className="text-center">
+              <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                Inactivity is detected during your session, your Session has been automatically stopeed.
+              </h3>
+              <h3 className="mb-5 text-lg font-normal text-red-500 dark:text-gray-400">
+                30 seconds has been deducted from your exercise duration.
+              </h3>
+              <div className="flex justify-center gap-4">
+                <Button
+                  color="gray"
+                  onClick={()=>handleStopButton()}
+                >
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
         <ToastContainer />
       </div>
     </Layout>
