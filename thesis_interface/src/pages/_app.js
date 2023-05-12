@@ -8,6 +8,7 @@ import UserInfoContext from '@/pages/api/user_info-conntext';
 import SessionContext from '@/pages/api/session_result';
 import fetchuserinfo from "@/pages/api/userinfo";
 import StudentRecordsContext from './api/stud_records-context';
+import StepsContext from "@/pages/api/steps-context";
 import Head from 'next/head';
 
 export default function App({ Component, pageProps }) {
@@ -27,6 +28,11 @@ export default function App({ Component, pageProps }) {
   const [selectedName, setSelectedName] = useState();
   const [selectedUsername, setSelectedUsername] = useState();
   const [studentRecord, setstudentRecord] = useState();
+
+  // STEPS CONTEXT BECAUSE AN ERROR OCCURS WHEN I PUT THIS IN THE REGISTER LAYOUT
+  const [step1, setStep1] = useState(false);
+  const [step2, setStep2] = useState(false);
+  const [step3, setStep3] = useState(false);
   
   const userid = Cookies.get('userinfoid');
   
@@ -84,10 +90,12 @@ export default function App({ Component, pageProps }) {
       <ExerciseContext.Provider value={{ exerName, setExerName, postValue, setPostValue, exerSessionStarted, setExerSessionStarted }}>
         <SessionContext.Provider value={{exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA}}>
           <StudentRecordsContext.Provider value={{selectedStudent, setSelectedStudent, selectedName, setSelectedName, selectedUsername, setSelectedUsername, studentRecord, setstudentRecord}}>
-            <Head>
-              <link rel="icon" href="/favicon/ai.jpg" />
-            </Head>
-            <Component {...pageProps} />
+            <StepsContext.Provider value={{step1, step2, step3, setStep1, setStep2, setStep3}}>
+              <Head>
+                <link rel="icon" href="/favicon/ai.jpg" />
+              </Head>
+              <Component {...pageProps} />
+            </StepsContext.Provider>
           </StudentRecordsContext.Provider>
         </SessionContext.Provider>
       </ExerciseContext.Provider>

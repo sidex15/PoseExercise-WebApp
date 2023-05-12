@@ -1,13 +1,14 @@
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { useRouter } from 'next/router';
+import StepsContext from "@/pages/api/steps-context";
 import Image from 'next/image';
 import loginbanner from "@/img/loginbanner.png";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import bcrypt from 'bcryptjs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Layout from "@/components/Layout";
+import RegLayout from "@/components/registerlayout";
 import Head from "next/head";
 
 
@@ -30,6 +31,8 @@ const Register = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    const { setStep1 } = useContext(StepsContext);
 
     const Personal_details = async (e) => {
         e.preventDefault();
@@ -59,6 +62,7 @@ const Register = () => {
             const hashedPassword = await hashPassword(formData.password);
             const userData = { ...formData, password: hashedPassword };
             localStorage.setItem('formData', JSON.stringify(userData));
+            setStep1(true);
             router.push('/personal_details');  
             
           } catch (error) {
@@ -77,12 +81,12 @@ const Register = () => {
         router.push('/login')
     }   
     return ( 
-    <Layout>
+     <RegLayout>
         <Head><title>Sign Up</title></Head>
-        <div className="h-full w-full flex">
+        <div className="bg-white h-5/6 w-9/12 flex items-center justify-center rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
             <div className="lg:w-1/2 w-full h-full flex justify-center items-center" onSubmit={Personal_details}>
                 <div className="">
-                    <h1 className='font-mono font-bold lg:text-8xl text-5xl text-cyan-blue text-center'>Create Account</h1>
+                    <h1 className='font-mono font-bold lg:text-7xl text-5xl text-cyan-blue text-center'>Create Account</h1>
                     <div className="flex justify-center pt-12">
                     <form className="lg:w-full w-screen flex flex-col items-center">
                         <div>
@@ -107,14 +111,14 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <div className="lg:flex hidden h-screen w-1/2 justify-center ml-20">
+            <div className="lg:flex hidden h-full w-1/2 justify-center">
                 <h1 className='absolute font-mono font-bold text-5xl text-white self-center mt-56'>Create your <br /> account and <br /> track your <br /> exercise records <br /> and stats</h1>
-                <Image className="h-full" src={loginbanner} alt="loginimg"/>
+                <Image className="h-full rounded-r-xl" src={loginbanner} alt="loginimg"/>
             </div>
             <ToastContainer />
         </div>
         
-    </Layout>
+    </RegLayout>
      );
 }
  

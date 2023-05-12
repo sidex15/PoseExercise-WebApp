@@ -22,6 +22,9 @@ module.exports = {
         "timberwolf": "#D3D3D3",
         "#03045E": "#03045E",
         "#00B4D8": "#00B4D8",
+        "#B6B6B6": "#B6B6B6",
+        "#48CAE4": "#48CAE4",
+        "#C5C5C5": "#C5C5C5",
       },
       height:{
         "30vh": "30vh",

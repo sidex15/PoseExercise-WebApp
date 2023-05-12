@@ -3,6 +3,7 @@ import Image from 'next/image';
 import userinfobanner from "@/img/userinfobanner.png"
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import RegLayout from '@/components/registerlayout';
 
 
 const Userinfo = () => {
@@ -35,11 +36,12 @@ const Userinfo = () => {
         router.push('/biometrics');
       } 
 
-    return ( 
-        <div className="h-screen w-screen flex">
+    return (
+    <RegLayout>   
+        <div className="bg-white h-5/6 w-9/12 flex items-center justify-center rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
             <Head><title>Personal Details</title></Head>
             <div className="h-full lg:w-1/2 w-full flex justify-center items-center">
-                <div className="lg:relavite absolute lg:bg-inherit bg-white/50 lg:w-full sm:w-4/5 w-90% lg:p-0 p-7 rounded-xl lg:shadow-none shadow-#023E8A">
+                <div className="lg:relative absolute lg:bg-inherit bg-white/50 lg:w-full sm:w-4/5 w-90% lg:p-0 p-7 rounded-xl lg:shadow-none shadow-#023E8A">
                     <h1 className='font-mono font-bold text-6xl text-cyan-blue text-center'>Personal Details</h1>
                     <div className="flex justify-center mt-5">
                         <form className='flex flex-col gap-4' onSubmit={Userinfo2}>
@@ -49,7 +51,7 @@ const Userinfo = () => {
                             </div>
                             <div className="">
                                 <label for="fn" className="absolute p-1 bg-white text-xs ml-3">MIDDLE NAME</label>
-                                <input type="text" name="middleName" value={formData.middleName} onChange={handleChange} size="35" className="border-solid border-2 border-cyan-blue bg-white rounded-md mt-3 p-2"/>  
+                                <input type="text" name="middleName" value={formData.middleName} onChange={handleChange} size="35" className="border-solid border-2 border-cyan-blue bg-white rounded-md mt-3 p-2" required/>  
                             </div>
                             <div className="">
                                 <label for="fn" className="absolute p-1 bg-white text-xs ml-3">LAST NAME</label>
@@ -72,7 +74,7 @@ const Userinfo = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex justify-center mt-36">
+                            <div className="flex justify-center mt-11">
                                 <button type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
                             </div>
                         </form>
@@ -80,16 +82,18 @@ const Userinfo = () => {
                 </div>
                 <Image className="lg:hidden block h-full w-full object-cover" src={userinfobanner} alt="userinfobanner"/>
             </div>
-            <div className="h-full w-1/2 lg:flex hidden justify-center">
+            <div className="h-full w-1/2 lg:flex hidden justify-center relative">
+                <Image className="h-full w-full absolute rounded-r-xl" src={userinfobanner} alt="userinfobanner"/>
                 <div className="absolute flex flex-col self-center">
                     <h1 className='font-mono font-bold text-5xl text-white'>Get stronger and <br /> fitter with us, <br /> helping you to take <br /> fitness to the top <br /> level</h1>
                     <div className="lg:hidden flex justify-center mt-36">
                         <button type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32">Proceed</button>
                     </div>
                 </div>
-                <Image className="h-full w-full" src={userinfobanner} alt="userinfobanner"/>
+                
             </div>
         </div>
+    </RegLayout>  
      );
 }
  

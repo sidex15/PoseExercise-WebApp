@@ -68,10 +68,10 @@ function Login () {
     return ( 
       <Layout>
         <Head><title>Login</title></Head>
-        <div className="h-screen w-screen flex items-center justify-center">
-            <div className="lg:w-1/2 w-full h-full flex justify-center items-center">
+        <div className="bg-white h-5/6 w-9/12 flex items-center justify-center rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
+            <div className="w-1/2 h-full flex justify-center items-center">
                 <div className="">
-                    <h1 className='font-mono font-bold lg:text-8xl text-5xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
+                    <h1 className='font-mono font-bold lg:text-7xl text-5xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
                     <div className="flex justify-center pt-12">
                     <form className="lg:w-full w-screen flex flex-col items-center">
                         <div className="">
@@ -92,9 +92,9 @@ function Login () {
                     </div>
                 </div>
             </div>
-            <div className="lg:flex hidden h-screen w-1/2  justify-center ml-20">
+            <div className="lg:flex hidden h-full w-1/2 justify-center">
                 <h1 className='absolute font-mono font-bold text-5xl text-white self-center mt-56'>Login to your <br /> account and <br /> start tracking <br /> you Exercise <br />Sessions now!</h1>
-                <Image className="h-full" src={loginbanner} priority='true' alt="loginimg"/>
+                <Image className="h-full rounded-r-xl" src={loginbanner} priority='true' alt="loginimg"/>
             </div>
             <ToastContainer />
         </div>
