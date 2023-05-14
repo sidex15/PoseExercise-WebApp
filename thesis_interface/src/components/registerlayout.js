@@ -10,7 +10,7 @@ const RegLayout = ( {children} ) => {
     return ( 
         
     <Layout>
-        <div className="h-full w-full flex items-center pl-20 gap-32">
+        <div className="h-full w-full flex items-center pl-20 xl:gap-20 2xl:gap-32">
             <Steps step1={step1} step2={step2} step3={step3}/> {/* this pass the value of step1, step2, step3 to the steps.js */}
             {children}  
         </div> 
