@@ -37,6 +37,9 @@ export default function Result (){
     const [avgRepsSpd, setAvgRepsSpd] = useState(0);
     const userid = Cookies.get('userinfoid');
     const addrecord = async (formData) => {
+        if(!userid){
+            return;
+        }
         if(!formData.reps == 0||!formData.reps === ''){
             try {
                 const response = await fetch('/api/addrecord', {
@@ -66,7 +69,10 @@ export default function Result (){
         const MET_val = exerEval[0];
         const result = exerEval[1];
         const duration_min = exerciseDuration/60;
-        const weight = info.weight;
+        let weight = 55; //default value if no user login
+        if (userid){
+            weight = info.weight //user weight set
+        }
         //console.log(weight);
         setCaloriesBurned(calcCalorie(duration_min, MET_val, weight).toFixed(2));
         setExerDuration(formatTime(exerciseDuration));
