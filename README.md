@@ -17,6 +17,16 @@ A collaboration between the proponents of the thesis titled "DEVELOPMENT OF WEB 
 > https://nodejs.org/en/download
 - Git
 > https://git-scm.com/downloads
+
+## Creating .env.local
+- under /thesis_interface folder create file and save to .env.local
+```
+MONGODB_URI='Your MongoDB Connection string'
+JWT_SECRET='Json Webtoken String (Random Generated String)'
+DB='MongoDB Database name'
+COLLECTION='MongoDB Collection name'
+```
+
 ## Installation
 1. Clone the repository
 > git clone https://github.com/sidex15/Thesis-Interface-nextJS.git
