@@ -16,8 +16,8 @@ export default async function addrecord(req, res) {
 
   try {
     await client.connect();
-    const database = client.db('thesis');
-    const usersCollection = database.collection('thesis');
+    const database = client.db(process.env.DB);
+    const usersCollection = database.collection(process.env.COLLECTION);
     
     // Create a new user object
     const newrecords = { exce_id: new ObjectId(), date: new Date(), extype, calburn, reps, avgreps, duration, result };
