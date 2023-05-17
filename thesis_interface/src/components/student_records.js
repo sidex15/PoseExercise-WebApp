@@ -18,6 +18,7 @@ function Table({ columns, data }){
     prepareRow,
     canPreviousPage,
     canNextPage,
+    nextPage,
     pageOptions,
     previousPage,
     setPageSize =5,
