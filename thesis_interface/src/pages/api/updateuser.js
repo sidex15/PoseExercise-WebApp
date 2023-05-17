@@ -11,8 +11,8 @@ export default async function createUser(req, res) {
 
   try {
     await client.connect();
-    const database = client.db('thesis');
-    const usersCollection = database.collection('thesis');
+    const database = client.db(process.env.DB);
+    const usersCollection = database.collection(process.env.COLLECTION);
     
     // Create a new user object
     const newUser = { firstName, middleName, lastName, birthDate, weight, height, sex};

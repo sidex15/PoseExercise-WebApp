@@ -6,10 +6,10 @@ export default async function fetchuser(req, res) {
 
   // Connect to MongoDB
   const client = await clientPromise;
-  const db = client.db('thesis');
+  const db = client.db(process.env.DB);
 
   // Find the user in the database
-  const user = await db.collection('thesis').findOne({ _id:new ObjectId(userid) });
+  const user = await db.collection(process.env.COLLECTION).findOne({ _id:new ObjectId(userid) });
 
   if (!user) {
     return res.status(401).json({ message: 'User not found' });

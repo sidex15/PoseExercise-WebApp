@@ -6,10 +6,10 @@ export default async function verifyuser(req, res) {
 
   // Connect to MongoDB
   const client = await clientPromise;
-  const db = client.db('thesis');
+  const db = client.db(process.env.DB);
 
   // Find the user in the database
-  const user = await db.collection('thesis').findOne({ username });
+  const user = await db.collection(process.env.COLLECTION).findOne({ username });
 
   if (!user) {
     

@@ -16,8 +16,8 @@ export default async function deleterecord(req, res) {
 
   try {
     await client.connect();
-    const database = client.db('thesis');
-    const usersCollection = database.collection('thesis');
+    const database = client.db(process.env.DB);
+    const usersCollection = database.collection(process.env.COLLECTION);
     
     // Create a new user object
     const Userid = userid
