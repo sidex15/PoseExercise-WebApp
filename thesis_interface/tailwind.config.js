@@ -27,7 +27,10 @@ module.exports = {
         "#C5C5C5": "#C5C5C5",
       },
       height:{
-        "30vh": "30vh",
+        "25vh": "25vh",
+        "35vh": "35vh",
+        "45vh": "45vh",
+        "55vh": "55vh",
         "65vh": "65vh",
         "5%": "5%",
         "95%": "95%",
@@ -53,7 +56,12 @@ module.exports = {
         'drinkwater': "url(/src/img/drinkwater.jpg)",
       },
       screens: {
-        'mobileL': '425px'
+        'mobileM': '375px',
+        'mobileL': '425px',
+        'tablet': '768px',
+        'laptop': '1024px',
+        'laptopL': '1440px',
+        'desktop': '1920px',
       },
     },
   },

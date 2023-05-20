@@ -31,13 +31,13 @@ const Dashboard = () => {
         </Head>
         <div className='absolute overflow-scroll h-full w-full'>
             <div className=' flex justify-center items-center w-full'>
-                <Image className="object-cover lg:h-65vh h-30vh" src={banner} alt="dashboardimg" priority/>
-                <p className="font-mono font-bold lg:text-8xl text-5xl text-white absolute">Start your exercise <br /> session now</p>
+                <Image className="object-cover laptop:h-65vh tablet:h-55vh mobileM:h-35vh h-25vh" src={banner} alt="dashboardimg" priority/>
+                <p className="font-mono font-bold laptopL:text-8xl laptop:text-7xl tablet:text-6xl mobileL:text-4xl mobileM:text-3xl text-2xl text-white absolute">Start your exercise <br /> session now!</p>
             </div>
             <div className='w-full flex justify-center bg-grey'>
-                <div className='pt-16 w-90% lg:block flex flex-col items-center'>
-                    <h1 className='font-mono font-bold text-cyan-blue lg:text-5xl text-3xl'>Choose an exercise</h1>
-                    <div className="flex flex-wrap justify-center lg:pt-16 pt-0">
+                <div className='pt-16 w-90% laptop:block flex flex-col items-center'>
+                    <h1 className='font-mono font-bold text-cyan-blue laptopL:text-5xl laptop:text-4xl mobileM:text-3xl text-2xl'>Choose an exercise</h1>
+                    <div className="flex flex-wrap justify-center laptop:pt-16 pt-0">
                         <Card name="PUSH-UPS" picsrc={pushups}/>
                         <Card name="SIT-UPS" picsrc={situps}/>
                         <Card name="JUMPING JACK" picsrc={jumpjacks}/>
