@@ -19,7 +19,9 @@ import getPrediction from "@/lib/get_prediction";
 import validateExercise from "@/lib/validate_exercise";
 import { Modal, Button, Carousel, Tooltip } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
-
+import guide1 from "@/img/guide1.png";
+import guide2 from "@/img/guide2.png";
+import Image from 'next/image'
 import { POSE_CONNECTIONS, Pose } from "@mediapipe/pose/pose";
 import { Camera } from "@mediapipe/camera_utils/camera_utils";
 import {
@@ -621,8 +623,8 @@ const Session = () => {
           </Modal.Header>
           <Modal.Body>
           <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-            <Carousel slideInterval={5000}>
-              <img
+            <Carousel slideInterval={3000}>
+              {/* <img
                 src="https://images2.alphacoders.com/130/1309135.png"
                 alt="..."
               />
@@ -641,7 +643,9 @@ const Session = () => {
               <img
                 src="https://images4.alphacoders.com/122/1226166.jpg"
                 alt="..."
-              />
+              /> */}
+              <Image src={guide1} alt="..." className="h-full w-full"/>
+              <Image src={guide2} alt="..." className="h-full w-full"/>
             </Carousel>
           </div>
           </Modal.Body>
