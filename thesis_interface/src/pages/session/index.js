@@ -15,13 +15,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import formatTime from "@/lib/format_time";
 import SessionContext from "@/pages/api/session_result";
-import { Tooltip } from "flowbite-react";
-
 import getPrediction from "@/lib/get_prediction";
 import validateExercise from "@/lib/validate_exercise";
-
-import { Modal } from "flowbite-react";
-import { Button } from "flowbite-react";
+import { Modal, Button, Carousel, Tooltip } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 
 import { POSE_CONNECTIONS, Pose } from "@mediapipe/pose/pose";
@@ -464,6 +460,13 @@ const Session = () => {
     });
   }
 
+  const [guide, setGuide] = useState(true);
+
+  function handleGuide() {
+    setGuide(false);
+    router.push('/dashboard')
+  }
+
   return (
     <Layout>
       <Head><title>Session</title></Head>
@@ -606,6 +609,52 @@ const Session = () => {
               </div>
             </div>
           </Modal.Body>
+        </Modal>
+        <Modal
+          show={guide}
+          size="5xl"
+          popup={true}
+          onClose={()=>handleGuide()}
+        >
+          <Modal.Header>
+            Session Guide
+          </Modal.Header>
+          <Modal.Body>
+          <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+            <Carousel slideInterval={5000}>
+              <img
+                src="https://images2.alphacoders.com/130/1309135.png"
+                alt="..."
+              />
+              <img
+                src="https://images6.alphacoders.com/991/991135.jpg"
+                alt="..."
+              />
+              <img
+                src="https://images4.alphacoders.com/100/1001620.jpg"
+                alt="..."
+              />
+              <img
+                src="https://images5.alphacoders.com/121/1211733.jpg"
+                alt="..."
+              />
+              <img
+                src="https://images4.alphacoders.com/122/1226166.jpg"
+                alt="..."
+              />
+            </Carousel>
+          </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <div className="flex justify-end w-full gap-3">
+            <Button onClick={ () => {setGuide(false)} }>
+              I Understand
+            </Button>
+            <Button color="gray" onClick={ () => handleGuide() }>
+              Decline
+            </Button>
+            </div>
+          </Modal.Footer>
         </Modal>
         <ToastContainer />
       </div>
