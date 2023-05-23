@@ -71,29 +71,29 @@ function Login () {
         <div className="bg-white h-5/6 w-9/12 flex items-center justify-center rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
             <div className="w-1/2 h-full flex justify-center items-center">
                 <div className="">
-                    <h1 className='font-mono font-bold lg:text-7xl text-5xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
-                    <div className="flex justify-center pt-12">
-                    <form className="lg:w-full w-screen flex flex-col items-center">
-                        <div className="">
-                          <span className="absolute lg:p-4 p-3"><FaUser color="blue" className="lg:h-12 h-8 lg:w-12 w-8"/></span>
-                          <input type="text" placeholder="Username" onChange={handleUsernameChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
-                        </div>
-                        <div className="mt-8">
-                          <span className="absolute lg:p-4 p-3"><FaLock color="blue" className="lg:h-12 h-8 lg:w-12 w-8"/></span>
-                          <input type="password" placeholder="Password" onKeyDown={handleKeyDown} onChange={handlePasswordChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 p-2 pl-20 lg:h-20 h-14 lg:w-550px w-80 lg:text-2xl text-lg" />    
-                        </div>
-                        <div className="flex justify-center mt-3">
-                            <button type="submit" onClick={signup} className=" font-bold rounded-3xl text-cyan-blue p-4">Don't have an account yet? <span className="underline">Sign up</span></button>
-                        </div>
-                        <div className="flex justify-center mt-7">
-                            <button id="submit" type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 w-32" onClick={handleSubmit}>Login</button>
-                        </div>
-                    </form>
+                    <h1 className='font-mono font-bold desktop:text-7xl laptopL:text-6xl laptop:text-4xl text-5xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
+                    <div className="flex justify-center laptopL:pt-12 laptop:pt-7 pt-12">
+                      <form className="laptop:w-full w-screen flex flex-col items-center">
+                          <div className="flex items-center desktop:h-20 laptopL:h-16 desktop:w-550px laptopL:w-96 laptop:w-60">
+                            <FaUser color="blue" className="absolute desktop:ml-4 laptopL:ml-3 laptop:ml-2 ml-3 desktop:h-12 desktop:w-12 laptopL:h-9 laptopL:w-9 laptop:h-7 laptop:w-7 h-9 w-9"/>
+                            <input type="text" placeholder="Username" onChange={handleUsernameChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 desktop:pl-20 laptopL:pl-14 laptop:pl-10 pl-14 desktop:h-20 laptopL:h-16 desktop:w-550px laptopL:w-96 laptop:w-60 h-16 w-96 laptop:text-2xl text-lg" />    
+                          </div>
+                          <div className="flex items-center desktop:h-20 laptopL:h-16 desktop:w-550px laptopL:w-96 laptop:w-60 mt-8">
+                            <FaLock color="blue" className="absolute desktop:ml-4 laptopL:ml-3 laptop:ml-2 ml-3 desktop:h-12 desktop:w-12 laptopL:h-9 laptopL:w-9 laptop:h-7 laptop:w-7 h-9 w-9"/>
+                            <input type="password" placeholder="Password" onKeyDown={handleKeyDown} onChange={handlePasswordChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 desktop:pl-20 laptopL:pl-14 laptop:pl-10 pl-14 desktop:h-20 laptopL:h-16 desktop:w-550px laptopL:w-96 laptop:w-60 h-16 w-96 laptop:text-2xl text-lg" />    
+                          </div>
+                          <div className="flex justify-center mt-3">
+                              <button type="submit" onClick={signup} className=" font-bold rounded-3xl text-cyan-blue p-4">Don't have an account yet? <span className="underline">Sign up</span></button>
+                          </div>
+                          <div className="flex justify-center mt-7">
+                              <button id="submit" type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 laptopL:w-32 laptop:w-28 w-32" onClick={handleSubmit}>Login</button>
+                          </div>
+                      </form>
                     </div>
                 </div>
             </div>
-            <div className="lg:flex hidden h-full w-1/2 justify-center">
-                <h1 className='absolute font-mono font-bold text-5xl text-white self-center mt-56'>Login to your <br /> account and <br /> start tracking <br /> you Exercise <br />Sessions now!</h1>
+            <div className="laptop:flex hidden h-full w-1/2 justify-center">
+                <h1 className='absolute font-mono font-bold desktop:text-5xl laptopL:text-4xl laptop:text-3xl text-white self-center mt-56'>Login to your <br /> account and <br /> start tracking <br /> you Exercise <br />Sessions now!</h1>
                 <Image className="h-full rounded-r-xl" src={loginbanner} priority='true' alt="loginimg"/>
             </div>
             <ToastContainer />

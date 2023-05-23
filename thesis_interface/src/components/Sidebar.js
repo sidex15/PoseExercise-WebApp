@@ -47,11 +47,11 @@ const Sidebar = ({open}) => {
     
 
     return ( <>
-        <div className={`${open ? 'lg:w-56 pr-2 w-full' : 'lg:w-14 lg:block hidden'} lg:h-full h-80 lg:static fixed lg:z-0 z-1 duration-300 bg-cyan-blue`}>
-            <ul className='lg:pt-3 pt-0 lg:block h-full flex flex-col justify-center items-center'>
+        <div className={`${open ? 'laptop:w-56 pr-2 w-full' : 'laptop:w-14 laptop:block hidden'} laptop:h-full h-80 laptop:static fixed laptop:z-0 z-1 duration-300 bg-cyan-blue`}>
+            <ul className='laptop:pt-3 pt-0 laptop:block h-full flex flex-col justify-center items-center'>
                 <div>
                     {Menus.map((menu, index) => (
-                    <li key={index} className={`${router.pathname === menu.path ? 'bg-#00B4D8 hover:bg-#00B4D8' : ''} ${menu.display ? 'flex' : 'hidden'} text-white text-sm items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md ${menu.gap ? "lg:absolute static inset-x-0 bottom-0" : "mt-2"} `} onClick={() => {router.push(menu.path)}}>
+                    <li key={index} className={`${router.pathname === menu.path ? 'bg-#00B4D8 hover:bg-#00B4D8' : ''} ${menu.display ? 'flex' : 'hidden'} text-white text-sm items-center gap-x-4 cursor-pointer p-3 hover:bg-light-white rounded-md ${menu.gap ? "laptop:absolute static inset-x-0 bottom-0" : "mt-2"} `} onClick={() => {router.push(menu.path)}}>
                         {menu.icon}
                         <span className={`${!open && 'hidden'} origin-left duration-300`}>{menu.title}</span>
                     </li>
