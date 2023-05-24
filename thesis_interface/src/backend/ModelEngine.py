@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import json
 from landmarks import firstRow
+from gevent.pywsgi import WSGIServer
 
 model = joblib.load('exercisev3.pkl')
 
@@ -45,5 +46,6 @@ def predict():
     return jsonify(response)    
     
 if __name__ == '__main__':
-    app.run(debug=True)
-
+   #app.run(debug=True)
+    http_server = WSGIServer(('0.0.0.0', 5000), app)
+    http_server.serve_forever()

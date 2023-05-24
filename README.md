@@ -25,6 +25,7 @@ MONGODB_URI='Your MongoDB Connection string'
 JWT_SECRET='Json Webtoken String (Random Generated String)'
 DB='MongoDB Database name'
 COLLECTION='MongoDB Collection name'
+NEXT_PUBLIC_MODEL_API='api link for modelengine default is: http://127.0.0.1:5000/predict'
 ```
 
 ## Installation
@@ -52,7 +53,7 @@ COLLECTION='MongoDB Collection name'
 > ./`name of virtual environment`/Scripts/activate
 
 6. Install python dependencies
-> pip install flask flask_cors joblib pandas numpy scikit-learn
+> pip install flask flask_cors joblib pandas numpy scikit-learn gevent
 
 7. Run the backend
 

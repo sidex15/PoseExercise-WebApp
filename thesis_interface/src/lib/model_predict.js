@@ -1,9 +1,8 @@
-
 export default async function requestPrediction(data){
     
     // SEND AN HTTP REQUEST TO THE PYTHON FLASK BACKEND THAT HOSTS ...
     // THE MACHINE LEARNING MODEL TO GET THE ML MODEL PREDICTION ON THE SENT DATA
-    const response = await fetch('http://127.0.0.1:5000/predict', {
+    const response = await fetch(process.env.NEXT_PUBLIC_MODEL_API, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
