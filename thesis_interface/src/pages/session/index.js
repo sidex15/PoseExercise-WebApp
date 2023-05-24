@@ -9,6 +9,7 @@ import { FaHourglass } from "react-icons/fa";
 import { AiFillControl } from "react-icons/ai";
 import Layout from "@/components/Layout";
 import PostQuestions from "@/components/questions";
+import Guides from "@/components/session-guide";
 import { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import ExerciseContext from "@/pages/api/exercise-context";
@@ -20,8 +21,6 @@ import getPrediction from "@/lib/get_prediction";
 import validateExercise from "@/lib/validate_exercise";
 import { Modal, Button, Carousel, Tooltip } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
-import guide1 from "@/img/guide1.png";
-import guide2 from "@/img/guide2.png";
 import Image from 'next/image'
 import { POSE_CONNECTIONS, Pose } from "@mediapipe/pose/pose";
 import { Camera } from "@mediapipe/camera_utils/camera_utils";
@@ -463,13 +462,6 @@ const Session = () => {
     });
   }
 
-  const [guide, setGuide] = useState(true);
-
-  function handleGuide() {
-    setGuide(false);
-    router.push('/dashboard')
-  }
-
   const [showControl, setShowControl] = useState(false);
 
   return (
@@ -565,7 +557,7 @@ const Session = () => {
                   style="light"
                   placement="left"
                 >
-                  <h4 className="text-red-700 font-bold font-mono mr-2 tablet:text-base text-sm">Inactivity Timer: <span className="text-lg">{seconds}</span></h4>
+                  <h4 className="text-white font-bold font-mono mr-2 tablet:text-base text-sm">Inactivity Timer: <span className="text-lg">{seconds}</span></h4>
                 </Tooltip>
               </div>
             </div>
@@ -621,54 +613,7 @@ const Session = () => {
             </div>
           </Modal.Body>
         </Modal>
-        <Modal
-          show={guide}
-          size="5xl"
-          popup={true}
-          onClose={()=>handleGuide()}
-        >
-          <Modal.Header>
-            Session Guide
-          </Modal.Header>
-          <Modal.Body>
-          <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-            <Carousel slideInterval={3000}>
-              {/* <img
-                src="https://images2.alphacoders.com/130/1309135.png"
-                alt="..."
-              />
-              <img
-                src="https://images6.alphacoders.com/991/991135.jpg"
-                alt="..."
-              />
-              <img
-                src="https://images4.alphacoders.com/100/1001620.jpg"
-                alt="..."
-              />
-              <img
-                src="https://images5.alphacoders.com/121/1211733.jpg"
-                alt="..."
-              />
-              <img
-                src="https://images4.alphacoders.com/122/1226166.jpg"
-                alt="..."
-              /> */}
-              <Image src={guide1} alt="..." className="h-full w-full"/>
-              <Image src={guide2} alt="..." className="h-full w-full"/>
-            </Carousel>
-          </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <div className="flex justify-end w-full gap-3">
-            <Button onClick={ () => {setGuide(false)} }>
-              I Understand
-            </Button>
-            <Button color="gray" onClick={ () => handleGuide() }>
-              Decline
-            </Button>
-            </div>
-          </Modal.Footer>
-        </Modal>
+        <Guides name={exerName}/>
         <ToastContainer />
       </div>
     </Layout>
