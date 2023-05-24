@@ -46,6 +46,7 @@ module.exports = {
       },
       zIndex: {
         '1': '1',
+        '2': '2',
       },
       boxShadow: {
         'cshadow': '0 0 8px 4px rgba(0, 0, 0, 0.1)',

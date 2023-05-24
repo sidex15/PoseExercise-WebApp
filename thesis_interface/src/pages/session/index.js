@@ -6,6 +6,7 @@ import { HiPlay } from "react-icons/hi2";
 import { HiStop } from "react-icons/hi2";
 import { useRouter } from "next/router";
 import { FaHourglass } from "react-icons/fa";
+import { AiFillControl } from "react-icons/ai";
 import Layout from "@/components/Layout";
 import PostQuestions from "@/components/questions";
 import { useState, useEffect, useRef } from "react";
@@ -543,6 +544,8 @@ const Session = () => {
     router.push('/dashboard')
   }
 
+  const [showControl, setShowControl] = useState(false);
+
   return (
     <Layout>
       <Head><title>Session</title></Head>
@@ -568,19 +571,22 @@ const Session = () => {
           />
         </div>
       </div>
-      <div className="h-full flex">
-        <div className="h-full w-4/5 ">
-          <div className="h-5% p-5">
+      <div className="h-full flex items-end relative">
+        <div className="h-full laptop:w-4/5 w-full ">
+          <div className="h-5% px-5 flex justify-between">
             <button
               className="flex items-center"
               onClick={() => router.push("/dashboard")}
             >
               <IoArrowBack size="30px" color="grey" /> Go Back
             </button>
+            <button className="laptop:hidden flex items-center h-full" onClick={() => setShowControl(!showControl)}>
+              <AiFillControl size="40px" color="grey" />
+            </button>
           </div>
-          <div className="h-95% flex items-center justify-center pl-7">
-            <div className="bg-black opacity-75 absolute w-96 self-start text-center rounded-xl p-2 z-1">
-              <h1 className="text-white text-4xl">{exerName}</h1>
+          <div className="h-95% flex items-center justify-center laptop:pl-7">
+            <div className="bg-black opacity-75 absolute tablet:w-96 self-start text-center rounded-xl p-2 z-0">
+              <h1 className="text-white tablet:text-4xl text-xl">{exerName}</h1>
             </div>
             <canvas
               className="output_canvas h-95% w-95% bg-grey rounded-3xl flex justify-center items-center"
@@ -590,13 +596,13 @@ const Session = () => {
             {/* <div className="z-10 stopwatch-display text-black">{formatTime(time)}</div> */}
           </div>
         </div>
-        <div className="h-full w-1/5 flex flex-col justify-around items-center">
-          <div className="bg-cambg flex justify-center items-center gap-2 w-72 rounded-full p-2 shadow-lg shadow-rgba(3,4,94,0.3)">
-            <HiVideoCamera color="#0096C7" />
+        <div className={`laptop:py-0 py-2 tablet:px-0 px-2 laptop:h-full h-1/4 laptop:w-1/5 w-full laptop:flex-col justify-around tablet:gap-0 gap-3 laptop:items-center laptop:flex ${showControl ? 'flex laptop:relative absolute' : 'hidden'}`}>
+          <div className="bg-cambg laptop:relative absolute flex items-center gap-2 desktop:w-72 laptopL:w-64 laptop:w-40 tablet:w-64 mobileL:w-36 mobileM:w-32 w-28 laptop:m-0 tablet:mr-1 mobileM:ml-3 rounded-full p-2 shadow-lg shadow-rgba(3,4,94,0.3)">
+            <HiVideoCamera color="#0096C7" className="absolute desktop:w-8 desktop:h-8 laptopL:w-6 laptopL:h-6 laptop:w-5 laptop:h-5 tablet:w-7 tablet:h-7 tablet:block hidden"/>
             {isphone ? <select
               //id="camera-select"
               //name="cameras"
-              className="bg-cambg w-56 text-center"
+              className="bg-cambg w-full text-center border-none laptopL:pl-0 laptop:pl-6"
               //disabled={isCameraBtnDisabled}
               onChange={setcam}
             >
@@ -605,47 +611,50 @@ const Session = () => {
             </select> : <select
             id="camera-select"
             name="cameras"
-            className="bg-cambg w-56 text-center"
+            className="bg-cambg w-full text-center border-none laptopL:pl-0 laptop:pl-6"
             //disabled={isCameraBtnDisabled}
           ></select>}
           </div>
-          <div className="bg-repsbg w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
-            <MdTimer size="40px" color="white" />
-
-            <h1 className="font-mono font-bold text-white text-center text-3xl">
-              Reps <br /> Count:
-            </h1>
-            <h1 className="font-mono font-bold text-white text-5xl">{reps}</h1>
-          </div>
-          <div className="bg-speedbg w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
-            <IoSpeedometer size="40px" color="white" />
-            <h1 className="font-mono font-bold text-white text-center text-3xl">
-              Reps <br /> Speed:
-            </h1>
-            <h1 className="font-mono font-bold text-white text-5xl">
-              {speed}
-            </h1>
-          </div>
-          <div className="bg-slate-600 w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
-            <FaHourglass size="40px" color="white" />
-            <div>
-              <h1 className="font-mono font-bold text-white text-center text-3xl">
-                Duration:
+          <div className="relative laptop:h-fit h-full laptop:w-fit w-40 flex flex-col justify-around desktop:gap-10 laptopL:gap-3 laptop:gap-8">
+            <div className="bg-repsbg desktop:w-72 laptopL:w-64 laptop:w-40 laptop:h-fit rounded-xl flex justify-around items-center gap-2 laptopL:p-4 laptop:p-2 px-0 py-2 shadow-lg shadow-rgba(3,4,94,0.3)">
+              <MdTimer className="laptopL:w-10 laptopL:h-10 laptopL:block hidden tablet:w-8 tablet:h-8 w-8 h-8" color="white" />
+              <h1 className="font-mono font-bold text-white text-center desktop:text-3xl laptopL:text-3xl tablet:text-lg mobileL:text-base">
+                Reps <br /> Count:
               </h1>
-              <h1 className="font-mono font-bold text-white text-5xl">
-                {formatTime(time)}
+              <h1 className="font-mono font-bold text-white laptopL:text-5xl tablet:text-3xl mobileL:text-3xl mobileM:text-2xl">{reps}0</h1>
+            </div>
+            <div className="bg-speedbg desktop:w-72 laptopL:w-64 laptop:w-40 laptop:h-fit rounded-xl flex justify-around items-center gap-2 laptopL:p-4 laptop:p-2 px-0 py-2 shadow-lg shadow-rgba(3,4,94,0.3)">
+              <IoSpeedometer className="laptopL:w-10 laptopL:h-10 laptopL:block hidden tablet:w-8 tablet:h-8" color="white" />
+              <h1 className="font-mono font-bold text-white text-center desktop:text-3xl laptopL:text-2xl tablet:text-xl mobileL:text-base">
+                Reps <br /> Speed:
               </h1>
-              <Tooltip
-                content="Automatically stops your session when timer reach 30 seconds due to inactivity."
-                style="light"
-                placement="left"
-              >
-                <h4 className="text-white">Inactivity Timer: {seconds}</h4>
-              </Tooltip>
+              <h1 className="font-mono font-bold text-white desktop:text-5xl laptopL:text-4xl tablet:text-3xl mobileL:text-3xl mobileM:text-2xl">
+                {speed}.00
+              </h1>
             </div>
           </div>
-          <div className="bg-cambg w-72 p-7 flex flex-col items-center gap-7 rounded-xl shadow-lg shadow-rgba(3,4,94,0.3)">
-            <h1 className="font-bold text-4xl">Session:</h1>
+          <div className="desktop:w-72 laptopL:w-64 laptop:w-40 laptop:h-fit h-full flex items-end pb-4 ">
+            <div className="bg-slate-600 w-full rounded-xl flex justify-around items-center gap-2 laptop:p-4 p-0 shadow-lg shadow-rgba(3,4,94,0.3)">
+              <FaHourglass className="laptopL:w-10 laptopL:h-10 laptopL:block hidden tablet:w-8 tablet:h-8" color="white" />
+              <div className="flex flex-col items-center">
+                <h1 className="font-mono font-bold text-white text-center laptopL:text-3xl tablet:text-xl">
+                  Duration:
+                </h1>
+                <h1 className="font-mono font-bold text-white laptopL:text-5xl tablet:text-4xl mobileL:text-xl">
+                  {formatTime(time)}
+                </h1>
+                <Tooltip
+                  content="Automatically stops your session when timer reach 30 seconds due to inactivity."
+                  style="light"
+                  placement="left"
+                >
+                  <h4 className="text-red-700 font-bold font-mono mr-2 tablet:text-base text-sm">Inactivity Timer: <span className="text-lg">{seconds}</span></h4>
+                </Tooltip>
+              </div>
+            </div>
+          </div>
+          <div className="bg-cambg desktop:w-72 laptopL:w-64 laptop:w-40 laptop:p-7 px-3 flex flex-col items-center laptop:justify-start justify-around laptop:gap-7 rounded-xl shadow-lg shadow-rgba(3,4,94,0.3)">
+            <h1 className="font-bold laptopL:text-4xl tablet:text-3xl">Session:</h1>
             <button
               onClick={() => {
                 stopSession = false;
@@ -656,9 +665,9 @@ const Session = () => {
                 }
               }}
               disabled={isStartBtnDisabled} 
-              className="bg-btnstart w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"
+              className="bg-btnstart laptopL:w-56 tablet:w-36 mobileL:w-24 mobileM:w-20 p-3 font-mono font-bold text-white laptopL:text-4xl tablet:text-2xl mobileL:text-lg rounded-full flex items-center justify-center"
             >
-              Start <HiPlay size="40px" />
+              Start <HiPlay className="laptopL:w-10 laptopL:h-10 laptop:w-8 laptop:h-8" />
             </button>
             <button
               onClick={() => {
@@ -666,9 +675,9 @@ const Session = () => {
               }}
               disabled={isStopBtnDisabled}
               id="stop-camera-button"
-              className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"
+              className="bg-btnstop laptopL:w-56 tablet:w-36 mobileL:w-24 mobileM:w-20 p-3 font-mono font-bold text-white laptopL:text-4xl tablet:text-2xl mobileL:text-lg rounded-full flex items-center justify-center"
             >
-              Stop <HiStop size="40px" />
+              Stop <HiStop className="laptopL:w-10 laptopL:h-10 laptop:w-8 laptop:h-8" />
             </button>
             {/* <button onClick={handlePause}>Pause</button>
             <button onClick={handleContinue}>Continue</button> */}
