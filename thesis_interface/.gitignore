@@ -12,6 +12,8 @@
 /build
 
 # misc
+/cert
+server.js
 /src/backend/modelenv
 /src/backend/__pycache__
 .next/

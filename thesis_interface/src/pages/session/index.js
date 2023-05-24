@@ -24,6 +24,7 @@ import guide2 from "@/img/guide2.png";
 import Image from 'next/image'
 import { POSE_CONNECTIONS, Pose } from "@mediapipe/pose/pose";
 import { Camera } from "@mediapipe/camera_utils/camera_utils";
+import {isMobile,isBrowser} from 'react-device-detect';
 import {
   drawLandmarks,
   drawConnectors,
@@ -39,6 +40,8 @@ var timePaused = false;
 var inactivityTimePaused = false;
 var avgRepsSpd = [];
 var borgAnswers = [];
+var phonecamid = 'user';
+var phonecam = isMobile;
 
 const Session = () => {
   const router = useRouter();
@@ -46,6 +49,7 @@ const Session = () => {
   const [isStartBtnDisabled, setStartBtnIsDisabled] = useState(false);
   const [isStopBtnDisabled, setStopBtnIsDisabled] = useState(true);
   const [isCameraBtnDisabled, setCameraBtnIsDisabled] = useState(false);
+  const [isphone,setisphone] = useState(false)
 
   const [stop, setStop] = useState(false);
   const [question1, setquestion1] = useState(true);
@@ -65,6 +69,10 @@ const Session = () => {
 
   const {exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA} = useContext(SessionContext);
   const { exerName, setExerName, postValue, setPostValue, exerSessionStarted, setExerSessionStarted} = useContext(ExerciseContext);
+
+  const setcam = (e) => {
+    phonecamid = e.target.value;
+  }
 
   const handleStopButton = () => {
     if(reps==0){
@@ -144,9 +152,14 @@ const Session = () => {
   }
 
   useEffect(() => {
+    if(phonecam==true){
+      setisphone(true);
+    }
+    console.log(isMobile);
     if(exerSessionStarted==true){
       refreshPage();
     }
+    fetchCameraDevice();
     setCount(true);
     // console.log("Component is mounted.");
     avgRepsSpd.length = 0;
@@ -161,11 +174,12 @@ const Session = () => {
       sessionFinished = true;
       // console.log(borgAnswers);
     };
+    
   }, []);
 
-  if (count == true) {
-    fetchCameraDevice();
-  }
+  //if (count == true) {
+    //fetchCameraDevice();
+  //}
 
   // const [repsSpeedArray, setRepsSpeedArray] = useState([]);
 
@@ -216,6 +230,7 @@ const Session = () => {
   }, [seconds])
 
   function initMediapipe(exercise) {
+
 
     if(sessionFinished == true){
       return;
@@ -388,21 +403,27 @@ const Session = () => {
     // }
 
     // stopPose();
+    let camera;
+    let track;
+    let videoTracks;
     startCamera();
 
     async function startCamera() {
       // Get the selected camera ID from the select element
-      const selectElement = document.getElementById("camera-select");
+      if(phonecam==false){
+        const selectElement = document.getElementById("camera-select");
       const selectedDeviceId = selectElement.value;
 
       // Request access to the selected camera
       const constraints = {
         audio: false,
-        video: { deviceId: selectedDeviceId },
+        video: {deviceId: { exact: selectedDeviceId }},
       };
       const mediaStream = await navigator.mediaDevices.getUserMedia(
         constraints
       );
+
+      videoTracks = mediaStream.getVideoTracks();
 
       // Attach the stream to a video element to display the camera feed
       const videoElement = document.createElement("video");
@@ -412,16 +433,62 @@ const Session = () => {
       };
 
       // Create a Camera object and start it (TEST CODE FOR SETTING THE VIDEO RESOLUTION BASED ON DEVICE SPECS)
-      const track = mediaStream.getVideoTracks()[0];
+      track = mediaStream.getVideoTracks()[0];
       const settings = track.getSettings();
-      const camera = new Camera(videoElement, {
+      camera = new Camera(videoElement, {
         onFrame: async () => {
           await pose.send({ image: videoElement });
         },
+        facingMode: phonecamid,
         width: settings.width,
         height: settings.height,
       });
       camera.start();
+      }
+      else{
+
+      // Request access to the selected camera
+      const constraints = {
+        audio: false,
+        video: {facingMode: phonecamid},
+      };
+      const mediaStream = await navigator.mediaDevices.getUserMedia(
+        constraints
+      );
+
+      videoTracks = mediaStream.getVideoTracks();
+      // Attach the stream to a video element to display the camera feed
+      const videoElement = document.createElement("video");
+      videoElement.srcObject = mediaStream;
+      videoElement.onloadedmetadata = function (e) {
+        videoElement.play();
+      };
+
+      // Create a Camera object and start it (TEST CODE FOR SETTING THE VIDEO RESOLUTION BASED ON DEVICE SPECS)
+      track = mediaStream.getVideoTracks()[0];
+      const settings = track.getSettings();
+      camera = new Camera(videoElement, {
+        onFrame: async () => {
+          await pose.send({ image: videoElement });
+        },
+        facingMode: phonecamid,
+        width: settings.width,
+        height: settings.height,
+      });
+      camera.start();
+      }
+
+      const stopCameraButton = document.getElementById("stop-camera-button");
+      stopCameraButton.addEventListener("click", stopCamera);
+      
+      // Define the stopCamera function
+      function stopCamera() {
+        // Stop the camera
+        videoTracks.forEach(track => {
+          track.stop();
+          camera.stop();
+        });
+      }
 
       // Create a Camera object and start it
       // const camera = new Camera(videoElement, {
@@ -438,8 +505,15 @@ const Session = () => {
   }
 
   function fetchCameraDevice() {
+    if (phonecam == true){
+      return;
+    }
     // Get list of available video devices (cameras)
+    //console.log(navigator.mediaDevices.enumerateDevices());
     navigator.mediaDevices.enumerateDevices().then((devices) => {
+      devices.forEach((device) => {
+        console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+      });
       const videoDevices = devices.filter(
         (device) => device.kind === "videoinput"
       );
@@ -519,12 +593,21 @@ const Session = () => {
         <div className="h-full w-1/5 flex flex-col justify-around items-center">
           <div className="bg-cambg flex justify-center items-center gap-2 w-72 rounded-full p-2 shadow-lg shadow-rgba(3,4,94,0.3)">
             <HiVideoCamera color="#0096C7" />
-            <select
-              id="camera-select"
-              name="cameras"
+            {isphone ? <select
+              //id="camera-select"
+              //name="cameras"
               className="bg-cambg w-56 text-center"
-              disabled={isCameraBtnDisabled}
-            ></select>
+              //disabled={isCameraBtnDisabled}
+              onChange={setcam}
+            >
+              <option value='user'>Front Cam</option>
+              <option value='environment'>Back Cam</option>
+            </select> : <select
+            id="camera-select"
+            name="cameras"
+            className="bg-cambg w-56 text-center"
+            //disabled={isCameraBtnDisabled}
+          ></select>}
           </div>
           <div className="bg-repsbg w-72 rounded-xl flex justify-around items-center gap-2 p-4 shadow-lg shadow-rgba(3,4,94,0.3)">
             <MdTimer size="40px" color="white" />
@@ -582,6 +665,7 @@ const Session = () => {
                 handleStopButton();
               }}
               disabled={isStopBtnDisabled}
+              id="stop-camera-button"
               className="bg-btnstop w-56 p-3 font-mono font-bold text-white text-4xl rounded-full flex items-center justify-center"
             >
               Stop <HiStop size="40px" />

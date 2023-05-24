@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@mediapipe/camera_utils": "^0.1.1617146909",
+    "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/control_utils": "^0.1.1617146970",
     "@mediapipe/drawing_utils": "^0.2.1617146986",
     "@mediapipe/pose": "^0.2.1617147663",
@@ -20,6 +20,7 @@
     "next": "latest",
     "react": "latest",
     "react-bootstrap": "^2.7.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-paginate": "^8.2.0",
