@@ -116,7 +116,7 @@ const Guides = ({name}) => {
         </Modal.Header>
         <Modal.Body>
         <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-            {name === "PUSH-UPS" ? pushprev : name === "SIT-UPS" ? sitprev : name === "JUMPING JACKS" ? jumpjackprev : name === "SQUATS" ? squatprev : name === "PLANKING" ? plankprev : waifus}
+            {name === "PUSH-UPS" ? pushprev : name === "SIT-UPS" ? sitprev : name === "JUMPING JACK" ? jumpjackprev : name === "SQUATS" ? squatprev : name === "PLANKING" ? plankprev : waifus}
         </div>
         </Modal.Body>
         <Modal.Footer>

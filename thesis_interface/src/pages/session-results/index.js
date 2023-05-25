@@ -124,42 +124,42 @@ export default function Result (){
         <Layout>
             <Head><title>Session Result</title></Head>
             <div className="bg-grey h-full w-full flex flex-col justify-center items-center gap-6">
-                <h1 className="font-mono font-bold lg:text-5xl text-xl text-cyan-blue self-start ml-24">Exercise session result</h1>
-                <div className="relative w-3/4 h-3/4 shadow-lg shadow-rgba(3,4,94,0.7) rounded-3xl">
+                <h1 className="font-mono font-bold laptopL:text-5xl tablet:text-4xl text-3xl text-cyan-blue tablet:self-start tablet:ml-24 mobileL:text-start text-center">Exercise session result</h1>
+                <div className="relative tablet:w-3/4 tablet:h-3/4 h-4/5 w-95% shadow-lg shadow-rgba(3,4,94,0.7) rounded-3xl">
                     <Image className="absolute object-cover h-full rounded-3xl" src={drinkwater} alt="dashboardimg" priority/>
                     <div className="absolute w-full h-full flex flex-col justify-around items-center py-7">
                         <div>
-                            <h1 className="text-cyan-400 drop-shadow-2xl xl:text-6xl 2xl:text-8xl font-semibold">{exerName}</h1>
+                            <h1 className="text-cyan-400 drop-shadow-2xl desktop:text-8xl laptopL:text-6xl tablet:text-5xl text-4xl font-semibold tablet:mb-0 mb-3">{exerName}</h1>
                         </div>
-                       <div className="bg-grey rounded-2xl flex justify-around p-5 gap-7 shadow-lg shadow-rgba(3,4,94,0.3)">
-                            <div className="flex items-center gap-3">
+                       <div className="bg-grey rounded-2xl flex tablet:flex-row flex-col justify-around p-5 gap-7 shadow-lg shadow-rgba(3,4,94,0.3)">
+                            <div className="flex items-center tablet:justify-start justify-center gap-3">
                                 <IoFlame size="60px" color="red" />
-                                <h1 className="font-mono font-bold text-#03045E xl:text-3xl 2xl:text-5xl">{caloriesBurned}</h1>
-                                <h1 className="font-mono font-bold text-cyan-blue text-center xl:text-xl 2xl:text-2xl">Calories <br /> Burned</h1>
+                                <h1 className="font-mono font-bold text-#03045E desktop:text-5xl text-3xl">{caloriesBurned}</h1>
+                                <h1 className="font-mono font-bold text-cyan-blue text-center desktop:text-2xl text-xl ">Calories <br /> Burned</h1>
                             </div>
                             <div className="flex items-center gap-3">
                                 <TbClockFilled size="60px" className="text-slate-500" />
-                                <h1 className="font-mono font-bold text-#03045E xl:text-3xl 2xl 2xl:text-5xl">{exerDuration}</h1>
-                                <h1 className="font-mono font-bold text-cyan-blue text-center xl:text-xl 2xl:text-2xl">Exercise <br /> Duration</h1>
+                                <h1 className="font-mono font-bold text-#03045E desktop:text-5xl text-3xl">{exerDuration}</h1>
+                                <h1 className="font-mono font-bold text-cyan-blue text-center desktop:text-2xl text-xl ">Exercise <br /> Duration</h1>
                             </div>
                         </div>
-                        <div className="w-3/5 flex justify-around">
+                        <div className="laptop:w-3/5 tablet:w-4/5 flex tablet:flex-row flex-col tablet:gap-0 gap-5 justify-around tablet:mt-0 pt-7">
                             <div className="bg-grey rounded-2xl p-5 relative shadow-lg shadow-rgba(3,4,94,0.7)">
                                 <MdTimer size="60px" className="text-repsbg absolute -top-5 -left-5" />
                                 <div className="h-full flex flex-col justify-center items-center">
-                                    <h1 className="font-mono font-bold text-#03045E xl:text-3xl 2xl 2xl:text-5xl">{exerRep}</h1>
-                                    <h1 className="font-mono font-bold text-cyan-blue text-center xl:text-xl 2xl:text-2xl">No. of Reps</h1>
+                                    <h1 className="font-mono font-bold text-#03045E desktop:text-5xl text-3xl">{exerRep}</h1>
+                                    <h1 className="font-mono font-bold text-cyan-blue text-center desktop:text-2xl text-xl">No. of Reps</h1>
                                 </div>
                             </div>
                             <div className="bg-grey rounded-2xl p-5 relative shadow-lg shadow-rgba(3,4,94,0.7)">
                                 <IoSpeedometer size="60px" className="text-speedbg absolute -top-5 -left-5" />
                                 <div className="flex flex-col items-center">
-                                    <h1 className="font-mono font-bold text-#03045E xl:text-3xl 2xl:text-5xl">{avgRepsSpd}</h1>
-                                    <h1 className="font-mono font-bold text-cyan-blue text-center xl:text-xl 2xl:text-xl">Average Reps <br /> Speed</h1>
+                                    <h1 className="font-mono font-bold text-#03045E desktop:text-5xl text-3xl">{avgRepsSpd}</h1>
+                                    <h1 className="font-mono font-bold text-cyan-blue text-center desktop:text-xl text-xl">Average Reps <br /> Speed</h1>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" className={`bg-cyan-blue font-bold rounded-2xl text-white p-4`} onClick={() => {handleProceed();}}>Proceed to Dashboard</button> 
+                        <button type="submit" className={`bg-cyan-blue font-bold rounded-2xl text-white p-4 tablet:mt-0 mt-5`} onClick={() => {handleProceed();}}>Proceed to Dashboard</button> 
                     </div>
                 </div>
                 <ToastContainer />
