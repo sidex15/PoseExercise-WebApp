@@ -613,7 +613,7 @@ const Session = () => {
               <h1 className="font-mono font-bold text-white text-center desktop:text-3xl laptopL:text-3xl tablet:text-lg mobileL:text-base">
                 Reps <br /> Count:
               </h1>
-              <h1 className="font-mono font-bold text-white laptopL:text-5xl tablet:text-3xl mobileL:text-3xl mobileM:text-2xl">{reps}0</h1>
+              <h1 className="font-mono font-bold text-white laptopL:text-5xl tablet:text-3xl mobileL:text-3xl mobileM:text-2xl">{reps}</h1>
             </div>
             <div className="bg-speedbg desktop:w-72 laptopL:w-64 laptop:w-40 laptop:h-fit rounded-xl flex justify-around items-center gap-2 laptopL:p-4 laptop:p-2 px-0 py-2 shadow-lg shadow-rgba(3,4,94,0.3)">
               <IoSpeedometer className="laptopL:w-10 laptopL:h-10 laptopL:block hidden tablet:w-8 tablet:h-8" color="white" />
@@ -621,7 +621,7 @@ const Session = () => {
                 Reps <br /> Speed:
               </h1>
               <h1 className="font-mono font-bold text-white desktop:text-5xl laptopL:text-4xl tablet:text-3xl mobileL:text-3xl mobileM:text-2xl">
-                {speed}.00
+                {speed}
               </h1>
             </div>
           </div>
