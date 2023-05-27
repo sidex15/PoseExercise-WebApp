@@ -71,19 +71,19 @@ function Login () {
         <div className="bg-white h-5/6 w-9/12 flex items-center justify-center rounded-xl shadow-2xl shadow-rgba(3,4,94,0.3)">
             <div className="w-1/2 h-full flex justify-center items-center">
                 <div className="">
-                    <h1 className='font-mono font-bold desktop:text-7xl laptopL:text-6xl laptop:text-4xl text-5xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
+                    <h1 className='font-mono font-bold desktop:text-7xl laptopL:text-6xl tablet:text-5xl mobileL:text-4xl text-3xl text-cyan-blue text-center'>Login to your <br /> Account</h1>
                     <div className="flex justify-center laptopL:pt-12 laptop:pt-7 pt-12">
                       <form className="laptop:w-full w-screen flex flex-col items-center">
-                          <div className="flex items-center desktop:h-20 laptopL:h-16 desktop:w-550px laptopL:w-96 laptop:w-60">
-                            <FaUser color="blue" className="absolute desktop:ml-4 laptopL:ml-3 laptop:ml-2 ml-3 desktop:h-12 desktop:w-12 laptopL:h-9 laptopL:w-9 laptop:h-7 laptop:w-7 h-9 w-9"/>
-                            <input type="text" placeholder="Username" onChange={handleUsernameChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 desktop:pl-20 laptopL:pl-14 laptop:pl-10 pl-14 desktop:h-20 laptopL:h-16 desktop:w-550px laptopL:w-96 laptop:w-60 h-16 w-96 laptop:text-2xl text-lg" />    
+                          <div className="flex items-center desktop:h-20 laptopL:h-16 tablet:h-16 h-14 desktop:w-550px laptopL:w-96 laptop:w-60 mobileL:w-fit w-60">
+                            <FaUser color="blue" className="absolute desktop:ml-4 laptopL:ml-3 ml-2 desktop:h-12 desktop:w-12 laptopL:h-9 laptopL:w-9 laptop:h-7 laptop:w-7 h-9 w-9"/>
+                            <input type="text" placeholder="Username" onChange={handleUsernameChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 desktop:pl-20 laptopL:pl-14 laptop:pl-10 pl-14 h-full w-full laptop:text-2xl text-lg" />    
                           </div>
-                          <div className="flex items-center desktop:h-20 laptopL:h-16 desktop:w-550px laptopL:w-96 laptop:w-60 mt-8">
-                            <FaLock color="blue" className="absolute desktop:ml-4 laptopL:ml-3 laptop:ml-2 ml-3 desktop:h-12 desktop:w-12 laptopL:h-9 laptopL:w-9 laptop:h-7 laptop:w-7 h-9 w-9"/>
-                            <input type="password" placeholder="Password" onKeyDown={handleKeyDown} onChange={handlePasswordChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 desktop:pl-20 laptopL:pl-14 laptop:pl-10 pl-14 desktop:h-20 laptopL:h-16 desktop:w-550px laptopL:w-96 laptop:w-60 h-16 w-96 laptop:text-2xl text-lg" />    
+                          <div className="flex items-center desktop:h-20 laptopL:h-16 tablet:h-16 h-14 desktop:w-550px laptopL:w-96 laptop:w-60 mobileL:w-fit w-60 mt-8">
+                            <FaLock color="blue" className="absolute desktop:ml-4 laptopL:ml-3 ml-2 desktop:h-12 desktop:w-12 laptopL:h-9 laptopL:w-9 laptop:h-7 laptop:w-7 h-9 w-9"/>
+                            <input type="password" placeholder="Password" onKeyDown={handleKeyDown} onChange={handlePasswordChange} className="bg-white rounded-md shadow-lg shadow-blue-500/50 desktop:pl-20 laptopL:pl-14 laptop:pl-10 pl-14 h-full w-full laptop:text-2xl text-lg" />    
                           </div>
                           <div className="flex justify-center mt-3">
-                              <button type="submit" onClick={signup} className=" font-bold rounded-3xl text-cyan-blue p-4">Don't have an account yet? <span className="underline">Sign up</span></button>
+                              <button type="submit" onClick={signup} className="font-bold rounded-3xl text-cyan-blue p-4 mobileL:text-base text-sm">Don't have an account yet? <span className="underline">Sign up</span></button>
                           </div>
                           <div className="flex justify-center mt-7">
                               <button id="submit" type="submit" className="bg-cyan-blue font-bold rounded-3xl text-white p-4 laptopL:w-32 laptop:w-28 w-32" onClick={handleSubmit}>Login</button>
