@@ -76,6 +76,8 @@ export default function App({ Component, pageProps }) {
         }
     }
     const fetchinfo = async (e) => {
+      setSelectedName('')
+      setstudentRecord([])
       const userinfo = await fetchuserinfo(userid);
       setinfo(userinfo);
     }
