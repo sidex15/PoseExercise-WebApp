@@ -43,7 +43,9 @@ var borgAnswers = [];
 var phonecamid = 'user';
 var phonecam = isMobile;
 
+
 const Session = () => {
+  const stopcam= useRef(null);
   const router = useRouter();
 
   const [isStartBtnDisabled, setStartBtnIsDisabled] = useState(false);
@@ -71,6 +73,10 @@ const Session = () => {
   const { exerName, setExerName, postValue, setPostValue, exerSessionStarted, setExerSessionStarted} = useContext(ExerciseContext);
 
   const [ rightPosDetected, setRightPosDetected ] = useState(false);
+
+  let camera;
+  let track;
+  let videoTracks;
 
   const setcam = (e) => {
     phonecamid = e.target.value;
@@ -101,6 +107,7 @@ const Session = () => {
       setBorgQnA(borgAnswers);
       sessionFinished = true;
     }else{
+      setShowInactivityModal(false);
       inactivityTimePaused = true;
       setStop(true);
       stopSession = true;
@@ -157,7 +164,7 @@ const Session = () => {
     if(phonecam==true){
       setisphone(true);
     }
-    console.log(isMobile);
+    //console.log(isMobile);
     if(exerSessionStarted==true){
       refreshPage();
     }
@@ -223,7 +230,7 @@ const Session = () => {
   }
 
   useEffect(()=>{
-    console.log(seconds);
+    //console.log(seconds);
     if(seconds == 30){
       inactivityTimePaused = true;
       console.log("Timer reached 30 seconds");
@@ -410,9 +417,7 @@ const Session = () => {
     // }
 
     // stopPose();
-    let camera;
-    let track;
-    let videoTracks;
+  
     startCamera();
 
     async function startCamera() {
@@ -486,8 +491,13 @@ const Session = () => {
       }
 
       const stopCameraButton = document.getElementById("stop-camera-button");
+      const camstop = stopcam.current
+      camstop.addEventListener("touchstart", stopCamera);
+      camstop.addEventListener("mouseenter", stopCamera);
+      camstop.addEventListener("click", stopCamera);
       stopCameraButton.addEventListener("click", stopCamera);
       
+
       // Define the stopCamera function
       function stopCamera() {
         // Stop the camera
@@ -548,7 +558,7 @@ const Session = () => {
   return (
     <Layout>
       <Head><title>Session</title></Head>
-      <div className={`${stop ? "block" : "hidden"} h-screen w-screen absolute z-10`}>
+      <div className={`${stop ? "block" : "hidden"} h-screen w-screen absolute z-10`} ref={stopcam}>
         <div className={`${question1 ? "block" : "hidden"}`}>
           <PostQuestions
             id="1"
@@ -685,7 +695,7 @@ const Session = () => {
         <Modal show={showInactivityModal} size="md" popup={true} onClose={()=>handleStopButton()}>
           <Modal.Header />
           <Modal.Body>
-            <div className="text-center">
+            <div className="text-center" ref={stopcam}>
               <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                 Your exercise session has been automatically stopped due to inactivity.
@@ -696,6 +706,7 @@ const Session = () => {
               <div className="flex justify-center gap-4">
                 <Button
                   color="gray"
+                  //ref={stopcam}
                   onClick={()=>handleStopButton()}
                 >
                   Confirm
