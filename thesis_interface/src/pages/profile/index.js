@@ -144,7 +144,7 @@ const Profile = () => {
       
           if (response.ok) {
             const data = await response.json();
-            console.log(data.message);
+            //console.log(data.message);
             toast.success(data.message, {
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 3000, // close after 3 seconds
@@ -154,11 +154,17 @@ const Profile = () => {
                 draggable: true, // allow dragging
               });
           } else {
+            toast.error("Coach Not Found!", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000, // close after 3 seconds
+                hideProgressBar: true, // hide the progress bar
+                closeOnClick: true, // close on click
+                pauseOnHover: true, // pause on hover
+                draggable: true,}) // allow dragging
+            console.error(error);
             console.error(`HTTP error! status: ${response.status}`);
           }
-        } catch (error) {
-          console.error(error);
-        }
+        } catch {}
         setupdatedb(counter += 1);
       };
     
@@ -176,7 +182,7 @@ const Profile = () => {
       
           if (response.ok) {
             const data = await response.json();
-            console.log(data.message);
+            //console.log(data.message);
             toast.info(data.message, {
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 3000, // close after 3 seconds
