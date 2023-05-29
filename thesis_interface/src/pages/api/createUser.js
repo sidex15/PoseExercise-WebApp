@@ -2,7 +2,7 @@ import clientPromise from '@/lib/mongodb';
 import generateCode from '@/lib/generate_code';
 
 export default async function createUser(req, res) {
-  const { username, password, firstName, middleName, lastName, birthDate, weight, height, sex } = req.body;
+  const { username, password, firstName, middleName, lastName, birthDate, weight, height, sex, coach } = req.body;
 
   const client = await clientPromise;
   // Validate the form data
@@ -16,8 +16,8 @@ export default async function createUser(req, res) {
     
     // Create a new user object
     const invcode = generateCode(username);
-    //console.log(invcode);
-    const newUser = { username, password, firstName, middleName, lastName, birthDate, weight, height, sex, invcode };
+    //console.log(coach);
+    const newUser = { username, password, firstName, middleName, lastName, birthDate, weight, height, sex, invcode, coach };
 
     // Save the user to the database
     const result = await usersCollection.insertOne(newUser);
