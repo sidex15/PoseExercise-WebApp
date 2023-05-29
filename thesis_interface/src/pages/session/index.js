@@ -24,7 +24,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import Image from 'next/image'
 import { POSE_CONNECTIONS, Pose } from "@mediapipe/pose/pose";
 import { Camera } from "@mediapipe/camera_utils/camera_utils";
-import {isMobile,isBrowser} from 'react-device-detect';
+import {isMobile, isBrowser} from 'react-device-detect';
 import {
   drawLandmarks,
   drawConnectors,
@@ -69,6 +69,8 @@ const Session = () => {
 
   const {exerciseReps, setExerciseReps, avgRepsSpeed, setAvgRepsSpeed, exerciseDuration, setExerciseDuration, borgQnA, setBorgQnA} = useContext(SessionContext);
   const { exerName, setExerName, postValue, setPostValue, exerSessionStarted, setExerSessionStarted} = useContext(ExerciseContext);
+
+  const [ rightPosDetected, setRightPosDetected ] = useState(false);
 
   const setcam = (e) => {
     phonecamid = e.target.value;
@@ -334,6 +336,9 @@ const Session = () => {
               repsProgress = exercise_assessment.count;
               // startDetected = exercise_assessment.isDetectedStart;
               countReset = exercise_assessment.countReset;
+              setRightPosDetected(true);
+            }else{
+              setRightPosDetected(false);
             }
 
             if (exercise_assessment.count == 1 && countReset == true) {
@@ -364,8 +369,10 @@ const Session = () => {
             if(exercise_assessment.count == 1){
               handleContinue();
               setSeconds(0);
+              setRightPosDetected(true);
             }else{
               handlePause();
+              setRightPosDetected(false);
             }
           }
         });
@@ -581,7 +588,7 @@ const Session = () => {
               <h1 className="text-white tablet:text-4xl text-xl">{exerName}</h1>
             </div>
             <canvas
-              className="output_canvas h-95% w-95% bg-grey rounded-3xl flex justify-center items-center"
+              className={`output_canvas h-95% w-95% bg-grey rounded-3xl flex justify-center items-center ${rightPosDetected ? 'green-shadow': ''}`}
               width={"1280"}
               height={"720"}
             ></canvas>

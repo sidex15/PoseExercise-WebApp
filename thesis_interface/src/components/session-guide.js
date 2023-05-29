@@ -37,46 +37,46 @@ const Guides = ({name}) => {
 
     const pushprev = (
         <Carousel slideInterval={5000}>
-            <Image src={pushupp1} alt="..."/>
-            <Image src={pushupp2} alt="..."/>
-            <Image src={pushupp3} alt="..."/>
-            <Image src={pushupp4} alt="..." />
+            <Image src={pushupp1} alt="..." className="h-auto object-contain"/>
+            <Image src={pushupp2} alt="..." className="h-auto object-contain"/>
+            <Image src={pushupp3} alt="..." className="h-auto object-contain"/>
+            <Image src={pushupp4} alt="..." className="h-auto object-contain"/>
         </Carousel>
     )
 
     const sitprev = (
         <Carousel slideInterval={5000}>
-            <Image src={situpp1} alt="..."/>
-            <Image src={situpp2} alt="..."/>
-            <Image src={situpp3} alt="..."/>
-            <Image src={situpp4} alt="..." />
+            <Image src={situpp1} alt="..." className="h-auto object-contain"/>
+            <Image src={situpp2} alt="..." className="h-auto object-contain"/>
+            <Image src={situpp3} alt="..." className="h-auto object-contain"/>
+            <Image src={situpp4} alt="..." className="h-auto object-contain"/>
         </Carousel>
     )
 
     const jumpjackprev = (
         <Carousel slideInterval={5000}>
-            <Image src={jumpjackp1} alt="..."/>
-            <Image src={jumpjackp2} alt="..."/>
-            <Image src={jumpjackp3} alt="..."/>
-            <Image src={jumpjackp4} alt="..." />
+            <Image src={jumpjackp1} alt="..."className="h-auto object-contain"/>
+            <Image src={jumpjackp2} alt="..."className="h-auto object-contain"/>
+            <Image src={jumpjackp3} alt="..."className="h-auto object-contain"/>
+            <Image src={jumpjackp4} alt="..."className="h-auto object-contain"/>
         </Carousel>
     )
 
     const squatprev = (
         <Carousel slideInterval={5000}>
-            <Image src={squatp1} alt="..."/>
-            <Image src={squatp2} alt="..."/>
-            <Image src={squatp3} alt="..."/>
-            <Image src={squatp4} alt="..." />
+            <Image src={squatp1} alt="..." className="object-contain"/>
+            <Image src={squatp2} alt="..." className="object-contain"/>
+            <Image src={squatp3} alt="..." className="object-contain"/>
+            <Image src={squatp4} alt="..." className="object-contain"/>
         </Carousel>
     )
 
     const plankprev = (
         <Carousel slideInterval={5000}>
-            <Image src={plankp1} alt="plankp1"/>
-            <Image src={plankp2} alt="plankp2"/>
-            <Image src={plankp3} alt="plankp3"/>
-            <Image src={plankp4} alt="plankp4" />
+            <Image src={plankp1} alt="plankp1" className="h-auto object-contain"/>
+            <Image src={plankp2} alt="plankp2" className="h-auto object-contain"/>
+            <Image src={plankp3} alt="plankp3" className="h-auto object-contain"/>
+            <Image src={plankp4} alt="plankp4" className="h-auto object-contain"/>
         </Carousel>
     )
 
@@ -85,29 +85,34 @@ const Guides = ({name}) => {
               <img
                 src="https://images2.alphacoders.com/130/1309135.png"
                 alt="..."
+                className="h-auto"
               />
               <img
                 src="https://images6.alphacoders.com/991/991135.jpg"
                 alt="..."
+                className="h-auto"
               />
               <img
                 src="https://images4.alphacoders.com/100/1001620.jpg"
                 alt="..."
+                className="h-auto"
               />
               <img
                 src="https://images5.alphacoders.com/121/1211733.jpg"
                 alt="..."
+                className="h-auto"
               />
               <img
                 src="https://images4.alphacoders.com/122/1226166.jpg"
                 alt="..."
+                className="h-auto"
               />
             </Carousel>
     )   
 
     return ( <Modal
         show={guide}
-        size="5xl"
+        size="2xl"
         popup={true}
         onClose={()=>handleGuide()}
       >
@@ -125,7 +130,7 @@ const Guides = ({name}) => {
             I Understand
           </Button>
           <Button color="gray" onClick={ () => handleGuide() }>
-            Decline
+            Go back
           </Button>
           </div>
         </Modal.Footer>

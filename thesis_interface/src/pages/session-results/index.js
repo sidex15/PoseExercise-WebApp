@@ -41,6 +41,8 @@ export default function Result (){
     const userid = Cookies.get('userinfoid');
     const weightInput = useRef();
 
+    const default_weight = 60;
+
     const handleProceed = () => {
         //console.log(postValue)
         router.push('/dashboard')
@@ -55,7 +57,12 @@ export default function Result (){
         const MET_val = exerEval[0];
         const duration_min = exerciseDuration/60;
         console.log(weightInput);
-        setCaloriesBurned(calcCalorie(duration_min, MET_val, weightInput.current).toFixed(2));
+        if(weightInput.current=='' || weightInput.current == undefined){
+            setCaloriesBurned(calcCalorie(duration_min, MET_val, default_weight).toFixed(2));
+        }else{
+            setCaloriesBurned(calcCalorie(duration_min, MET_val, weightInput.current).toFixed(2));
+        }
+        
         setShowWeightModal(false);
     }
 
@@ -112,7 +119,7 @@ export default function Result (){
             let exerEval = evalExercise(borgQnA[0], borgQnA[1]);
             let MET_val = exerEval[0];
             let duration_min = exerciseDuration/60;
-            setCaloriesBurned(calcCalorie(duration_min, MET_val, 60).toFixed(2));
+            setCaloriesBurned(calcCalorie(duration_min, MET_val, default_weight).toFixed(2));
             setExerDuration(formatTime(exerciseDuration));
             setExerRep(exerciseReps);
             setAvgRepsSpd(average(avgRepsSpeed).toFixed(2));
