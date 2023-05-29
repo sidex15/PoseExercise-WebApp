@@ -24,7 +24,7 @@ export default async function addrecord(req, res) {
     // Save the user to the database
     const insert = await usersCollection.updateOne({_id: new ObjectId(userid)},{$push:{records: newrecords}});
     if (insert.acknowledged == true) {
-      console.error(newrecords);
+      //console.error(newrecords);
       res.status(200).json({ message: 'Records Added' });
     } else {
       res.status(500).json({ message: 'Add Records failed' });

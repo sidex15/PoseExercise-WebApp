@@ -10,7 +10,7 @@ const Steps = ({step1, step2, step3}) => {
     const donepage = step3
 
     return ( 
-    <div className="h-full flex items-center">
+    <div className="h-full items-center laptop:flex hidden">
         <ol className="flex flex-col items-center h-3/4 ">
             <li className="flex flex-col w-full h-full justify-center items-center text-blue-600 dark:text-blue-500 relative drop-shadow-md">
                 <span class={`flex items-center justify-center ${addpage ? 'bg-#48CAE4' : 'bg-#B6B6B6' } rounded-full h-20 w-20 shrink-0`}>
