@@ -396,7 +396,7 @@ const Session = () => {
     // MediapipeScreen({"count": 1, "speed": 3});
     const pose = new Pose({
       locateFile: (file) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.2/${file}`;
+        return `./mediapipe/pose/${file}`;
       },
     });
     pose.setOptions({
