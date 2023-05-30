@@ -47,5 +47,6 @@ def predict():
     
 if __name__ == '__main__':
    #app.run(debug=True)
-    http_server = WSGIServer(('0.0.0.0', 5000), app)
+    http_server = WSGIServer(('0.0.0.0', 5000), app,keyfile='cert/localhost+1-key.pem', 
+certfile='cert/localhost+1.pem')
     http_server.serve_forever()
