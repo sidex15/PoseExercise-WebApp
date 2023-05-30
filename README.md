@@ -19,7 +19,7 @@ A collaboration between the proponents of the thesis titled "DEVELOPMENT OF WEB 
 > https://git-scm.com/downloads
 
 ## Creating .env.local
-- under /thesis_interface folder create file and save to .env.local
+- under root create file and save to .env.local
 ```
 MONGODB_URI='Your MongoDB Connection string'
 JWT_SECRET='Json Webtoken String (Random Generated String)'
@@ -35,7 +35,7 @@ NEXT_PUBLIC_MODEL_API='api link for modelengine default is: http://127.0.0.1:500
 2. Proceed to child directory
 > cd thesis-interface-nextJS
 
-3. Install React dependencies
+3. Install dependencies
 > npm install
 
 4. Create a python virtual environment:
