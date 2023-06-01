@@ -1,4 +1,4 @@
-# Thesis Web Based App
+# Pose Exercise Web App
 
 ## Description
 A collaboration between the proponents of the thesis titled "DEVELOPMENT OF WEB BASED APP FOR DETERMINING ANATOMICAL METRICS OF NON-LOCOMOTOR EXERCISES USING POSE ESTIMATION" for the completion of the degree of Bachelor of Science in Computer Science in Cavite State University - CCAT Campus.
