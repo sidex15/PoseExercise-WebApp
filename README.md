@@ -7,11 +7,13 @@
 A collaboration between the proponents of the thesis titled "DEVELOPMENT OF WEB BASED APP FOR DETERMINING ANATOMICAL METRICS OF NON-LOCOMOTOR EXERCISES USING POSE ESTIMATION" for the completion of the degree of Bachelor of Science in Computer Science in Cavite State University - CCAT Campus.
 
 ## Features
-- Real Time Repetition Counting Using Machine Learing
-- Real Time Speed per Repetition Counting Using Machine Learing
+- Real Time Repetition Counting Using Machine Learning
+- Real Time Speed per Repetition Counting Using Machine Learning
 - Calories Burned in Session
+- Mobile Webapp compatible*
 - Register and Login
 - Session Records Viewing
+* Must use #unsafely-treat-insecure-origin-as-secure flag in chrome app
 
 ## Requirements
 - Python 
@@ -28,15 +30,14 @@ MONGODB_URI='Your MongoDB Connection string'
 JWT_SECRET='Json Webtoken String (Random Generated String)'
 DB='MongoDB Database name'
 COLLECTION='MongoDB Collection name'
-NEXT_PUBLIC_MODEL_API='api link for modelengine default is: http://127.0.0.1:5000/predict'
+NEXT_PUBLIC_MODEL_API='api link for modelengine default is: http://localhost:5000/predict'
 ```
 
 ## Installation
 1. Clone the repository
-> git clone https://github.com/sidex15/Thesis-Interface-nextJS.git
 
 2. Proceed to child directory
-> cd thesis-interface-nextJS
+> cd PoseExcercise-WebApp
 
 3. Install dependencies
 > npm install
@@ -65,7 +66,7 @@ NEXT_PUBLIC_MODEL_API='api link for modelengine default is: http://127.0.0.1:500
 
 8. Run the frontend
 
- Must be in thesis-interface-nextJS
+ Must be in PoseExcercise-WebApp
 > npm run build
 >
 > npm run start
