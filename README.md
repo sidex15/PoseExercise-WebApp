@@ -10,10 +10,9 @@ A collaboration between the proponents of the thesis titled "DEVELOPMENT OF WEB 
 - Real Time Repetition Counting Using Machine Learning
 - Real Time Speed per Repetition Counting Using Machine Learning
 - Calories Burned in Session
-- Mobile Webapp compatible*
+- Mobile Webapp compatible `Must use #unsafely-treat-insecure-origin-as-secure flag in chrome app`
 - Register and Login
 - Session Records Viewing
-* Must use #unsafely-treat-insecure-origin-as-secure flag in chrome app
 
 ## Requirements
 - Python 
