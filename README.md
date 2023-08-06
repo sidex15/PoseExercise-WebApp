@@ -5,7 +5,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Description
-A collaboration between the proponents of the thesis titled "DEVELOPMENT OF WEB BASED APP FOR DETERMINING ANATOMICAL METRICS OF NON-LOCOMOTOR EXERCISES USING POSE ESTIMATION" for the completion of the degree of Bachelor of Science in Computer Science in Cavite State University - CCAT Campus.
+A collaboration between the proponents of the thesis titled ["DEVELOPMENT OF WEB BASED APP FOR DETERMINING ANATOMICAL METRICS OF NON-LOCOMOTOR EXERCISES USING POSE ESTIMATION"](https://1drv.ms/b/s!AqeUxEvHez4Pxi1yLnah7SV8Jw8v?e=DhJIz6) for the completion of the degree of Bachelor of Science in Computer Science in Cavite State University - CCAT Campus.
 
 ## Features
 - Real Time Repetition Counting Using Machine Learning
