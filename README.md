@@ -1,11 +1,14 @@
 ![image](https://upload.wikimedia.org/wikipedia/en/d/d2/Cavite_State_University_%28CvSU%29.png) <picture><img src="https://drive.google.com/uc?id=1vssSgsho-jm08j9_w595hgLT9azusaO7" width="347" height="310"></picture>
 # Pose Exercise Web App
-![image](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white) ![image](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)  ![image](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue) ![image](https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![image](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white) ![image](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) ![image](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue) ![image](https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white) [![image](https://img.shields.io/badge/Academia-fff?style=for-the-badge&logo=academia&logoColor=black)](
+https://www.academia.edu/106833673/DEVELOPMENT_OF_WEB_BASED_APP_FOR_DETERMINING_ANATOMICAL_METRICS_OF_NON_LOCOMOTOR_EXERCISES_USING_POSE_ESTIMATION_TECHNIQUE)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1dARKUwbp18FvRERF_NA3Gnb0l7nV0Qes#scrollTo=RvSjfH4rSay6)
 
 ## Description
-A collaboration between the proponents of the thesis titled ["DEVELOPMENT OF WEB BASED APP FOR DETERMINING ANATOMICAL METRICS OF NON-LOCOMOTOR EXERCISES USING POSE ESTIMATION"](https://1drv.ms/b/s!AqeUxEvHez4Pxi1yLnah7SV8Jw8v?e=DhJIz6) for the completion of the degree of Bachelor of Science in Computer Science in Cavite State University - CCAT Campus.
+A collaboration between the proponents of the thesis titled ["DEVELOPMENT OF WEB BASED APP FOR DETERMINING ANATOMICAL METRICS OF NON-LOCOMOTOR EXERCISES USING POSE ESTIMATION"](
+https://www.academia.edu/106833673/DEVELOPMENT_OF_WEB_BASED_APP_FOR_DETERMINING_ANATOMICAL_METRICS_OF_NON_LOCOMOTOR_EXERCISES_USING_POSE_ESTIMATION_TECHNIQUE
+) for the completion of the degree of Bachelor of Science in Computer Science in Cavite State University - CCAT Campus.
 
 ## Features
 - Real Time Repetition Counting Using Machine Learning
