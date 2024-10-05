@@ -6,13 +6,11 @@ https://www.academia.edu/106833673/DEVELOPMENT_OF_WEB_BASED_APP_FOR_DETERMINING_
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1dARKUwbp18FvRERF_NA3Gnb0l7nV0Qes#scrollTo=RvSjfH4rSay6)
 
 ## Description
-A collaboration between the proponents of the thesis titled ["DEVELOPMENT OF WEB BASED APP FOR DETERMINING ANATOMICAL METRICS OF NON-LOCOMOTOR EXERCISES USING POSE ESTIMATION"](
-https://www.academia.edu/106833673/DEVELOPMENT_OF_WEB_BASED_APP_FOR_DETERMINING_ANATOMICAL_METRICS_OF_NON_LOCOMOTOR_EXERCISES_USING_POSE_ESTIMATION_TECHNIQUE
-) for the completion of the degree of Bachelor of Science in Computer Science in Cavite State University - CCAT Campus.
+A collaboration between the proponents of the thesis titled "DEVELOPMENT OF WEB BASED APP FOR DETERMINING ANATOMICAL METRICS OF NON-LOCOMOTOR EXERCISES USING POSE ESTIMATION" for the completion of the degree of Bachelor of Science in Computer Science in Cavite State University - CCAT Campus.
 
 ## Features
-- Real Time Repetition Counting Using Machine Learning
-- Real Time Speed per Repetition Counting Using Machine Learning
+- Real-Time Repetition Counting Using Machine Learning
+- Real-Time Speed per Repetition Counting Using Machine Learning
 - Calories Burned in Session
 - Mobile Webapp compatible `Must use #unsafely-treat-insecure-origin-as-secure flag in chrome app`
 - Register and Login
